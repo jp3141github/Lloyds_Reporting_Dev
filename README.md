@@ -2,15 +2,36 @@
 
 **Comprehensive Data Processing and Reporting Tools for Lloyd's of London**
 
-This repository contains Python and R scripts for processing Lloyd's regulatory reporting requirements, including RRA (Reserving Return Annual) forms, FSCS data generation, Solvency II Pillar 3 claims reporting, and Liquidity Stress Testing.
+This repository contains Python and R scripts for processing Lloyd's regulatory reporting requirements, including RRA (Reserving Return Annual) and RRQ (Reserving Return Quarterly) forms, FSCS data generation, Solvency II Pillar 3 claims reporting, and Liquidity Stress Testing.
 
 ---
 
+## 🆕 What's New - RRQ Support Added!
+
+✨ **Now supports both RRQ and RRA returns!**
+- 📅 Generate quarterly RRQ data (Q1, Q2, Q3, Q4)
+- 📊 Generate annual RRA data
+- 🔄 Unified processing framework (auto-detects RRQ vs RRA)
+- 📈 Quarter-over-quarter comparison tools
+- 📉 ~80% data reduction for RRQ (focused scope)
+
 ## 📋 Overview
 
-A complete suite of tools for Lloyd's of London regulatory reporting:
+A complete suite of tools for Lloyd's of London regulatory reporting.
 
-✅ **RRA Reporting Scripts** - Process all RRA forms (010, 020, 071, 081, 091, 193, 291-295, 391, 910, 990)
+### Reserving Returns (RRA & RRQ)
+
+The Lloyd's reporting system requires syndicates to submit detailed reserving data through:
+- **RRQ**: Quarterly submissions (Q1, Q2, Q3, Q4) with focused scope (current + 2 prior years)
+- **RRA**: Annual submission with comprehensive historical analysis
+
+### Complete Feature Set
+
+This repository provides:
+
+✅ **RRA & RRQ Reporting Scripts** - Process all 14 forms (010, 020, 071, 081, 091, 193, 291-295, 391, 910, 990)
+✅ **Unified Framework** - Automatic RRQ/RRA detection and processing
+✅ **Quarter Comparisons** - Analyze movements between quarters
 ✅ **FSCS Data Generator** - Financial Services Compensation Scheme data processing
 ✅ **Solvency II Claims Processing** - Pillar 3 claims reporting automation
 ✅ **Liquidity Stress Testing** - RRA liquidity stress test analysis and reporting
@@ -126,9 +147,32 @@ Rscript install_packages.R
 
 ### 3. Choose Your Use Case
 
-#### A. RRA Reporting
+#### A. RRA & RRQ Reporting
+
+**Generate RRA (Annual) Data:**
 ```bash
-# Generate synthetic RRA data
+cd python_scripts/data_generation
+
+# Generate comprehensive annual data
+python generate_unified_lloyds_data.py --type RRA --year 2024
+# Output: synthetic_data_rra_2024/ (all 7 years, all 14 forms)
+```
+
+**Generate RRQ (Quarterly) Data:**
+```bash
+cd python_scripts/data_generation
+
+# Generate Q2 2024 quarterly data
+python generate_unified_lloyds_data.py --type RRQ --year 2024 --quarter Q2
+# Output: synthetic_data_rrq_2024_q2/ (3 years, 11 forms)
+
+# OR generate all four quarters at once
+python generate_unified_lloyds_data.py --all-quarters --year 2024
+# Output: Creates Q1, Q2, Q3, Q4 folders
+```
+
+**Legacy RRA-only generator (still available):**
+```bash
 cd python_scripts/data_generation
 python generate_synthetic_lloyds_data.py
 
@@ -564,11 +608,18 @@ This is a development repository for Lloyd's reporting. To contribute:
 
 ## 📚 Documentation
 
+### Core Guides
+- **[RRQ_RRA_USAGE_GUIDE.md](RRQ_RRA_USAGE_GUIDE.md)** - ⭐ **START HERE** - Complete guide for RRQ and RRA usage
+- **[RRQ_vs_RRA_COMPARISON.md](RRQ_vs_RRA_COMPARISON.md)** - Detailed comparison of RRQ vs RRA returns
+- **[QUICKSTART.md](QUICKSTART.md)** - Quick start guide
+
+### Power BI Integration
 - **[POWER_BI_INTEGRATION_GUIDE.md](POWER_BI_INTEGRATION_GUIDE.md)** - RRA & FSCS Power BI guide
 - **[POWERBI_GUIDE.md](POWERBI_GUIDE.md)** - Solvency II Power BI guide
 - **[python_implementation/POWERBI_INTEGRATION.md](python_implementation/POWERBI_INTEGRATION.md)** - Liquidity (Python)
 - **[r_implementation/POWERBI_INTEGRATION.md](r_implementation/POWERBI_INTEGRATION.md)** - Liquidity (R)
-- **[QUICKSTART.md](QUICKSTART.md)** - Quick start guide
+
+### Reference
 - **[Files_for_Claude/](Files_for_Claude/)** - Lloyd's specifications
 - **Python Docstrings** - All functions have detailed docstrings
 - **R Comments** - All R functions are documented
