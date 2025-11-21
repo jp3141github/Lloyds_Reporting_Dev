@@ -1,18 +1,33 @@
-# Lloyd's RRA Reporting Scripts
+# Lloyd's RRA & RRQ Reporting Scripts
 
-**Reserving Return Annual (RRA) Data Processing and Reporting for Lloyd's of London**
+**Reserving Return Annual (RRA) and Quarterly (RRQ) Data Processing and Reporting for Lloyd's of London**
 
-This repository contains Python and R scripts for processing Lloyd's RRA (Reserving Return Annual) forms, generating synthetic data for testing, and creating Power BI reports.
+This repository contains Python and R scripts for processing both Lloyd's RRA (Reserving Return Annual) and RRQ (Reserving Return Quarterly) forms, generating synthetic data for testing, and creating Power BI reports.
 
 ---
 
+## 🆕 What's New - RRQ Support Added!
+
+✨ **Now supports both RRQ and RRA returns!**
+- 📅 Generate quarterly RRQ data (Q1, Q2, Q3, Q4)
+- 📊 Generate annual RRA data
+- 🔄 Unified processing framework (auto-detects RRQ vs RRA)
+- 📈 Quarter-over-quarter comparison tools
+- 📉 ~80% data reduction for RRQ (focused scope)
+
 ## 📋 Overview
 
-The Lloyd's RRA reporting system requires syndicates to submit detailed reserving data across multiple forms. This repository provides:
+The Lloyd's reporting system requires syndicates to submit detailed reserving data through:
+- **RRQ**: Quarterly submissions (Q1, Q2, Q3, Q4) with focused scope (current + 2 prior years)
+- **RRA**: Annual submission with comprehensive historical analysis
 
-✅ **Synthetic Data Generation** - Create realistic Lloyd's data for testing
-✅ **Form Processing Scripts** - Process all RRA forms (010, 020, 071, 081, 091, 193, 291-295, 391, 910, 990)
-✅ **Power BI Integration** - Ready-to-use scripts for Power BI dashboards
+This repository provides:
+
+✅ **Synthetic Data Generation** - Create realistic RRQ and RRA data for testing
+✅ **Form Processing Scripts** - Process all 14 forms (010, 020, 071, 081, 091, 193, 291-295, 391, 910, 990)
+✅ **Unified Framework** - Automatic RRQ/RRA detection and processing
+✅ **Power BI Integration** - Ready-to-use scripts for dashboards
+✅ **Quarter Comparisons** - Analyze movements between quarters
 ✅ **Data Validation** - Built-in validation rules for data quality
 ✅ **Analysis Functions** - Calculate chain ladder factors, loss ratios, reserve adequacy metrics
 
@@ -80,7 +95,27 @@ Rscript install_packages.R
 
 ### 3. Generate Synthetic Data
 
-**Using Python:**
+**Option A: Generate RRA (Annual) Data**
+```bash
+cd python_scripts/data_generation
+
+# Generate comprehensive annual data
+python generate_unified_lloyds_data.py --type RRA --year 2024
+# Output: synthetic_data_rra_2024/ (all 7 years, all 14 forms)
+```
+
+**Option B: Generate RRQ (Quarterly) Data**
+```bash
+# Generate Q2 2024 quarterly data
+python generate_unified_lloyds_data.py --type RRQ --year 2024 --quarter Q2
+# Output: synthetic_data_rrq_2024_q2/ (3 years, 11 forms)
+
+# OR generate all four quarters at once
+python generate_unified_lloyds_data.py --all-quarters --year 2024
+# Output: Creates Q1, Q2, Q3, Q4 folders
+```
+
+**Legacy RRA-only generator (still available):**
 ```bash
 cd python_scripts/data_generation
 python generate_synthetic_lloyds_data.py
@@ -258,7 +293,12 @@ def validate_rra_010(data_source):
 
 ## 📚 Documentation
 
-- **[POWER_BI_INTEGRATION_GUIDE.md](POWER_BI_INTEGRATION_GUIDE.md)** - Complete Power BI integration guide
+### Core Guides
+- **[RRQ_RRA_USAGE_GUIDE.md](RRQ_RRA_USAGE_GUIDE.md)** - ⭐ **START HERE** - Complete guide for RRQ and RRA usage
+- **[RRQ_vs_RRA_COMPARISON.md](RRQ_vs_RRA_COMPARISON.md)** - Detailed comparison of RRQ vs RRA returns
+- **[POWER_BI_INTEGRATION_GUIDE.md](POWER_BI_INTEGRATION_GUIDE.md)** - Power BI integration guide
+
+### Reference
 - **[Files_for_Claude/RRA-specs.xlsx](Files_for_Claude/RRA-specs.xlsx)** - Lloyd's RRA specifications
 - **Python Docstrings** - All functions have detailed docstrings
 - **R Comments** - All R functions are documented
