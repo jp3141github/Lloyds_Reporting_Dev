@@ -1,18 +1,26 @@
-# Solvency II QSR Reporting for Lloyd's of London
+# Solvency II Reporting for Lloyd's of London (QSR + AAD + ASB)
 
-Comprehensive Python and R scripts for generating Solvency II Quarterly Solvency Return (QSR) reports from Lloyd's of London syndicate data, designed for seamless integration with Power BI.
+Comprehensive Python and R scripts for generating Solvency II regulatory returns from Lloyd's of London syndicate data:
+- **QSR**: Quarterly Solvency Return
+- **AAD**: Annual Actuarial Data
+- **ASB**: Annual Solvency Balance Sheet
+
+Designed for seamless integration with Power BI for regulatory reporting and solvency monitoring.
 
 ## Overview
 
 This project provides production-ready scripts to:
 - Generate synthetic Lloyd's of London syndicate data for testing and development
-- Transform raw syndicate data into standardized Solvency II QSR return formats
+- Transform raw syndicate data into standardized Solvency II return formats (QSR, AAD, ASB)
+- Support both quarterly and annual reporting frequencies
 - Integrate seamlessly with Power BI for reporting and visualization
 - Support both Python and R implementations for maximum flexibility
 
-## Solvency II QSR Returns Covered
+## Returns Covered
 
-Based on the **Q3 2025 QSR Return Specifications**, this implementation covers:
+### QSR - Quarterly Solvency Returns (Q3 2025)
+
+Based on the **Q3 2025 QSR Return Specifications**:
 
 | QSR Return | Description | EIOPA Reference |
 |------------|-------------|-----------------|
@@ -27,32 +35,72 @@ Based on the **Q3 2025 QSR Return Specifications**, this implementation covers:
 | **QSR 450** | Life Insurance Information | S.05.01.02.02 |
 | **QSR 510/511** | Minimum Capital Requirement (MCR) | S.28.01.01 |
 
-Additional reports:
+### AAD - Annual Actuarial Data (2024)
+
+Based on the **Annual 2024 AAD Return Specifications**:
+
+| AAD Return | Description | EIOPA Reference |
+|------------|-------------|-----------------|
+| **AAD 230** | Open Market Value of Investments | S.06.02.01 |
+| **AAD 233** | Off-Balance Sheet Items | S.08.01.01 |
+| **AAD 235** | Derivatives | S.09.01.01 |
+| **AAD 236** | Collective Investments Undertakings | S.06.03.01 |
+| **AAD 237** | Structured Products | S.10.01.01 |
+| **AAD 238** | Securities Lending and Repos | S.11.01.01 |
+
+### ASB - Annual Solvency Balance Sheet (2024)
+
+Based on the **Annual 2024 ASB Return Specifications**:
+
+| ASB Return | Description | EIOPA Reference |
+|------------|-------------|-----------------|
+| **ASB 245** | Non-Life Claims Information - Gross | S.19.01.01 |
+| **ASB 246** | Non-Life Claims Information - Reinsurers Share | S.19.01.01 |
+| **ASB 247** | Non-Life Claims Information - Net | S.19.01.01 |
+| **ASB 248** | Non-Life Claims Information - Total | S.19.01.01 |
+
+### Additional Analytical Reports
 - **SCR Summary**: Comprehensive Solvency Capital Requirement breakdown
 - **Solvency Ratio Report**: SCR and MCR coverage ratios with surplus calculations
+- **AAD Investment Summary**: Aggregated views by asset category
+- **AAD Derivatives Summary**: Risk metrics and exposure analysis
+- **ASB Claims Development Factors**: Age-to-age development factors from triangles
+- **ASB Claims Summary**: Outstanding claims by line of business
 
 ## Project Structure
 
 ```
 Solvency_II_QSR_Reporting/
-├── README.md                          # This file
+├── README.md                                    # This file
+├── QSR_vs_AAD_vs_ASB.md                        # Detailed comparison guide
 ├── Python/
-│   ├── synthetic_data_generator.py    # Generate synthetic Lloyd's data
-│   ├── qsr_report_generator.py        # Transform data to QSR formats
-│   └── POWERBI_GUIDE.md               # Power BI integration guide (Python)
+│   ├── synthetic_data_generator.py              # Original QSR data generator
+│   ├── synthetic_data_generator_extended.py     # Extended: QSR + AAD + ASB
+│   ├── qsr_report_generator.py                  # QSR report generator
+│   ├── report_generator_extended.py             # Extended: QSR + AAD + ASB
+│   └── POWERBI_GUIDE.md                         # Power BI integration guide
 ├── R/
-│   ├── synthetic_data_generator.R     # Generate synthetic Lloyd's data (R)
-│   ├── qsr_report_generator.R         # Transform data to QSR formats (R)
-│   └── POWERBI_GUIDE.md               # Power BI integration guide (R)
+│   ├── synthetic_data_generator.R               # R QSR data generator
+│   ├── qsr_report_generator.R                   # R QSR report generator
+│   └── POWERBI_GUIDE.md                         # R Power BI integration guide
 └── Data/
-    ├── synthetic_balance_sheet.csv    # Generated data files
-    ├── synthetic_own_funds.csv
-    ├── synthetic_technical_provisions.csv
-    ├── synthetic_premiums_claims.csv
-    ├── synthetic_investments.csv
-    ├── synthetic_scr_calculation.csv
-    ├── synthetic_mcr_calculation.csv
-    └── [QSR report outputs]           # Generated QSR returns
+    ├── Synthetic Data (QSR):
+    │   ├── synthetic_balance_sheet.csv
+    │   ├── synthetic_own_funds.csv
+    │   ├── synthetic_technical_provisions.csv
+    │   ├── synthetic_premiums_claims.csv
+    │   └── synthetic_scr/mcr_calculation.csv
+    ├── Synthetic Data (AAD):
+    │   ├── synthetic_aad230_open_market_value.csv
+    │   ├── synthetic_aad233_off_balance_sheet.csv
+    │   ├── synthetic_aad235_derivatives.csv
+    │   └── synthetic_aad236/237/238...csv
+    ├── Synthetic Data (ASB):
+    │   └── synthetic_asb_claims_triangles.csv
+    └── Generated Reports (23 total):
+        ├── QSR reports (10)
+        ├── AAD reports (8)
+        └── ASB reports (5)
 ```
 
 ## Quick Start
@@ -65,26 +113,51 @@ pip install pandas numpy openpyxl
 ```
 
 #### Generate Synthetic Data
+
+**Option 1: QSR Only (Quarterly)**
 ```bash
 cd Solvency_II_QSR_Reporting/Python
 python synthetic_data_generator.py
 ```
 
-#### Generate QSR Reports
+**Option 2: QSR + AAD + ASB (Quarterly + Annual)**
+```bash
+cd Solvency_II_QSR_Reporting/Python
+python synthetic_data_generator_extended.py
+```
+This generates 14 datasets (7 QSR + 6 AAD + 1 ASB)
+
+#### Generate Reports
+
+**QSR Reports Only**
 ```bash
 python qsr_report_generator.py
 ```
 
+**All Reports (QSR + AAD + ASB)**
+```bash
+python report_generator_extended.py
+```
+This generates 23 reports (10 QSR + 8 AAD + 5 ASB)
+
 #### Use in Power BI
 See `Python/POWERBI_GUIDE.md` for detailed integration instructions.
 
-Example:
+**Examples:**
 ```python
-# In Power BI Python script
+# QSR Reports in Power BI
 import sys
 sys.path.append(r'C:\path\to\Solvency_II_QSR_Reporting\Python')
 from qsr_report_generator import get_solvency_ratios
 dataset = get_solvency_ratios()
+
+# AAD Reports in Power BI
+from report_generator_extended import get_aad230_investments
+dataset = get_aad230_investments()
+
+# ASB Reports in Power BI
+from report_generator_extended import get_asb_claims_triangles
+dataset = get_asb_claims_triangles()
 ```
 
 ### R Implementation
@@ -406,6 +479,15 @@ For issues or questions:
 
 ## Version History
 
+- **v2.0** (2025-11-21): Extended release - QSR + AAD + ASB
+  - Added Annual Actuarial Data (AAD) support with 6 returns
+  - Added Annual Solvency Balance Sheet (ASB) with claims triangles
+  - Extended Python synthetic data generator
+  - Extended Python report generator
+  - Total 23 reports (10 QSR + 8 AAD + 5 ASB)
+  - Comprehensive QSR vs AAD vs ASB comparison guide
+  - Power BI integration for quarterly and annual reporting
+
 - **v1.0** (2025-11-21): Initial release
   - Python and R implementations
   - Synthetic data generators
@@ -416,6 +498,8 @@ For issues or questions:
 
 Based on:
 - Solvency II Pillar 3 QSR Return Specifications Q3 2025
+- Solvency II Pillar 3 AAD Return Specifications Annual 2024
+- Solvency II Pillar 3 ASB Return Specifications Annual 2024
 - Lloyd's of London reporting requirements
 - EIOPA reporting guidelines
 
