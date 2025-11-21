@@ -1,0 +1,57 @@
+Syndicate_Number,SCOB_Code,LOB_Code,LOB_Description,Reserving_Class,Active_Flag,Effective_From,Effective_To
+2987,M3_2987,M3,Marine Liability,RC_M3,Y,2018-01-01,2025-12-31
+2987,F1_2987,F1,Fire & Other Damage - Direct,RC_F1,Y,2018-01-01,2025-12-31
+2987,T1_2987,T1,Third Party Liability - Direct,RC_T1,Y,2018-01-01,2025-12-31
+2987,N2_2987,N2,Non-Marine Property Facultative,RC_N2,Y,2018-01-01,2025-12-31
+2987,P2_2987,P2,Public & Products Liability,RC_P2,Y,2018-01-01,2025-12-31
+2987,D1_2987,D1,Direct Motor (Private Car),RC_D1,Y,2018-01-01,2025-12-31
+2987,E1_2987,E1,Energy Offshore,RC_E1,Y,2018-01-01,2025-12-31
+33,F2_33,F2,Fire & Other Damage - Reinsurance,RC_F2,Y,2018-01-01,2025-12-31
+33,V1_33,V1,Aviation,RC_V1,Y,2018-01-01,2025-12-31
+33,W1_33,W1,Political Risk & Contingency,RC_W1,Y,2018-01-01,2025-12-31
+33,M1_33,M1,Marine Cargo,RC_M1,Y,2018-01-01,2025-12-31
+1183,P1_1183,P1,Professional Indemnity,RC_P1,Y,2018-01-01,2025-12-31
+1183,W1_1183,W1,Political Risk & Contingency,RC_W1,Y,2018-01-01,2025-12-31
+1183,N2_1183,N2,Non-Marine Property Facultative,RC_N2,Y,2018-01-01,2025-12-31
+1183,N1_1183,N1,Non-Marine Property Treaty,RC_N1,Y,2018-01-01,2025-12-31
+1183,F2_1183,F2,Fire & Other Damage - Reinsurance,RC_F2,Y,2018-01-01,2025-12-31
+1183,D1_1183,D1,Direct Motor (Private Car),RC_D1,Y,2018-01-01,2025-12-31
+1183,M1_1183,M1,Marine Cargo,RC_M1,Y,2018-01-01,2025-12-31
+2791,D1_2791,D1,Direct Motor (Private Car),RC_D1,Y,2018-01-01,2025-12-31
+2791,A2_2791,A2,Accident & Health Reinsurance,RC_A2,Y,2018-01-01,2025-12-31
+2791,D2_2791,D2,Direct Motor (Commercial),RC_D2,Y,2018-01-01,2025-12-31
+2791,E1_2791,E1,Energy Offshore,RC_E1,Y,2018-01-01,2025-12-31
+2791,E2_2791,E2,Energy Onshore,RC_E2,Y,2018-01-01,2025-12-31
+2791,N2_2791,N2,Non-Marine Property Facultative,RC_N2,Y,2018-01-01,2025-12-31
+623,X1_623,X1,Catastrophe Reinsurance,RC_X1,Y,2018-01-01,2025-12-31
+623,D1_623,D1,Direct Motor (Private Car),RC_D1,Y,2018-01-01,2025-12-31
+623,N2_623,N2,Non-Marine Property Facultative,RC_N2,Y,2018-01-01,2025-12-31
+623,V1_623,V1,Aviation,RC_V1,Y,2018-01-01,2025-12-31
+623,P2_623,P2,Public & Products Liability,RC_P2,Y,2018-01-01,2025-12-31
+623,M1_623,M1,Marine Cargo,RC_M1,Y,2018-01-01,2025-12-31
+4242,V1_4242,V1,Aviation,RC_V1,Y,2018-01-01,2025-12-31
+4242,A1_4242,A1,Direct Accident & Health,RC_A1,Y,2018-01-01,2025-12-31
+4242,D2_4242,D2,Direct Motor (Commercial),RC_D2,Y,2018-01-01,2025-12-31
+4242,M1_4242,M1,Marine Cargo,RC_M1,Y,2018-01-01,2025-12-31
+4242,M3_4242,M3,Marine Liability,RC_M3,Y,2018-01-01,2025-12-31
+5000,M2_5000,M2,Marine Hull,RC_M2,Y,2018-01-01,2025-12-31
+5000,P1_5000,P1,Professional Indemnity,RC_P1,Y,2018-01-01,2025-12-31
+5000,E2_5000,E2,Energy Onshore,RC_E2,Y,2018-01-01,2025-12-31
+1910,A1_1910,A1,Direct Accident & Health,RC_A1,Y,2018-01-01,2025-12-31
+1910,M1_1910,M1,Marine Cargo,RC_M1,Y,2018-01-01,2025-12-31
+1910,T2_1910,T2,Third Party Liability - Reinsurance,RC_T2,Y,2018-01-01,2025-12-31
+1910,E2_1910,E2,Energy Onshore,RC_E2,Y,2018-01-01,2025-12-31
+1910,D2_1910,D2,Direct Motor (Commercial),RC_D2,Y,2018-01-01,2025-12-31
+1910,P1_1910,P1,Professional Indemnity,RC_P1,Y,2018-01-01,2025-12-31
+2010,T2_2010,T2,Third Party Liability - Reinsurance,RC_T2,Y,2018-01-01,2025-12-31
+2010,F1_2010,F1,Fire & Other Damage - Direct,RC_F1,Y,2018-01-01,2025-12-31
+2010,E1_2010,E1,Energy Offshore,RC_E1,Y,2018-01-01,2025-12-31
+2010,N1_2010,N1,Non-Marine Property Treaty,RC_N1,Y,2018-01-01,2025-12-31
+2010,E2_2010,E2,Energy Onshore,RC_E2,Y,2018-01-01,2025-12-31
+2525,T2_2525,T2,Third Party Liability - Reinsurance,RC_T2,Y,2018-01-01,2025-12-31
+2525,A1_2525,A1,Direct Accident & Health,RC_A1,Y,2018-01-01,2025-12-31
+2525,M3_2525,M3,Marine Liability,RC_M3,Y,2018-01-01,2025-12-31
+2525,T1_2525,T1,Third Party Liability - Direct,RC_T1,Y,2018-01-01,2025-12-31
+2525,W1_2525,W1,Political Risk & Contingency,RC_W1,Y,2018-01-01,2025-12-31
+2525,A2_2525,A2,Accident & Health Reinsurance,RC_A2,Y,2018-01-01,2025-12-31
+2525,E2_2525,E2,Energy Onshore,RC_E2,Y,2018-01-01,2025-12-31

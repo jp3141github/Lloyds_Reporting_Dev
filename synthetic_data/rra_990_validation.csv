@@ -1,0 +1,11 @@
+Syndicate_Number,Reporting_Period,Total_Forms_Submitted,Forms_With_Errors,Forms_With_Warnings,Validation_Status,Data_Completeness_Score,Cross_Form_Reconciliation,YoY_Movement_Check,Submission_Timestamp,Submitted_By,Validation_Version
+2987,2024-12-31,15,1,3,Pass,0.9847,Passed,Within Tolerance,2025-11-21 03:35:31,user2987,1.1
+33,2024-12-31,15,1,0,Pass,0.9901,Passed,Within Tolerance,2025-11-21 03:35:31,user33,1.1
+1183,2024-12-31,15,2,4,Pass,0.959,Passed with Exceptions,Within Tolerance,2025-11-21 03:35:31,user1183,1.1
+2791,2024-12-31,15,0,5,Review Required,0.9863,Passed,Within Tolerance,2025-11-21 03:35:31,user2791,1.1
+623,2024-12-31,15,1,4,Pass,0.9761,Passed with Exceptions,Within Tolerance,2025-11-21 03:35:31,user623,1.1
+4242,2024-12-31,15,2,2,Review Required,0.9547,Passed,Within Tolerance,2025-11-21 03:35:31,user4242,1.1
+5000,2024-12-31,15,2,3,Pass,0.9768,Passed with Exceptions,Within Tolerance,2025-11-21 03:35:31,user5000,1.1
+1910,2024-12-31,15,2,4,Pass with Warnings,0.9784,Passed with Exceptions,Requires Explanation,2025-11-21 03:35:31,user1910,1.1
+2010,2024-12-31,15,0,5,Review Required,0.9547,Passed,Within Tolerance,2025-11-21 03:35:31,user2010,1.1
+2525,2024-12-31,15,1,1,Pass with Warnings,0.9767,Passed,Within Tolerance,2025-11-21 03:35:31,user2525,1.1
