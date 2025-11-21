@@ -372,8 +372,12 @@ All include:
 - **RRA/RRQ forms** - ✨ **NEW**: Full Python + R parity achieved (Form 291, unified processor, unified data generator)
 - **RRQ data generation** - ✨ **NEW**: Both Python and R can now generate quarterly returns
 
-### 📋 Planned enhancements
-- Add remaining RRA form processors (020, 071, 081, 091, 292-295, 391, 910, 990)
+### 🚧 Phase 2 in progress - Additional RRA Form Processors
+- ✅ **Form 292** (Net Premium and IBNR) - Python + R complete
+- ✅ **Form 990** (Validation Summary) - Python + R complete
+- 📋 **Remaining:** Forms 293, 294, 391 (IBNR family), 020, 071, 081 (reference data), 091, 295, 910 (specialized)
+
+### 📋 Future enhancements
 - Unit testing suite
 - CI/CD with GitHub Actions
 - MkDocs or Quarto documentation site
