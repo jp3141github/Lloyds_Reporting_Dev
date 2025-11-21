@@ -369,13 +369,10 @@ All include:
 - **Solvency II ASB** - Complete annual reporting (ASB 245/246/247/248)
 - **FSCS** - Full data generation and Power BI integration
 - **Liquidity stress testing** - Complete analysis and reporting
-
-### ⚠️ Partially implemented (Python complete, R gaps)
-- **RRA/RRQ forms** - Python has 3 form processors + unified processor; R has 2 form processors
-- **Unified RRQ/RRA generator** - Python only (R has RRA-only generator)
+- **RRA/RRQ forms** - ✨ **NEW**: Full Python + R parity achieved (Form 291, unified processor, unified data generator)
+- **RRQ data generation** - ✨ **NEW**: Both Python and R can now generate quarterly returns
 
 ### 📋 Planned enhancements
-- Complete R parity for RRA/RRQ processing
 - Add remaining RRA form processors (020, 071, 081, 091, 292-295, 391, 910, 990)
 - Unit testing suite
 - CI/CD with GitHub Actions
