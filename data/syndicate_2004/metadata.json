@@ -1,0 +1,20 @@
+{
+  "syndicate_number": 2004,
+  "syndicate_name": "Delta Syndicate",
+  "managing_agent": "Delta Risk Services",
+  "qma_date": "2024-12-31",
+  "date_completed": "2025-11-21",
+  "syndicate_fal": 161819576,
+  "syndicate_fis": 137754084,
+  "syndicate_uscr": 100805467,
+  "syndicate_ueca": 17705601,
+  "scenario_type": "US Windstorm",
+  "loss_occurrence_date": "2025-02-15",
+  "gross_loss_estimate": 325795586,
+  "reinsurance_recovery_estimate": 153113637,
+  "net_loss_estimate": 172681949,
+  "us_funding_requirement": 45934091,
+  "total_disputed_recoveries": 36317913,
+  "disputed_60_days": 21790747,
+  "disputed_90_days": 14527165
+}

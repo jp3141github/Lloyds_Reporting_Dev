@@ -1,8 +1,8 @@
-# R Package Installation Script for Lloyd's RRA Reporting
+# R Package Installation Script for Lloyd's Reporting
 # Run this script to install all required R packages
 # Usage: Rscript install_packages.R
 
-cat("Installing required R packages for Lloyd's RRA Reporting...\n\n")
+cat("Installing required R packages for Lloyd's Reporting...\n\n")
 
 # List of required packages
 required_packages <- c(
@@ -23,6 +23,7 @@ required_packages <- c(
   # Optional: For working with Excel files
   "readxl",     # Reading Excel files
   "writexl",    # Writing Excel files
+  "openxlsx",   # Writing Excel files (for Solvency II claims processor)
 
   # Optional: For statistical modeling
   "stats",      # Base R statistics (already installed)
@@ -71,4 +72,4 @@ for (pkg in required_packages) {
 }
 
 cat("\n", rep("=", 60), "\n", sep = "")
-cat("Setup complete! You can now use the R scripts for RRA reporting.\n")
+cat("Setup complete! You can now use the R scripts for Lloyd's reporting.\n")

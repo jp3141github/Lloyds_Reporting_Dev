@@ -1,0 +1,20 @@
+{
+  "syndicate_number": 2003,
+  "syndicate_name": "Gamma Syndicate",
+  "managing_agent": "Gamma Underwriting Ltd",
+  "qma_date": "2024-12-31",
+  "date_completed": "2025-11-21",
+  "syndicate_fal": 282708911,
+  "syndicate_fis": 230139532,
+  "syndicate_uscr": 195614480,
+  "syndicate_ueca": 35768398,
+  "scenario_type": "US Windstorm",
+  "loss_occurrence_date": "2025-02-15",
+  "gross_loss_estimate": 494099124,
+  "reinsurance_recovery_estimate": 250405386,
+  "net_loss_estimate": 243693738,
+  "us_funding_requirement": 75121615,
+  "total_disputed_recoveries": 66026120,
+  "disputed_60_days": 39615672,
+  "disputed_90_days": 26410448
+}
