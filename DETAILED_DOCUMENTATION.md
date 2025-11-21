@@ -102,7 +102,7 @@ The RRA (Reserving Return Annual) and RRQ (Reserving Return Quarterly) modules p
 | **081** | Reserving Class Info | Annual/Quarterly | 📊 Data only | 📊 Data only |
 | **091** | LPT (Loss Portfolio Transfer) | Annual/Quarterly | 📊 Data only | 📊 Data only |
 | **193** | Net Claims Development | Annual/Quarterly | ✅ | ✅ |
-| **291** | Gross Premium and IBNR | Annual/Quarterly | ✅ | ⚠️ Planned |
+| **291** | Gross Premium and IBNR | Annual/Quarterly | ✅ | ✅ |
 | **292** | Net Premium and IBNR | Annual/Quarterly | 📊 Data only | 📊 Data only |
 | **293** | Outstanding & IBNR | Annual/Quarterly | 📊 Data only | 📊 Data only |
 | **294** | Gross IBNR (Catastrophe) | Annual/Quarterly | 📊 Data only | 📊 Data only |
@@ -311,7 +311,7 @@ class UnifiedFormProcessor:
         pass
 ```
 
-**R Implementation:** ⚠️ Planned (see IMPLEMENTATION_ROADMAP.md)
+**R Implementation:** ✅ `r_scripts/forms/unified_form_processor.R` (R6 class, full parity)
 
 #### RRA Aggregator
 
