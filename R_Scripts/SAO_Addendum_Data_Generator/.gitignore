@@ -1,0 +1,5 @@
+# Ignore generated output files
+output/
+.Rhistory
+.RData
+.Rproj.user
