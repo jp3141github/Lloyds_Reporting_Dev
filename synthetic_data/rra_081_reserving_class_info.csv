@@ -1,0 +1,201 @@
+Syndicate_Number,Reserving_Class_Code,Reserving_Class_Description,LOB_Code,Development_Pattern,Average_Settlement_Years,Actuarial_Method,Last_Review_Date
+2987,RC_A1,Direct Accident & Health - Reserves,A1,Medium Tail,4,Chain Ladder,2024-04-19
+2987,RC_A2,Accident & Health Reinsurance - Reserves,A2,Short Tail,2,Expected Loss Ratio,2024-02-25
+2987,RC_D1,Direct Motor (Private Car) - Reserves,D1,Long Tail,13,BF Method,2024-03-22
+2987,RC_D2,Direct Motor (Commercial) - Reserves,D2,Medium Tail,9,BF Method,2024-05-17
+2987,RC_E1,Energy Offshore - Reserves,E1,Long Tail,7,BF Method,2024-09-25
+2987,RC_E2,Energy Onshore - Reserves,E2,Long Tail,12,BF Method,2024-12-10
+2987,RC_F1,Fire & Other Damage - Direct - Reserves,F1,Medium Tail,11,Cape Cod,2024-08-17
+2987,RC_F2,Fire & Other Damage - Reinsurance - Reserves,F2,Medium Tail,2,BF Method,2024-04-03
+2987,RC_M1,Marine Cargo - Reserves,M1,Medium Tail,1,BF Method,2024-10-08
+2987,RC_M2,Marine Hull - Reserves,M2,Short Tail,2,Chain Ladder,2024-04-03
+2987,RC_M3,Marine Liability - Reserves,M3,Short Tail,14,Cape Cod,2024-02-17
+2987,RC_N1,Non-Marine Property Treaty - Reserves,N1,Short Tail,5,Expected Loss Ratio,2024-04-18
+2987,RC_N2,Non-Marine Property Facultative - Reserves,N2,Short Tail,12,Expected Loss Ratio,2024-04-26
+2987,RC_P1,Professional Indemnity - Reserves,P1,Medium Tail,13,Expected Loss Ratio,2024-04-04
+2987,RC_P2,Public & Products Liability - Reserves,P2,Short Tail,11,Expected Loss Ratio,2024-06-14
+2987,RC_T1,Third Party Liability - Direct - Reserves,T1,Medium Tail,8,Chain Ladder,2024-11-21
+2987,RC_T2,Third Party Liability - Reinsurance - Reserves,T2,Long Tail,2,Chain Ladder,2024-07-24
+2987,RC_V1,Aviation - Reserves,V1,Medium Tail,13,Chain Ladder,2024-04-07
+2987,RC_W1,Political Risk & Contingency - Reserves,W1,Short Tail,9,Expected Loss Ratio,2024-03-14
+2987,RC_X1,Catastrophe Reinsurance - Reserves,X1,Short Tail,5,Expected Loss Ratio,2024-04-28
+33,RC_A1,Direct Accident & Health - Reserves,A1,Short Tail,8,Chain Ladder,2024-01-21
+33,RC_A2,Accident & Health Reinsurance - Reserves,A2,Long Tail,14,Chain Ladder,2024-02-25
+33,RC_D1,Direct Motor (Private Car) - Reserves,D1,Short Tail,3,Expected Loss Ratio,2024-08-16
+33,RC_D2,Direct Motor (Commercial) - Reserves,D2,Short Tail,14,Expected Loss Ratio,2024-01-06
+33,RC_E1,Energy Offshore - Reserves,E1,Medium Tail,1,Expected Loss Ratio,2024-05-26
+33,RC_E2,Energy Onshore - Reserves,E2,Medium Tail,5,Expected Loss Ratio,2024-12-24
+33,RC_F1,Fire & Other Damage - Direct - Reserves,F1,Long Tail,11,Expected Loss Ratio,2024-03-07
+33,RC_F2,Fire & Other Damage - Reinsurance - Reserves,F2,Medium Tail,4,Chain Ladder,2024-10-24
+33,RC_M1,Marine Cargo - Reserves,M1,Long Tail,1,Cape Cod,2024-01-02
+33,RC_M2,Marine Hull - Reserves,M2,Long Tail,8,BF Method,2024-01-17
+33,RC_M3,Marine Liability - Reserves,M3,Short Tail,14,BF Method,2024-02-20
+33,RC_N1,Non-Marine Property Treaty - Reserves,N1,Short Tail,11,BF Method,2024-07-04
+33,RC_N2,Non-Marine Property Facultative - Reserves,N2,Long Tail,4,Chain Ladder,2024-10-03
+33,RC_P1,Professional Indemnity - Reserves,P1,Medium Tail,11,Cape Cod,2024-05-07
+33,RC_P2,Public & Products Liability - Reserves,P2,Long Tail,12,Cape Cod,2024-04-09
+33,RC_T1,Third Party Liability - Direct - Reserves,T1,Medium Tail,3,Cape Cod,2024-08-11
+33,RC_T2,Third Party Liability - Reinsurance - Reserves,T2,Short Tail,1,Expected Loss Ratio,2024-10-19
+33,RC_V1,Aviation - Reserves,V1,Short Tail,2,BF Method,2024-09-09
+33,RC_W1,Political Risk & Contingency - Reserves,W1,Short Tail,15,Cape Cod,2024-02-08
+33,RC_X1,Catastrophe Reinsurance - Reserves,X1,Medium Tail,5,BF Method,2024-08-27
+1183,RC_A1,Direct Accident & Health - Reserves,A1,Long Tail,12,Cape Cod,2024-10-26
+1183,RC_A2,Accident & Health Reinsurance - Reserves,A2,Long Tail,9,Chain Ladder,2024-11-27
+1183,RC_D1,Direct Motor (Private Car) - Reserves,D1,Long Tail,5,Chain Ladder,2024-03-09
+1183,RC_D2,Direct Motor (Commercial) - Reserves,D2,Short Tail,15,Chain Ladder,2024-12-18
+1183,RC_E1,Energy Offshore - Reserves,E1,Short Tail,5,Cape Cod,2024-10-07
+1183,RC_E2,Energy Onshore - Reserves,E2,Long Tail,6,BF Method,2024-11-21
+1183,RC_F1,Fire & Other Damage - Direct - Reserves,F1,Medium Tail,9,Expected Loss Ratio,2024-05-28
+1183,RC_F2,Fire & Other Damage - Reinsurance - Reserves,F2,Short Tail,2,Expected Loss Ratio,2024-05-02
+1183,RC_M1,Marine Cargo - Reserves,M1,Short Tail,6,BF Method,2024-11-09
+1183,RC_M2,Marine Hull - Reserves,M2,Short Tail,12,Expected Loss Ratio,2024-09-23
+1183,RC_M3,Marine Liability - Reserves,M3,Medium Tail,9,Chain Ladder,2024-02-03
+1183,RC_N1,Non-Marine Property Treaty - Reserves,N1,Long Tail,15,BF Method,2024-09-02
+1183,RC_N2,Non-Marine Property Facultative - Reserves,N2,Medium Tail,10,BF Method,2024-07-05
+1183,RC_P1,Professional Indemnity - Reserves,P1,Short Tail,5,Cape Cod,2024-01-12
+1183,RC_P2,Public & Products Liability - Reserves,P2,Short Tail,11,BF Method,2024-11-04
+1183,RC_T1,Third Party Liability - Direct - Reserves,T1,Medium Tail,13,Expected Loss Ratio,2024-10-24
+1183,RC_T2,Third Party Liability - Reinsurance - Reserves,T2,Short Tail,15,BF Method,2024-03-26
+1183,RC_V1,Aviation - Reserves,V1,Short Tail,15,Expected Loss Ratio,2024-01-06
+1183,RC_W1,Political Risk & Contingency - Reserves,W1,Long Tail,15,Cape Cod,2024-07-26
+1183,RC_X1,Catastrophe Reinsurance - Reserves,X1,Long Tail,14,BF Method,2024-05-06
+2791,RC_A1,Direct Accident & Health - Reserves,A1,Long Tail,2,Expected Loss Ratio,2024-01-28
+2791,RC_A2,Accident & Health Reinsurance - Reserves,A2,Medium Tail,4,BF Method,2024-08-12
+2791,RC_D1,Direct Motor (Private Car) - Reserves,D1,Medium Tail,14,BF Method,2024-04-01
+2791,RC_D2,Direct Motor (Commercial) - Reserves,D2,Long Tail,4,Expected Loss Ratio,2024-06-09
+2791,RC_E1,Energy Offshore - Reserves,E1,Short Tail,13,Cape Cod,2024-06-21
+2791,RC_E2,Energy Onshore - Reserves,E2,Long Tail,7,Cape Cod,2024-01-04
+2791,RC_F1,Fire & Other Damage - Direct - Reserves,F1,Medium Tail,3,Cape Cod,2024-01-04
+2791,RC_F2,Fire & Other Damage - Reinsurance - Reserves,F2,Long Tail,7,Cape Cod,2024-12-26
+2791,RC_M1,Marine Cargo - Reserves,M1,Medium Tail,7,Chain Ladder,2024-07-19
+2791,RC_M2,Marine Hull - Reserves,M2,Short Tail,5,Chain Ladder,2024-12-14
+2791,RC_M3,Marine Liability - Reserves,M3,Short Tail,9,BF Method,2024-06-14
+2791,RC_N1,Non-Marine Property Treaty - Reserves,N1,Short Tail,11,Cape Cod,2024-10-11
+2791,RC_N2,Non-Marine Property Facultative - Reserves,N2,Long Tail,14,Chain Ladder,2024-12-10
+2791,RC_P1,Professional Indemnity - Reserves,P1,Long Tail,5,Expected Loss Ratio,2024-06-13
+2791,RC_P2,Public & Products Liability - Reserves,P2,Long Tail,5,BF Method,2024-04-14
+2791,RC_T1,Third Party Liability - Direct - Reserves,T1,Long Tail,7,BF Method,2024-10-19
+2791,RC_T2,Third Party Liability - Reinsurance - Reserves,T2,Medium Tail,7,Chain Ladder,2024-05-10
+2791,RC_V1,Aviation - Reserves,V1,Short Tail,7,Cape Cod,2024-08-15
+2791,RC_W1,Political Risk & Contingency - Reserves,W1,Medium Tail,11,BF Method,2024-09-16
+2791,RC_X1,Catastrophe Reinsurance - Reserves,X1,Long Tail,3,Chain Ladder,2024-05-17
+623,RC_A1,Direct Accident & Health - Reserves,A1,Long Tail,11,Cape Cod,2024-02-27
+623,RC_A2,Accident & Health Reinsurance - Reserves,A2,Short Tail,11,Cape Cod,2024-04-26
+623,RC_D1,Direct Motor (Private Car) - Reserves,D1,Short Tail,3,Chain Ladder,2024-01-08
+623,RC_D2,Direct Motor (Commercial) - Reserves,D2,Medium Tail,10,Chain Ladder,2024-08-14
+623,RC_E1,Energy Offshore - Reserves,E1,Long Tail,10,BF Method,2024-12-23
+623,RC_E2,Energy Onshore - Reserves,E2,Medium Tail,8,Expected Loss Ratio,2024-04-05
+623,RC_F1,Fire & Other Damage - Direct - Reserves,F1,Long Tail,12,Chain Ladder,2024-02-25
+623,RC_F2,Fire & Other Damage - Reinsurance - Reserves,F2,Medium Tail,4,BF Method,2024-12-17
+623,RC_M1,Marine Cargo - Reserves,M1,Medium Tail,1,BF Method,2024-02-15
+623,RC_M2,Marine Hull - Reserves,M2,Short Tail,13,Expected Loss Ratio,2024-11-17
+623,RC_M3,Marine Liability - Reserves,M3,Long Tail,10,Cape Cod,2024-08-20
+623,RC_N1,Non-Marine Property Treaty - Reserves,N1,Long Tail,15,Expected Loss Ratio,2024-09-15
+623,RC_N2,Non-Marine Property Facultative - Reserves,N2,Short Tail,12,Expected Loss Ratio,2024-08-09
+623,RC_P1,Professional Indemnity - Reserves,P1,Short Tail,14,Cape Cod,2024-09-16
+623,RC_P2,Public & Products Liability - Reserves,P2,Long Tail,4,Cape Cod,2024-08-03
+623,RC_T1,Third Party Liability - Direct - Reserves,T1,Long Tail,5,BF Method,2024-05-11
+623,RC_T2,Third Party Liability - Reinsurance - Reserves,T2,Medium Tail,15,Chain Ladder,2024-03-05
+623,RC_V1,Aviation - Reserves,V1,Short Tail,7,BF Method,2024-12-07
+623,RC_W1,Political Risk & Contingency - Reserves,W1,Short Tail,7,Expected Loss Ratio,2024-06-18
+623,RC_X1,Catastrophe Reinsurance - Reserves,X1,Medium Tail,7,Chain Ladder,2024-04-27
+4242,RC_A1,Direct Accident & Health - Reserves,A1,Medium Tail,7,Chain Ladder,2024-10-13
+4242,RC_A2,Accident & Health Reinsurance - Reserves,A2,Medium Tail,1,Cape Cod,2024-05-25
+4242,RC_D1,Direct Motor (Private Car) - Reserves,D1,Medium Tail,14,Expected Loss Ratio,2024-09-24
+4242,RC_D2,Direct Motor (Commercial) - Reserves,D2,Long Tail,9,BF Method,2024-08-08
+4242,RC_E1,Energy Offshore - Reserves,E1,Medium Tail,7,Expected Loss Ratio,2024-01-13
+4242,RC_E2,Energy Onshore - Reserves,E2,Medium Tail,11,Expected Loss Ratio,2024-12-06
+4242,RC_F1,Fire & Other Damage - Direct - Reserves,F1,Medium Tail,15,BF Method,2024-10-18
+4242,RC_F2,Fire & Other Damage - Reinsurance - Reserves,F2,Short Tail,15,Expected Loss Ratio,2024-10-19
+4242,RC_M1,Marine Cargo - Reserves,M1,Long Tail,1,Chain Ladder,2024-11-14
+4242,RC_M2,Marine Hull - Reserves,M2,Short Tail,14,Expected Loss Ratio,2024-03-02
+4242,RC_M3,Marine Liability - Reserves,M3,Medium Tail,7,Cape Cod,2024-04-15
+4242,RC_N1,Non-Marine Property Treaty - Reserves,N1,Medium Tail,6,Expected Loss Ratio,2024-05-25
+4242,RC_N2,Non-Marine Property Facultative - Reserves,N2,Medium Tail,5,Chain Ladder,2024-08-01
+4242,RC_P1,Professional Indemnity - Reserves,P1,Long Tail,9,Chain Ladder,2024-06-08
+4242,RC_P2,Public & Products Liability - Reserves,P2,Long Tail,2,Chain Ladder,2024-01-08
+4242,RC_T1,Third Party Liability - Direct - Reserves,T1,Short Tail,14,Chain Ladder,2024-10-05
+4242,RC_T2,Third Party Liability - Reinsurance - Reserves,T2,Short Tail,3,Expected Loss Ratio,2024-11-04
+4242,RC_V1,Aviation - Reserves,V1,Long Tail,4,Expected Loss Ratio,2024-12-09
+4242,RC_W1,Political Risk & Contingency - Reserves,W1,Medium Tail,3,Chain Ladder,2024-03-10
+4242,RC_X1,Catastrophe Reinsurance - Reserves,X1,Short Tail,10,Chain Ladder,2024-05-19
+5000,RC_A1,Direct Accident & Health - Reserves,A1,Long Tail,15,Expected Loss Ratio,2024-07-23
+5000,RC_A2,Accident & Health Reinsurance - Reserves,A2,Short Tail,2,BF Method,2024-02-23
+5000,RC_D1,Direct Motor (Private Car) - Reserves,D1,Medium Tail,14,Chain Ladder,2024-10-26
+5000,RC_D2,Direct Motor (Commercial) - Reserves,D2,Short Tail,6,Expected Loss Ratio,2024-11-12
+5000,RC_E1,Energy Offshore - Reserves,E1,Short Tail,9,Cape Cod,2024-01-28
+5000,RC_E2,Energy Onshore - Reserves,E2,Medium Tail,14,Expected Loss Ratio,2024-02-14
+5000,RC_F1,Fire & Other Damage - Direct - Reserves,F1,Medium Tail,11,Expected Loss Ratio,2024-12-05
+5000,RC_F2,Fire & Other Damage - Reinsurance - Reserves,F2,Medium Tail,3,Cape Cod,2024-10-26
+5000,RC_M1,Marine Cargo - Reserves,M1,Long Tail,13,Expected Loss Ratio,2024-08-14
+5000,RC_M2,Marine Hull - Reserves,M2,Long Tail,10,Cape Cod,2024-06-28
+5000,RC_M3,Marine Liability - Reserves,M3,Short Tail,14,Chain Ladder,2024-05-15
+5000,RC_N1,Non-Marine Property Treaty - Reserves,N1,Short Tail,13,Expected Loss Ratio,2024-10-20
+5000,RC_N2,Non-Marine Property Facultative - Reserves,N2,Long Tail,7,Cape Cod,2024-01-16
+5000,RC_P1,Professional Indemnity - Reserves,P1,Medium Tail,3,Expected Loss Ratio,2024-04-12
+5000,RC_P2,Public & Products Liability - Reserves,P2,Medium Tail,6,Cape Cod,2024-10-23
+5000,RC_T1,Third Party Liability - Direct - Reserves,T1,Medium Tail,9,Chain Ladder,2024-09-07
+5000,RC_T2,Third Party Liability - Reinsurance - Reserves,T2,Short Tail,4,Expected Loss Ratio,2024-08-18
+5000,RC_V1,Aviation - Reserves,V1,Short Tail,12,Expected Loss Ratio,2024-11-23
+5000,RC_W1,Political Risk & Contingency - Reserves,W1,Medium Tail,8,Chain Ladder,2024-02-10
+5000,RC_X1,Catastrophe Reinsurance - Reserves,X1,Short Tail,7,BF Method,2024-05-22
+1910,RC_A1,Direct Accident & Health - Reserves,A1,Long Tail,6,Expected Loss Ratio,2024-09-17
+1910,RC_A2,Accident & Health Reinsurance - Reserves,A2,Medium Tail,7,Cape Cod,2024-06-23
+1910,RC_D1,Direct Motor (Private Car) - Reserves,D1,Medium Tail,5,Cape Cod,2024-05-08
+1910,RC_D2,Direct Motor (Commercial) - Reserves,D2,Short Tail,12,BF Method,2024-06-04
+1910,RC_E1,Energy Offshore - Reserves,E1,Long Tail,9,BF Method,2024-04-07
+1910,RC_E2,Energy Onshore - Reserves,E2,Long Tail,8,Cape Cod,2024-12-19
+1910,RC_F1,Fire & Other Damage - Direct - Reserves,F1,Long Tail,10,Cape Cod,2024-02-27
+1910,RC_F2,Fire & Other Damage - Reinsurance - Reserves,F2,Short Tail,5,BF Method,2024-06-06
+1910,RC_M1,Marine Cargo - Reserves,M1,Medium Tail,1,BF Method,2024-05-02
+1910,RC_M2,Marine Hull - Reserves,M2,Short Tail,9,Cape Cod,2024-12-05
+1910,RC_M3,Marine Liability - Reserves,M3,Long Tail,14,Expected Loss Ratio,2024-02-28
+1910,RC_N1,Non-Marine Property Treaty - Reserves,N1,Short Tail,10,Cape Cod,2024-08-16
+1910,RC_N2,Non-Marine Property Facultative - Reserves,N2,Medium Tail,6,BF Method,2024-01-09
+1910,RC_P1,Professional Indemnity - Reserves,P1,Medium Tail,2,Chain Ladder,2024-07-16
+1910,RC_P2,Public & Products Liability - Reserves,P2,Short Tail,10,Chain Ladder,2024-03-05
+1910,RC_T1,Third Party Liability - Direct - Reserves,T1,Long Tail,5,Chain Ladder,2024-04-04
+1910,RC_T2,Third Party Liability - Reinsurance - Reserves,T2,Long Tail,13,Expected Loss Ratio,2024-10-20
+1910,RC_V1,Aviation - Reserves,V1,Long Tail,4,Expected Loss Ratio,2024-08-15
+1910,RC_W1,Political Risk & Contingency - Reserves,W1,Medium Tail,14,Expected Loss Ratio,2024-05-19
+1910,RC_X1,Catastrophe Reinsurance - Reserves,X1,Long Tail,1,Chain Ladder,2024-04-21
+2010,RC_A1,Direct Accident & Health - Reserves,A1,Short Tail,5,Chain Ladder,2024-03-08
+2010,RC_A2,Accident & Health Reinsurance - Reserves,A2,Short Tail,9,Chain Ladder,2024-03-01
+2010,RC_D1,Direct Motor (Private Car) - Reserves,D1,Medium Tail,8,Expected Loss Ratio,2024-05-02
+2010,RC_D2,Direct Motor (Commercial) - Reserves,D2,Short Tail,5,Cape Cod,2024-12-28
+2010,RC_E1,Energy Offshore - Reserves,E1,Medium Tail,2,BF Method,2024-05-26
+2010,RC_E2,Energy Onshore - Reserves,E2,Long Tail,10,BF Method,2024-07-04
+2010,RC_F1,Fire & Other Damage - Direct - Reserves,F1,Long Tail,4,BF Method,2024-05-27
+2010,RC_F2,Fire & Other Damage - Reinsurance - Reserves,F2,Short Tail,2,Chain Ladder,2024-03-26
+2010,RC_M1,Marine Cargo - Reserves,M1,Medium Tail,10,Cape Cod,2024-08-04
+2010,RC_M2,Marine Hull - Reserves,M2,Medium Tail,12,Cape Cod,2024-12-13
+2010,RC_M3,Marine Liability - Reserves,M3,Medium Tail,9,Expected Loss Ratio,2024-08-03
+2010,RC_N1,Non-Marine Property Treaty - Reserves,N1,Long Tail,1,Expected Loss Ratio,2024-12-11
+2010,RC_N2,Non-Marine Property Facultative - Reserves,N2,Long Tail,5,Chain Ladder,2024-02-08
+2010,RC_P1,Professional Indemnity - Reserves,P1,Long Tail,14,Chain Ladder,2024-11-27
+2010,RC_P2,Public & Products Liability - Reserves,P2,Medium Tail,10,Chain Ladder,2024-03-16
+2010,RC_T1,Third Party Liability - Direct - Reserves,T1,Long Tail,11,Expected Loss Ratio,2024-05-06
+2010,RC_T2,Third Party Liability - Reinsurance - Reserves,T2,Long Tail,7,Expected Loss Ratio,2024-02-16
+2010,RC_V1,Aviation - Reserves,V1,Medium Tail,7,Cape Cod,2024-06-22
+2010,RC_W1,Political Risk & Contingency - Reserves,W1,Short Tail,14,BF Method,2024-06-14
+2010,RC_X1,Catastrophe Reinsurance - Reserves,X1,Long Tail,8,Cape Cod,2024-11-13
+2525,RC_A1,Direct Accident & Health - Reserves,A1,Long Tail,1,Expected Loss Ratio,2024-02-11
+2525,RC_A2,Accident & Health Reinsurance - Reserves,A2,Medium Tail,6,Chain Ladder,2024-07-28
+2525,RC_D1,Direct Motor (Private Car) - Reserves,D1,Long Tail,14,Chain Ladder,2024-11-28
+2525,RC_D2,Direct Motor (Commercial) - Reserves,D2,Long Tail,8,Expected Loss Ratio,2024-01-07
+2525,RC_E1,Energy Offshore - Reserves,E1,Long Tail,6,Expected Loss Ratio,2024-11-15
+2525,RC_E2,Energy Onshore - Reserves,E2,Short Tail,4,Cape Cod,2024-09-05
+2525,RC_F1,Fire & Other Damage - Direct - Reserves,F1,Medium Tail,8,Expected Loss Ratio,2024-02-01
+2525,RC_F2,Fire & Other Damage - Reinsurance - Reserves,F2,Long Tail,10,BF Method,2024-12-06
+2525,RC_M1,Marine Cargo - Reserves,M1,Medium Tail,9,Chain Ladder,2024-09-14
+2525,RC_M2,Marine Hull - Reserves,M2,Short Tail,4,Chain Ladder,2024-08-04
+2525,RC_M3,Marine Liability - Reserves,M3,Long Tail,14,BF Method,2024-08-23
+2525,RC_N1,Non-Marine Property Treaty - Reserves,N1,Medium Tail,9,Cape Cod,2024-07-27
+2525,RC_N2,Non-Marine Property Facultative - Reserves,N2,Medium Tail,8,BF Method,2024-08-18
+2525,RC_P1,Professional Indemnity - Reserves,P1,Short Tail,7,BF Method,2024-10-17
+2525,RC_P2,Public & Products Liability - Reserves,P2,Long Tail,15,BF Method,2024-02-09
+2525,RC_T1,Third Party Liability - Direct - Reserves,T1,Medium Tail,6,Cape Cod,2024-01-10
+2525,RC_T2,Third Party Liability - Reinsurance - Reserves,T2,Long Tail,5,Expected Loss Ratio,2024-03-15
+2525,RC_V1,Aviation - Reserves,V1,Long Tail,8,Cape Cod,2024-06-18
+2525,RC_W1,Political Risk & Contingency - Reserves,W1,Long Tail,7,Expected Loss Ratio,2024-06-28
+2525,RC_X1,Catastrophe Reinsurance - Reserves,X1,Short Tail,12,BF Method,2024-10-13
