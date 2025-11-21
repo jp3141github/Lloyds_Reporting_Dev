@@ -1,0 +1,20 @@
+{
+  "syndicate_number": 2001,
+  "syndicate_name": "Alpha Syndicate",
+  "managing_agent": "Alpha Managing Agents Ltd",
+  "qma_date": "2024-12-31",
+  "date_completed": "2025-11-21",
+  "syndicate_fal": 299900595,
+  "syndicate_fis": 282688443,
+  "syndicate_uscr": 234821711,
+  "syndicate_ueca": 47943863,
+  "scenario_type": "US Windstorm",
+  "loss_occurrence_date": "2025-02-15",
+  "gross_loss_estimate": 518467598,
+  "reinsurance_recovery_estimate": 219360515,
+  "net_loss_estimate": 299107083,
+  "us_funding_requirement": 65808154,
+  "total_disputed_recoveries": 42438081,
+  "disputed_60_days": 25462848,
+  "disputed_90_days": 16975232
+}

@@ -1,0 +1,20 @@
+{
+  "syndicate_number": 2005,
+  "syndicate_name": "Epsilon Syndicate",
+  "managing_agent": "Epsilon Capital Management",
+  "qma_date": "2024-12-31",
+  "date_completed": "2025-11-21",
+  "syndicate_fal": 123020885,
+  "syndicate_fis": 113415406,
+  "syndicate_uscr": 102945370,
+  "syndicate_ueca": 24431960,
+  "scenario_type": "US Windstorm",
+  "loss_occurrence_date": "2025-02-15",
+  "gross_loss_estimate": 289367449,
+  "reinsurance_recovery_estimate": 163658141,
+  "net_loss_estimate": 125709308,
+  "us_funding_requirement": 49097442,
+  "total_disputed_recoveries": 38319030,
+  "disputed_60_days": 22991418,
+  "disputed_90_days": 15327612
+}
