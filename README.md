@@ -1,602 +1,422 @@
-# Lloyd's of London Reporting Suite
+# Lloyds_Reporting_Dev
 
-**Comprehensive Data Processing and Reporting Tools for Lloyd's of London**
+End-to-end Lloyd's of London regulatory reporting toolkit, with **Python + R** implementations for:
 
-This repository contains Python and R scripts for processing Lloyd's regulatory reporting requirements, including RRA (Reserving Return Annual) and RRQ (Reserving Return Quarterly) forms, FSCS data generation, Solvency II Pillar 3 claims reporting, and Liquidity Stress Testing.
+- Lloyd's **Reserving Return Annual (RRA)** and **Reserving Return Quarterly (RRQ)** forms
+- **Solvency II Pillar 3** - QSR (Quarterly) and ASB (Annual) returns
+- **FSCS** (Financial Services Compensation Scheme) data generation
+- **Liquidity stress testing** for Lloyd's syndicates
+- **Power BI integration** across all modules
 
----
-
-## 🆕 What's New - RRQ Support Added!
-
-✨ **Now supports both RRQ and RRA returns!**
-- 📅 Generate quarterly RRQ data (Q1, Q2, Q3, Q4)
-- 📊 Generate annual RRA data
-- 🔄 Unified processing framework (auto-detects RRQ vs RRA)
-- 📈 Quarter-over-quarter comparison tools
-- 📉 ~80% data reduction for RRQ (focused scope)
-
-## 📋 Overview
-
-A complete suite of tools for Lloyd's of London regulatory reporting.
-
-### Reserving Returns (RRA & RRQ)
-
-The Lloyd's reporting system requires syndicates to submit detailed reserving data through:
-- **RRQ**: Quarterly submissions (Q1, Q2, Q3, Q4) with focused scope (current + 2 prior years)
-- **RRA**: Annual submission with comprehensive historical analysis
-
-### Complete Feature Set
-
-This repository provides:
-
-✅ **RRA & RRQ Reporting Scripts** - Process all 14 forms (010, 020, 071, 081, 091, 193, 291-295, 391, 910, 990)
-✅ **Unified Framework** - Automatic RRQ/RRA detection and processing
-✅ **Quarter Comparisons** - Analyze movements between quarters
-✅ **FSCS Data Generator** - Financial Services Compensation Scheme data processing
-✅ **Solvency II Claims Processing** - Pillar 3 claims reporting automation
-✅ **Liquidity Stress Testing** - RRA liquidity stress test analysis and reporting
-✅ **Synthetic Data Generation** - Create realistic Lloyd's data for testing
-✅ **Power BI Integration** - Ready-to-use scripts for Power BI dashboards
-✅ **Data Validation** - Built-in validation rules for data quality
+The repo is designed as a reusable sandbox for regulatory reporting, MI and prototyping, not tied to any real syndicate data.
 
 ---
 
-## 🗂️ Repository Structure
+## Features at a glance
 
-```
+- 🔁 **Dual language**: mirrored Python and R implementations for core components
+- 🧪 **Full synthetic data**: RRA/RRQ forms, Solvency II claims, FSCS, and liquidity datasets
+- 📊 **Power BI ready**: example Python/R scripts and integration guides for all modules
+- 📦 **Regulatory templates wired in**: Lloyd's & Solvency II spec Excel files included as references
+- 📈 **Actuarial methods**: claims triangles, chain ladder, IBNR ranges, ultimate LR trends, liquidity gap analysis
+
+---
+
+## Repository structure
+
+```text
 Lloyds_Reporting_Dev/
+├─ README.md                     # This file
+├─ DETAILED_DOCUMENTATION.md     # Comprehensive technical documentation
+├─ IMPLEMENTATION_ROADMAP.md     # Planned enhancements and gaps
+├─ QUICKSTART.md                 # 5-minute Solvency II claims quickstart
+├─ POWERBI_GUIDE.md              # Power BI guide – Solvency II claims
+├─ POWER_BI_INTEGRATION_GUIDE.md # Power BI guide – RRA & FSCS
+├─ RRQ_RRA_USAGE_GUIDE.md        # RRQ and RRA usage guide
+├─ RRQ_vs_RRA_COMPARISON.md      # Comparison of RRQ vs RRA
+├─ SOLVENCY_II_ASB_README.md     # Solvency II ASB returns documentation
+├─ powerbi_python_example.py     # Python Solvency II example for Power BI
+├─ powerbi_r_example.R           # R Solvency II example for Power BI
 │
-├── python_scripts/              # Python implementations
-│   ├── data_generation/         # Synthetic data generators
-│   │   └── generate_synthetic_lloyds_data.py
-│   ├── forms/                   # RRA form-specific processing scripts
-│   │   ├── rra_010_control.py
-│   │   ├── rra_193_net_claims.py
-│   │   └── rra_291_gross_premium_ibnr.py
-│   ├── utils/                   # Utility functions
-│   │   └── rra_aggregator.py
-│   ├── solvency_claims_processor.py  # Solvency II claims processor
-│   └── requirements.txt         # Python dependencies
+├─ Files_for_Claude/             # Regulatory Excel specs (reference only)
+│    ├─ FSCS data - template for completion 2.xlsx
+│    ├─ Liquidity Stress Test Template_December 2024.xlsx
+│    ├─ RRA-specs.xlsx
+│    ├─ RRQ-specs.xlsx
+│    ├─ Solvency II Pillar 3 - AAD Return Specifications Annual 2024.xlsx
+│    ├─ Solvency II Pillar 3 - ASB Return Specifications Annual 2024.xlsx
+│    ├─ Solvency II Pillar 3 - QAD Return Specifications Q3 2025.xlsx
+│    ├─ Solvency II Pillar 3 - QSR Return Specifications Q3 2025.xlsx
+│    └─ Solvency II Pillar 3 - Risk and Claim Reporting templates
 │
-├── r_scripts/                   # R implementations
-│   ├── data_generation/         # Synthetic data generators
-│   │   └── generate_synthetic_lloyds_data.R
-│   ├── forms/                   # RRA form-specific processing scripts
-│   │   ├── rra_010_control.R
-│   │   └── rra_193_net_claims.R
-│   ├── utils/                   # Utility functions
-│   │   └── rra_aggregator.R
-│   ├── solvency_claims_processor.R  # Solvency II claims processor
-│   └── install_packages.R       # R package installer
+├─ python_scripts/               # RRA/RRQ + Solvency II claims – Python
+│    ├─ requirements.txt
+│    ├─ solvency_claims_processor.py
+│    ├─ forms/
+│    │    ├─ rra_010_control.py
+│    │    ├─ rra_193_net_claims.py
+│    │    ├─ rra_291_gross_premium_ibnr.py
+│    │    └─ unified_form_processor.py    # RRQ/RRA auto-detection
+│    ├─ utils/
+│    │    └─ rra_aggregator.py
+│    └─ data_generation/
+│         ├─ generate_synthetic_lloyds_data.py
+│         └─ generate_unified_lloyds_data.py  # RRQ/RRA unified generator
 │
-├── FSCS_PowerBI/                # FSCS data generator
-│   ├── Python/                  # Python implementation
-│   │   ├── fscs_data_generator.py
-│   │   ├── powerbi_query.py
-│   │   └── example_usage.py
-│   └── R/                       # R implementation
-│       ├── fscs_data_generator.R
-│       ├── powerbi_query.R
-│       └── example_usage.R
+├─ r_scripts/                    # R equivalents (partial parity - see roadmap)
+│    ├─ install_packages.R
+│    ├─ solvency_claims_processor.R
+│    ├─ forms/
+│    │    ├─ rra_010_control.R
+│    │    └─ rra_193_net_claims.R
+│    ├─ utils/
+│    │    └─ rra_aggregator.R
+│    └─ data_generation/
+│         └─ generate_synthetic_lloyds_data.R
 │
-├── python_implementation/       # Liquidity Stress Test (Python)
-│   ├── liquidity_stress_test.py
-│   ├── POWERBI_INTEGRATION.md
-│   ├── syndicate_2001_analysis.xlsx
-│   └── all_syndicates_analysis.xlsx
+├─ FSCS_PowerBI/                 # FSCS data generation (Python + R - full parity)
+│    ├─ README.md
+│    ├─ Python/
+│    │    ├─ fscs_data_generator.py
+│    │    ├─ powerbi_query.py
+│    │    ├─ example_usage.py
+│    │    └─ requirements.txt
+│    └─ R/
+│         ├─ fscs_data_generator.R
+│         ├─ powerbi_query.R
+│         ├─ example_usage.R
+│         └─ install_packages.R
 │
-├── r_implementation/            # Liquidity Stress Test (R)
-│   ├── liquidity_stress_test.R
-│   ├── POWERBI_INTEGRATION.md
-│   ├── syndicate_2001_analysis.xlsx
-│   └── all_syndicates_analysis.xlsx
+├─ python_implementation/        # Liquidity stress test – Python
+│    ├─ README.md
+│    ├─ liquidity_stress_test.py
+│    ├─ POWERBI_INTEGRATION.md
+│    ├─ syndicate_2001_analysis.xlsx
+│    └─ all_syndicates_analysis.xlsx
 │
-├── data/                        # Liquidity stress test data
-│   ├── generate_synthetic_data.py
-│   ├── syndicate_XXXX/          # Individual syndicate folders
-│   │   ├── metadata.json
-│   │   ├── assets_liquidity.csv
-│   │   ├── cashflow.csv
-│   │   └── stress_scenario.csv
-│   ├── all_syndicates_metadata.csv
-│   ├── all_syndicates_assets.csv
-│   ├── all_syndicates_cashflow.csv
-│   └── all_syndicates_stress.csv
+├─ r_implementation/             # Liquidity stress test – R (full parity)
+│    ├─ README.md
+│    ├─ liquidity_stress_test.R
+│    └─ POWERBI_INTEGRATION.md
 │
-├── synthetic_data/              # RRA and claims synthetic data
-│   ├── [RRA CSV files]
-│   ├── generate_synthetic_data.py
-│   └── synthetic_lloyds_claims_data.xlsx
+├─ Solvency_II_ASB_Python/       # Solvency II ASB – Python
+│    ├─ README.md
+│    ├─ synthetic_data_generator.py
+│    ├─ powerbi_asb_returns.py
+│    └─ export_to_excel.py
 │
-├── Files_for_Claude/            # Specification files
-│   ├── RRA-specs.xlsx
-│   └── Liquidity Stress Test Template_December 2024.xlsx
+├─ Solvency_II_ASB_R/            # Solvency II ASB – R (full parity)
+│    ├─ README.md
+│    ├─ synthetic_data_generator.R
+│    ├─ powerbi_asb_returns.R
+│    └─ export_to_excel.R
 │
-├── README.md                    # This file
-├── POWER_BI_INTEGRATION_GUIDE.md # Power BI integration guide
-├── POWERBI_GUIDE.md             # Solvency II Power BI guide
-├── QUICKSTART.md                # Quick start guide
-├── powerbi_python_example.py    # Example Power BI Python script
-└── powerbi_r_example.R          # Example Power BI R script
+├─ Solvency_II_QSR_Reporting/    # Solvency II QSR – Python + R (full parity)
+│    ├─ README.md
+│    ├─ Python/
+│    │    ├─ qsr_report_generator.py
+│    │    ├─ synthetic_data_generator.py
+│    │    └─ POWERBI_GUIDE.md
+│    ├─ R/
+│    │    ├─ qsr_report_generator.R
+│    │    ├─ synthetic_data_generator.R
+│    │    └─ POWERBI_GUIDE.md
+│    └─ Data/                    # 17 generated QSR CSV files
+│
+├─ data/                         # Liquidity synthetic data and generator
+│    ├─ README.md
+│    ├─ generate_synthetic_data.py
+│    ├─ all_syndicates_metadata.csv
+│    ├─ all_syndicates_assets.csv
+│    ├─ all_syndicates_cashflow.csv
+│    ├─ all_syndicates_stress.csv
+│    └─ syndicate_2001/ ... syndicate_2005/  # 5 syndicates with full data
+│
+└─ synthetic_data/               # RRA + Solvency II claims synthetic data
+     ├─ generate_synthetic_data.py
+     ├─ synthetic_lloyds_claims_data.xlsx
+     └─ All 14 RRA form CSV files (010, 020, 071, 081, 091, 193, 291-295, 391, 910, 990)
+
+# Plus generated quarterly data directories:
+synthetic_data_rra_2024/         # RRA 2024 annual data
+synthetic_data_rrq_2024_q1/      # RRQ Q1 2024 data
+synthetic_data_rrq_2024_q2/      # RRQ Q2 2024 data
+synthetic_data_rrq_2024_q3/      # RRQ Q3 2024 data
+synthetic_data_rrq_2024_q4/      # RRQ Q4 2024 data
 ```
 
 ---
 
-## 🚀 Quick Start
+## Getting started
 
-### 1. Clone the Repository
+### Prerequisites
+- **Python ≥ 3.7** with: pandas, numpy, openpyxl, xlrd
+- **R ≥ 4.0** with: dplyr, tidyr, readr, lubridate, openxlsx, ggplot2, R6, writexl
+- **Power BI Desktop**
+- **Excel**
 
-```bash
-git clone https://github.com/jp3141github/Lloyds_Reporting_Dev.git
-cd Lloyds_Reporting_Dev
-```
+### Install Python dependencies
 
-### 2. Install Dependencies
-
-**For Python:**
 ```bash
 cd python_scripts
 pip install -r requirements.txt
+
+cd ../FSCS_PowerBI/Python
+pip install -r requirements.txt
 ```
 
-**For R:**
+Or install globally:
+
 ```bash
-cd r_scripts
-Rscript install_packages.R
+pip install pandas numpy openpyxl xlrd matplotlib seaborn scipy statsmodels
 ```
 
-### 3. Choose Your Use Case
+### Install R dependencies
 
-#### A. RRA & RRQ Reporting
+Run once:
 
-**Generate RRA (Annual) Data:**
+```R
+source("r_scripts/install_packages.R")
+source("FSCS_PowerBI/R/install_packages.R")
+```
+
+---
+
+## Quick starts
+
+### 1. Solvency II claims processing (Python)
+
+```python
+from pathlib import Path
+from python_scripts.solvency_claims_processor import process_claims_data, export_to_excel
+
+REPO_PATH = Path(r"YOUR_LOCAL_PATH_TO_REPO")
+input_file = REPO_PATH / "synthetic_data" / "synthetic_lloyds_claims_data.xlsx"
+
+tables = process_claims_data(input_file)
+
+# Optional: export to Excel
+export_to_excel(
+    tables,
+    REPO_PATH / "outputs" / "solvency_claims_output.xlsx"
+)
+```
+
+**Outputs** (all DataFrames):
+- `detailed_claims`
+- `by_syndicate`
+- `by_risk_code`
+- `by_claim_status`
+- `summary`
+
+In Power BI, use `powerbi_python_example.py` or `powerbi_r_example.R` as script templates.
+
+---
+
+### 2. RRA/RRQ forms + synthetic data
+
+**Generate RRA (Annual) data:**
+
 ```bash
 cd python_scripts/data_generation
-
-# Generate comprehensive annual data
 python generate_unified_lloyds_data.py --type RRA --year 2024
-# Output: synthetic_data_rra_2024/ (all 7 years, all 14 forms)
 ```
 
-**Generate RRQ (Quarterly) Data:**
+**Generate RRQ (Quarterly) data:**
+
 ```bash
 cd python_scripts/data_generation
 
-# Generate Q2 2024 quarterly data
+# Single quarter
 python generate_unified_lloyds_data.py --type RRQ --year 2024 --quarter Q2
-# Output: synthetic_data_rrq_2024_q2/ (3 years, 11 forms)
 
-# OR generate all four quarters at once
+# All four quarters
 python generate_unified_lloyds_data.py --all-quarters --year 2024
-# Output: Creates Q1, Q2, Q3, Q4 folders
 ```
 
-**Legacy RRA-only generator (still available):**
-```bash
-cd python_scripts/data_generation
-python generate_synthetic_lloyds_data.py
+**Process forms:**
 
-# Process RRA forms
-cd ../forms
-python rra_010_control.py
-python rra_193_net_claims.py
-python rra_291_gross_premium_ibnr.py
+```python
+# Python
+from python_scripts.forms.rra_010_control import validate_rra_010
+from python_scripts.forms.rra_193_net_claims import calculate_chain_ladder
+from python_scripts.forms.rra_291_gross_premium_ibnr import analyze_ibnr
+from python_scripts.forms.unified_form_processor import UnifiedFormProcessor
+
+# Auto-detects RRQ vs RRA
+processor = UnifiedFormProcessor()
+results = processor.process_all_forms('synthetic_data_rra_2024/')
 ```
 
-#### B. FSCS Data Generation
+**R equivalent:**
+
+```R
+# R (Note: R implementation has partial parity - see IMPLEMENTATION_ROADMAP.md)
+source('r_scripts/forms/rra_010_control.R')
+source('r_scripts/forms/rra_193_net_claims.R')
+source('r_scripts/utils/rra_aggregator.R')
+```
+
+---
+
+### 3. FSCS Power BI module
+
+**Python:**
+
 ```python
 from FSCS_PowerBI.Python.fscs_data_generator import FSCSDataGenerator
 
-generator = FSCSDataGenerator()
-data = generator.generate_fscs_data(num_syndicates=10)
+gen = FSCSDataGenerator(seed=123)
+summary, detail = gen.generate_all(
+    num_syndicates=10,
+    start_year=2018,
+    end_year=2025
+)
 ```
 
-#### C. Solvency II Claims Processing
-```python
-from solvency_claims_processor import process_claims_data, export_to_excel
+Use `FSCS_PowerBI/Python/powerbi_query.py` directly inside Power BI's Python script connector.
 
-output_tables = process_claims_data('synthetic_data/synthetic_lloyds_claims_data.xlsx')
-export_to_excel(output_tables, 'claims_output.xlsx')
-```
+**R:** See `FSCS_PowerBI/R/example_usage.R` for analogous usage.
 
-#### D. Liquidity Stress Testing
+---
+
+### 4. Liquidity stress testing
+
+**Python** (`python_implementation/liquidity_stress_test.py`):
+
 ```python
 from python_implementation.liquidity_stress_test import LiquidityStressTest
 
 lst = LiquidityStressTest('data')
 lst.load_data()
+
+# Generate analysis tables
+capital = lst.calculate_capital_position_table()
+liquidity = lst.calculate_liquidity_breakdown_table()
+cashflow = lst.calculate_cashflow_summary_table()
+stress = lst.calculate_stress_impact_table()
 summary = lst.create_dashboard_summary()
-lst.export_to_excel('liquidity_output.xlsx')
-```
-
----
-
-## 📊 Features by Module
-
-### 1. RRA Reporting Scripts
-
-Process all Lloyd's RRA (Reserving Return Annual) forms with comprehensive data validation and analysis.
-
-**Supported Forms:**
-
-| Form | Description | Python | R |
-|------|-------------|--------|---|
-| **010** | Control Data | ✅ | ✅ |
-| **020** | Exchange Rates | ✅ | ✅ |
-| **071** | SCOB Mapping | ✅ | ✅ |
-| **081** | Reserving Class Info | ✅ | ✅ |
-| **091** | LPT (Loss Portfolio Transfer) | ✅ | ✅ |
-| **193** | Net Claims Development | ✅ | ✅ |
-| **291** | Gross Premium and IBNR | ✅ | ✅ |
-| **292** | Net Premium and IBNR | ✅ | ✅ |
-| **293** | Outstanding & IBNR (<20 PYoA) | ✅ | ✅ |
-| **294** | Gross IBNR (Catastrophe) | ✅ | ✅ |
-| **295** | ULAE Reserves | ✅ | ✅ |
-| **391** | IELR (Incurred Emerging Loss Ratio) | ✅ | ✅ |
-| **910** | Additional Information | ✅ | ✅ |
-| **990** | Validation Summary | ✅ | ✅ |
-
-**Key Features:**
-- Chain ladder analysis with age-to-age factors
-- Reserve adequacy metrics
-- Loss ratio calculations
-- Development pattern analysis
-- Portfolio-level aggregations
-
-### 2. FSCS Data Generator
-
-Generate Financial Services Compensation Scheme data for Power BI reporting.
-
-**Features:**
-- Syndicate-level FSCS contribution calculations
-- Premium-based levy computations
-- Historical trend analysis
-- Power BI integration ready
-- Supports both Python and R
-
-**Example Usage:**
-```python
-from FSCS_PowerBI.Python.fscs_data_generator import FSCSDataGenerator
-
-gen = FSCSDataGenerator()
-data = gen.generate_fscs_data(
-    num_syndicates=10,
-    years=range(2020, 2025),
-    levy_rate=0.0025
-)
-```
-
-### 3. Solvency II Claims Processing
-
-Automate processing of Lloyd's claims data for Solvency II Pillar 3 reporting.
-
-**Data Processing:**
-- Data validation and cleansing
-- Calculated fields (Total Incurred, Movement in Year, Reserve Movement)
-- Multiple aggregation views
-
-**Output Tables:**
-1. **Detailed Claims** - Complete processed dataset with calculated fields
-2. **By Syndicate** - Aggregated by syndicate and year of account
-3. **By Risk Code** - Breakdown by risk classification
-4. **By Claim Status** - Analysis by claim status
-5. **Summary** - Overall statistics across all syndicates
-
-**Example Usage:**
-```python
-from solvency_claims_processor import process_claims_data, export_to_excel
-
-# Process claims data
-output = process_claims_data('synthetic_data/synthetic_lloyds_claims_data.xlsx')
 
 # Export to Excel
-export_to_excel(output, 'solvency_ii_output.xlsx')
-
-# Access specific tables
-print(output['summary'])
-print(output['by_syndicate'])
-```
-
-**Input Data Requirements:**
-- Syndicate Number
-- Claim Reference
-- UMR (Unique Market Reference)
-- Risk Code
-- Year of Account
-- Claim status (beginning/end of period)
-- Outstanding Claims Amount
-- Paid to Date Amount
-- Paid in Year amount
-
-### 4. Liquidity Stress Testing
-
-Comprehensive liquidity stress test analysis for RRA reporting compliance.
-
-**Analysis Components:**
-
-1. **Capital Position Analysis**
-   - Funds at Lloyd's (FAL)
-   - Funds in Syndicate (FIS)
-   - Underwriting SCR (uSCR)
-   - Underwriting ECA (uECA)
-   - Solvency ratios
-
-2. **Liquidity Breakdown**
-   - Restricted Assets (US Trust Funds, Other Trust Funds)
-   - Illiquid Assets (Reinsurance Recoverables)
-   - Liquid Assets / Free Funds
-   - Quarterly projections
-
-3. **Cashflow Analysis**
-   - Operating and non-operating cash flows
-   - Premium income and claims paid
-   - Investment income
-   - Member transactions
-
-4. **Stress Test Impact**
-   - Baseline vs stressed scenarios
-   - Liquidity gaps
-   - US funding requirements
-   - Disputed reinsurance recoveries
-
-**Example Usage:**
-```python
-from liquidity_stress_test import LiquidityStressTest
-
-lst = LiquidityStressTest('data')
-lst.load_data()
-
-# Generate dashboard summary
-summary = lst.create_dashboard_summary()
-
-# Get capital position
-capital = lst.get_capital_position()
-
-# Analyze stress impact
-stress_impact = lst.get_stress_impact_analysis()
-
-# Export all tables
 lst.export_to_excel('liquidity_analysis.xlsx')
 ```
 
-**Stress Scenarios:**
-- 1-in-200 year event modeling
-- US Windstorm scenarios
-- Customizable stress parameters
-- Multi-syndicate analysis
+**R:** `r_implementation/liquidity_stress_test.R` provides an R6 class with the same API and ggplot2 visualization hooks.
 
 ---
 
-## 💡 Synthetic Data Generation
+### 5. Solvency II QSR returns
 
-All modules include synthetic data generators for testing and development:
+**Python:**
 
-### RRA Synthetic Data
-- **10 Syndicates** with realistic syndicate numbers
-- **Years of Account** from 2018-2025
-- **20 Classes of Business** (Marine, Aviation, Property, Casualty, etc.)
-- **Development triangles** with realistic payment patterns
-- **IBNR estimates** with high/low ranges
-- **Currency conversions** for GBP, USD, EUR, CAD, AUD, JPY
+```python
+from Solvency_II_QSR_Reporting.Python.qsr_report_generator import QSRReportGenerator
 
-### Claims Synthetic Data
-- **500+ claims** across 8 syndicates
-- **Multiple risk codes** and years (2015-2024)
-- **Realistic monetary amounts**
-- **Various claim statuses**
-- **Reference lookup tables**
+generator = QSRReportGenerator()
+generator.generate_synthetic_data()
+reports = generator.generate_all_reports()
+generator.export_to_excel('qsr_output.xlsx')
+```
 
-### Liquidity Stress Test Data
-- **5 Sample syndicates** with complete data
-- **Quarterly projections** (Dec 2024 - Dec 2025)
-- **Stress scenarios** (1-in-200 year events)
-- **Capital and liquidity metrics**
-- **Cashflow projections**
+**R:** See `Solvency_II_QSR_Reporting/R/qsr_report_generator.R` for R6 class implementation.
 
 ---
 
-## 🔌 Power BI Integration
+### 6. Solvency II ASB returns
 
-All scripts are designed for seamless Power BI integration.
+**Python:**
 
-### Quick Integration Steps:
+```python
+from Solvency_II_ASB_Python.synthetic_data_generator import SyntheticDataGenerator
+from Solvency_II_ASB_Python.powerbi_asb_returns import ASBReturnsProcessor
 
-1. **Open Power BI Desktop**
-2. **Get Data → More → Python script** (or R script)
-3. **Load the appropriate script**
-4. **Refresh data as needed**
+# Generate data
+gen = SyntheticDataGenerator()
+data = gen.generate_all_data()
 
-See detailed guides:
-- [POWER_BI_INTEGRATION_GUIDE.md](POWER_BI_INTEGRATION_GUIDE.md) - RRA and FSCS integration
-- [POWERBI_GUIDE.md](POWERBI_GUIDE.md) - Solvency II integration
-- [python_implementation/POWERBI_INTEGRATION.md](python_implementation/POWERBI_INTEGRATION.md) - Liquidity (Python)
-- [r_implementation/POWERBI_INTEGRATION.md](r_implementation/POWERBI_INTEGRATION.md) - Liquidity (R)
-- [QUICKSTART.md](QUICKSTART.md) - Quick start guide
+# Process for ASB returns
+processor = ASBReturnsProcessor()
+asb_245 = processor.process_asb_245(data)
+asb_246 = processor.process_asb_246(data)
+```
 
-### Example Power BI Scripts:
-- `powerbi_python_example.py` - Python example for Power BI
-- `powerbi_r_example.R` - R example for Power BI
+**R:** See `Solvency_II_ASB_R/` for equivalent R implementation.
 
 ---
 
-## 📈 Example Use Cases
+## Power BI integration
 
-### Executive Dashboard
-```python
-from rra_aggregator import RRADataAggregator
+There are multiple integration guides:
+- **[POWERBI_GUIDE.md](POWERBI_GUIDE.md)** – Solvency II claims
+- **[POWER_BI_INTEGRATION_GUIDE.md](POWER_BI_INTEGRATION_GUIDE.md)** – RRA and FSCS
+- **[python_implementation/POWERBI_INTEGRATION.md](python_implementation/POWERBI_INTEGRATION.md)** – Liquidity (Python)
+- **[r_implementation/POWERBI_INTEGRATION.md](r_implementation/POWERBI_INTEGRATION.md)** – Liquidity (R)
+- **[Solvency_II_QSR_Reporting/Python/POWERBI_GUIDE.md](Solvency_II_QSR_Reporting/Python/POWERBI_GUIDE.md)** – QSR (Python)
+- **[Solvency_II_QSR_Reporting/R/POWERBI_GUIDE.md](Solvency_II_QSR_Reporting/R/POWERBI_GUIDE.md)** – QSR (R)
 
-aggregator = RRADataAggregator('synthetic_data')
-aggregator.load_all_forms()
-summary = aggregator.get_portfolio_summary()
-```
-
-### Claims Development Analysis
-```python
-from rra_193_net_claims import calculate_chain_ladder
-
-factors = calculate_chain_ladder(syndicate=2987, lob_code='M1')
-print(f"Paid LDF 12-24: {factors['paid_12_24']}")
-```
-
-### Reserve Monitoring
-```r
-source('r_scripts/utils/rra_aggregator.R')
-
-forms <- rra_load_all_forms()
-indicators <- get_reserve_adequacy_indicators(forms)
-```
-
-### Solvency II Reporting
-```python
-from solvency_claims_processor import process_claims_data
-
-output = process_claims_data('synthetic_data/synthetic_lloyds_claims_data.xlsx')
-print(output['by_risk_code'])
-```
-
-### Liquidity Stress Analysis
-```python
-from liquidity_stress_test import LiquidityStressTest
-
-lst = LiquidityStressTest('data')
-lst.load_data()
-
-# Get stress test summary
-for syndicate in lst.get_dashboard_summary():
-    print(f"{syndicate['name']}: Stress Test {'PASS' if syndicate['stress_test_pass'] else 'FAIL'}")
-```
+All include:
+- Step-by-step script connector instructions (Python + R)
+- Performance tips
+- Example visuals (triangles, time series, KPIs)
+- DAX snippets for common metrics
 
 ---
 
-## 🧪 Testing
+## Implementation status
 
-### Test All Python Scripts
-```bash
-# RRA scripts
-cd python_scripts/data_generation
-python generate_synthetic_lloyds_data.py
+### ✅ Fully implemented (Python + R parity)
+- **Solvency II QSR** - Complete quarterly reporting (17 forms)
+- **Solvency II ASB** - Complete annual reporting (ASB 245/246/247/248)
+- **FSCS** - Full data generation and Power BI integration
+- **Liquidity stress testing** - Complete analysis and reporting
 
-cd ../forms
-python rra_010_control.py
-python rra_193_net_claims.py
-python rra_291_gross_premium_ibnr.py
+### ⚠️ Partially implemented (Python complete, R gaps)
+- **RRA/RRQ forms** - Python has 3 form processors + unified processor; R has 2 form processors
+- **Unified RRQ/RRA generator** - Python only (R has RRA-only generator)
 
-# Solvency II
-cd ..
-python solvency_claims_processor.py
+### 📋 Planned enhancements
+- Complete R parity for RRA/RRQ processing
+- Add remaining RRA form processors (020, 071, 081, 091, 292-295, 391, 910, 990)
+- Unit testing suite
+- CI/CD with GitHub Actions
+- MkDocs or Quarto documentation site
+- Additional actuarial methods (Bornhuetter-Ferguson, Cape Cod)
 
-# FSCS
-cd ../FSCS_PowerBI/Python
-python example_usage.py
-
-# Liquidity Stress Test
-cd ../../python_implementation
-python liquidity_stress_test.py
-```
-
-### Test All R Scripts
-```bash
-# Install packages first
-cd r_scripts
-Rscript install_packages.R
-
-# RRA scripts
-cd data_generation
-Rscript generate_synthetic_lloyds_data.R
-
-cd ../forms
-Rscript rra_010_control.R
-Rscript rra_193_net_claims.R
-
-# Solvency II
-cd ..
-Rscript solvency_claims_processor.R
-
-# FSCS
-cd ../FSCS_PowerBI/R
-Rscript example_usage.R
-
-# Liquidity Stress Test
-cd ../../r_implementation
-Rscript liquidity_stress_test.R
-```
+See **[IMPLEMENTATION_ROADMAP.md](IMPLEMENTATION_ROADMAP.md)** for detailed action plan.
 
 ---
 
-## ⚠️ Important Notes
+## Documentation
 
-### Data Privacy
-- This repository uses **synthetic data only**
-- Never commit actual Lloyd's syndicate data
-- Ensure `.gitignore` excludes sensitive data files
-- Comply with GDPR and data protection regulations
+### Core guides
+- **[QUICKSTART.md](QUICKSTART.md)** - 5-minute quick start
+- **[DETAILED_DOCUMENTATION.md](DETAILED_DOCUMENTATION.md)** - Comprehensive technical documentation
+- **[RRQ_RRA_USAGE_GUIDE.md](RRQ_RRA_USAGE_GUIDE.md)** - Complete RRQ and RRA guide
+- **[RRQ_vs_RRA_COMPARISON.md](RRQ_vs_RRA_COMPARISON.md)** - Comparison of RRQ vs RRA
 
-### Lloyd's Specifications
-- RRA specifications are subject to change
-- Always refer to the latest Lloyd's guidance
-- Update scripts when specifications change
-- See `Files_for_Claude/` for current specs
-
-### Power BI Limitations
-- Python/R scripts don't support scheduled refresh in Power BI Service by default
-- Consider using Power BI Dataflows or Azure Functions for production
-- Use Power BI Gateway for on-premise refresh
-
-### Validation
-- Always validate outputs against official Lloyd's requirements
-- Ensure all reporting meets Lloyd's regulatory standards
-- Test with synthetic data before using production data
+### Module-specific
+- **[SOLVENCY_II_ASB_README.md](SOLVENCY_II_ASB_README.md)** - ASB returns guide
+- **[Solvency_II_QSR_Reporting/README.md](Solvency_II_QSR_Reporting/README.md)** - QSR returns guide
+- **[FSCS_PowerBI/README.md](FSCS_PowerBI/README.md)** - FSCS guide
+- **[data/README.md](data/README.md)** - Liquidity data guide
 
 ---
 
-## 🔧 Configuration
+## Status and notes
 
-### Customizing Synthetic Data
+This is a **synthetic, non-production training and prototyping repo**. Key notes:
 
-```python
-# In generate_synthetic_lloyds_data.py
-self.syndicates = [1234, 5678, 9012]  # Your syndicate numbers
-self.years_of_account = list(range(2020, 2025))
-self.classes_of_business = {
-    'M1': 'Marine Cargo',
-    'A1': 'Aviation',
-    # ... add your classes
-}
-```
-
-### Customizing Stress Scenarios
-
-```python
-# In data/generate_synthetic_data.py
-SYNDICATES = [
-    {"number": 2006, "name": "Your Syndicate", "agent": "Your Managing Agent"},
-    # ... add more
-]
-
-# Modify stress parameters
-def generate_stress_scenario():
-    # Change loss multiples, recovery rates, etc.
-    ...
-```
-
-### Adjusting Validation Rules
-
-```python
-# In rra_010_control.py
-def validate_rra_010(data_source):
-    invalid_capacity = df['Capacity_GBP'] < 10000000  # Min £10M
-    validations.append({
-        'Rule': 'Minimum Capacity £10M',
-        'Status': 'FAIL' if invalid_capacity.any() else 'PASS',
-        'Records_Affected': invalid_capacity.sum()
-    })
-```
+- All data is synthetic and compliant with GDPR
+- Not tied to any real Lloyd's syndicate
+- Designed for learning, MI prototyping, and interview preparation
+- Scripts follow Lloyd's regulatory specifications as of 2024-2025
+- Always validate against latest Lloyd's guidance for production use
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
-This is a development repository for Lloyd's reporting. To contribute:
+Contributions via issues and PRs are welcome:
 
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/new-feature`)
@@ -606,81 +426,9 @@ This is a development repository for Lloyd's reporting. To contribute:
 
 ---
 
-## 📚 Documentation
-
-### Core Guides
-- **[RRQ_RRA_USAGE_GUIDE.md](RRQ_RRA_USAGE_GUIDE.md)** - ⭐ **START HERE** - Complete guide for RRQ and RRA usage
-- **[RRQ_vs_RRA_COMPARISON.md](RRQ_vs_RRA_COMPARISON.md)** - Detailed comparison of RRQ vs RRA returns
-- **[QUICKSTART.md](QUICKSTART.md)** - Quick start guide
-
-### Power BI Integration
-- **[POWER_BI_INTEGRATION_GUIDE.md](POWER_BI_INTEGRATION_GUIDE.md)** - RRA & FSCS Power BI guide
-- **[POWERBI_GUIDE.md](POWERBI_GUIDE.md)** - Solvency II Power BI guide
-- **[python_implementation/POWERBI_INTEGRATION.md](python_implementation/POWERBI_INTEGRATION.md)** - Liquidity (Python)
-- **[r_implementation/POWERBI_INTEGRATION.md](r_implementation/POWERBI_INTEGRATION.md)** - Liquidity (R)
-
-### Reference
-- **[Files_for_Claude/](Files_for_Claude/)** - Lloyd's specifications
-- **Python Docstrings** - All functions have detailed docstrings
-- **R Comments** - All R functions are documented
-
----
-
-## 📝 License
+## License
 
 This code is provided as-is for Lloyd's of London regulatory reporting purposes.
-
----
-
-## 📧 Support
-
-For questions or issues:
-
-1. Check the documentation files listed above
-2. Review function docstrings and comments
-3. Verify all required packages are installed
-4. Examine example outputs in the implementation folders
-5. Raise an issue in the repository
-
----
-
-## 🎯 Roadmap
-
-Future enhancements:
-
-- [ ] Add more advanced actuarial methods (Bornhuetter-Ferguson, Cape Cod)
-- [ ] Create Power BI template files (.pbit)
-- [ ] Add data quality dashboards
-- [ ] Implement automated testing suite
-- [ ] Enhanced validation rules
-- [ ] Real-time data refresh capabilities
-- [ ] Additional stress scenario types
-- [ ] Integration with Lloyd's data feeds
-- [ ] API endpoints for data access
-- [ ] SQL database schema for data storage
-
----
-
-## 📊 Version History
-
-- **v1.0** (2024-11): Initial release
-  - RRA reporting scripts (Python & R)
-  - FSCS data generator
-  - Power BI integration
-  - Synthetic data generators
-
-- **v1.1** (2025-11): Solvency II addition
-  - Solvency II Pillar 3 claims processing
-  - Enhanced Power BI integration
-  - Additional synthetic data generators
-  - Comprehensive documentation
-
-- **v1.2** (2025-11): Liquidity Stress Testing addition
-  - Liquidity stress test implementation (Python & R)
-  - Capital position analysis
-  - Cashflow analysis
-  - Stress scenario modeling
-  - Multi-syndicate comparison tools
 
 ---
 
@@ -688,7 +436,3 @@ Future enhancements:
 **Last Updated:** 2025-11-21
 **Maintained By:** Lloyd's Development Team
 **Compatibility:** Power BI Desktop, Python 3.7+, R 4.0+
-
----
-
-Happy Reporting! 📊
