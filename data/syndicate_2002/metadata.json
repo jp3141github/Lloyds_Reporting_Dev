@@ -1,0 +1,20 @@
+{
+  "syndicate_number": 2002,
+  "syndicate_name": "Beta Syndicate",
+  "managing_agent": "Beta Insurance Management",
+  "qma_date": "2024-12-31",
+  "date_completed": "2025-11-21",
+  "syndicate_fal": 255569237,
+  "syndicate_fis": 238208463,
+  "syndicate_uscr": 193232964,
+  "syndicate_ueca": 33112411,
+  "scenario_type": "US Windstorm",
+  "loss_occurrence_date": "2025-02-15",
+  "gross_loss_estimate": 573540948,
+  "reinsurance_recovery_estimate": 353462949,
+  "net_loss_estimate": 220077999,
+  "us_funding_requirement": 106038884,
+  "total_disputed_recoveries": 69352653,
+  "disputed_60_days": 41611591,
+  "disputed_90_days": 27741061
+}

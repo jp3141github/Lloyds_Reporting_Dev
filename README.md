@@ -2,7 +2,7 @@
 
 **Comprehensive Data Processing and Reporting Tools for Lloyd's of London**
 
-This repository contains Python and R scripts for processing Lloyd's regulatory reporting requirements, including RRA (Reserving Return Annual) forms, FSCS data generation, and Solvency II Pillar 3 claims reporting.
+This repository contains Python and R scripts for processing Lloyd's regulatory reporting requirements, including RRA (Reserving Return Annual) forms, FSCS data generation, Solvency II Pillar 3 claims reporting, and Liquidity Stress Testing.
 
 ---
 
@@ -13,6 +13,7 @@ A complete suite of tools for Lloyd's of London regulatory reporting:
 ✅ **RRA Reporting Scripts** - Process all RRA forms (010, 020, 071, 081, 091, 193, 291-295, 391, 910, 990)
 ✅ **FSCS Data Generator** - Financial Services Compensation Scheme data processing
 ✅ **Solvency II Claims Processing** - Pillar 3 claims reporting automation
+✅ **Liquidity Stress Testing** - RRA liquidity stress test analysis and reporting
 ✅ **Synthetic Data Generation** - Create realistic Lloyd's data for testing
 ✅ **Power BI Integration** - Ready-to-use scripts for Power BI dashboards
 ✅ **Data Validation** - Built-in validation rules for data quality
@@ -57,13 +58,38 @@ Lloyds_Reporting_Dev/
 │       ├── powerbi_query.R
 │       └── example_usage.R
 │
-├── synthetic_data/              # Generated synthetic data
+├── python_implementation/       # Liquidity Stress Test (Python)
+│   ├── liquidity_stress_test.py
+│   ├── POWERBI_INTEGRATION.md
+│   ├── syndicate_2001_analysis.xlsx
+│   └── all_syndicates_analysis.xlsx
+│
+├── r_implementation/            # Liquidity Stress Test (R)
+│   ├── liquidity_stress_test.R
+│   ├── POWERBI_INTEGRATION.md
+│   ├── syndicate_2001_analysis.xlsx
+│   └── all_syndicates_analysis.xlsx
+│
+├── data/                        # Liquidity stress test data
+│   ├── generate_synthetic_data.py
+│   ├── syndicate_XXXX/          # Individual syndicate folders
+│   │   ├── metadata.json
+│   │   ├── assets_liquidity.csv
+│   │   ├── cashflow.csv
+│   │   └── stress_scenario.csv
+│   ├── all_syndicates_metadata.csv
+│   ├── all_syndicates_assets.csv
+│   ├── all_syndicates_cashflow.csv
+│   └── all_syndicates_stress.csv
+│
+├── synthetic_data/              # RRA and claims synthetic data
 │   ├── [RRA CSV files]
 │   ├── generate_synthetic_data.py
 │   └── synthetic_lloyds_claims_data.xlsx
 │
 ├── Files_for_Claude/            # Specification files
-│   └── RRA-specs.xlsx           # Lloyd's RRA specifications
+│   ├── RRA-specs.xlsx
+│   └── Liquidity Stress Test Template_December 2024.xlsx
 │
 ├── README.md                    # This file
 ├── POWER_BI_INTEGRATION_GUIDE.md # Power BI integration guide
@@ -127,6 +153,16 @@ from solvency_claims_processor import process_claims_data, export_to_excel
 
 output_tables = process_claims_data('synthetic_data/synthetic_lloyds_claims_data.xlsx')
 export_to_excel(output_tables, 'claims_output.xlsx')
+```
+
+#### D. Liquidity Stress Testing
+```python
+from python_implementation.liquidity_stress_test import LiquidityStressTest
+
+lst = LiquidityStressTest('data')
+lst.load_data()
+summary = lst.create_dashboard_summary()
+lst.export_to_excel('liquidity_output.xlsx')
 ```
 
 ---
@@ -228,6 +264,63 @@ print(output['by_syndicate'])
 - Paid to Date Amount
 - Paid in Year amount
 
+### 4. Liquidity Stress Testing
+
+Comprehensive liquidity stress test analysis for RRA reporting compliance.
+
+**Analysis Components:**
+
+1. **Capital Position Analysis**
+   - Funds at Lloyd's (FAL)
+   - Funds in Syndicate (FIS)
+   - Underwriting SCR (uSCR)
+   - Underwriting ECA (uECA)
+   - Solvency ratios
+
+2. **Liquidity Breakdown**
+   - Restricted Assets (US Trust Funds, Other Trust Funds)
+   - Illiquid Assets (Reinsurance Recoverables)
+   - Liquid Assets / Free Funds
+   - Quarterly projections
+
+3. **Cashflow Analysis**
+   - Operating and non-operating cash flows
+   - Premium income and claims paid
+   - Investment income
+   - Member transactions
+
+4. **Stress Test Impact**
+   - Baseline vs stressed scenarios
+   - Liquidity gaps
+   - US funding requirements
+   - Disputed reinsurance recoveries
+
+**Example Usage:**
+```python
+from liquidity_stress_test import LiquidityStressTest
+
+lst = LiquidityStressTest('data')
+lst.load_data()
+
+# Generate dashboard summary
+summary = lst.create_dashboard_summary()
+
+# Get capital position
+capital = lst.get_capital_position()
+
+# Analyze stress impact
+stress_impact = lst.get_stress_impact_analysis()
+
+# Export all tables
+lst.export_to_excel('liquidity_analysis.xlsx')
+```
+
+**Stress Scenarios:**
+- 1-in-200 year event modeling
+- US Windstorm scenarios
+- Customizable stress parameters
+- Multi-syndicate analysis
+
 ---
 
 ## 💡 Synthetic Data Generation
@@ -249,6 +342,13 @@ All modules include synthetic data generators for testing and development:
 - **Various claim statuses**
 - **Reference lookup tables**
 
+### Liquidity Stress Test Data
+- **5 Sample syndicates** with complete data
+- **Quarterly projections** (Dec 2024 - Dec 2025)
+- **Stress scenarios** (1-in-200 year events)
+- **Capital and liquidity metrics**
+- **Cashflow projections**
+
 ---
 
 ## 🔌 Power BI Integration
@@ -265,6 +365,8 @@ All scripts are designed for seamless Power BI integration.
 See detailed guides:
 - [POWER_BI_INTEGRATION_GUIDE.md](POWER_BI_INTEGRATION_GUIDE.md) - RRA and FSCS integration
 - [POWERBI_GUIDE.md](POWERBI_GUIDE.md) - Solvency II integration
+- [python_implementation/POWERBI_INTEGRATION.md](python_implementation/POWERBI_INTEGRATION.md) - Liquidity (Python)
+- [r_implementation/POWERBI_INTEGRATION.md](r_implementation/POWERBI_INTEGRATION.md) - Liquidity (R)
 - [QUICKSTART.md](QUICKSTART.md) - Quick start guide
 
 ### Example Power BI Scripts:
@@ -308,6 +410,18 @@ output = process_claims_data('synthetic_data/synthetic_lloyds_claims_data.xlsx')
 print(output['by_risk_code'])
 ```
 
+### Liquidity Stress Analysis
+```python
+from liquidity_stress_test import LiquidityStressTest
+
+lst = LiquidityStressTest('data')
+lst.load_data()
+
+# Get stress test summary
+for syndicate in lst.get_dashboard_summary():
+    print(f"{syndicate['name']}: Stress Test {'PASS' if syndicate['stress_test_pass'] else 'FAIL'}")
+```
+
 ---
 
 ## 🧪 Testing
@@ -330,6 +444,10 @@ python solvency_claims_processor.py
 # FSCS
 cd ../FSCS_PowerBI/Python
 python example_usage.py
+
+# Liquidity Stress Test
+cd ../../python_implementation
+python liquidity_stress_test.py
 ```
 
 ### Test All R Scripts
@@ -353,6 +471,10 @@ Rscript solvency_claims_processor.R
 # FSCS
 cd ../FSCS_PowerBI/R
 Rscript example_usage.R
+
+# Liquidity Stress Test
+cd ../../r_implementation
+Rscript liquidity_stress_test.R
 ```
 
 ---
@@ -369,12 +491,17 @@ Rscript example_usage.R
 - RRA specifications are subject to change
 - Always refer to the latest Lloyd's guidance
 - Update scripts when specifications change
-- See `Files_for_Claude/RRA-specs.xlsx` for current specs
+- See `Files_for_Claude/` for current specs
 
 ### Power BI Limitations
 - Python/R scripts don't support scheduled refresh in Power BI Service by default
 - Consider using Power BI Dataflows or Azure Functions for production
 - Use Power BI Gateway for on-premise refresh
+
+### Validation
+- Always validate outputs against official Lloyd's requirements
+- Ensure all reporting meets Lloyd's regulatory standards
+- Test with synthetic data before using production data
 
 ---
 
@@ -391,6 +518,21 @@ self.classes_of_business = {
     'A1': 'Aviation',
     # ... add your classes
 }
+```
+
+### Customizing Stress Scenarios
+
+```python
+# In data/generate_synthetic_data.py
+SYNDICATES = [
+    {"number": 2006, "name": "Your Syndicate", "agent": "Your Managing Agent"},
+    # ... add more
+]
+
+# Modify stress parameters
+def generate_stress_scenario():
+    # Change loss multiples, recovery rates, etc.
+    ...
 ```
 
 ### Adjusting Validation Rules
@@ -424,8 +566,10 @@ This is a development repository for Lloyd's reporting. To contribute:
 
 - **[POWER_BI_INTEGRATION_GUIDE.md](POWER_BI_INTEGRATION_GUIDE.md)** - RRA & FSCS Power BI guide
 - **[POWERBI_GUIDE.md](POWERBI_GUIDE.md)** - Solvency II Power BI guide
+- **[python_implementation/POWERBI_INTEGRATION.md](python_implementation/POWERBI_INTEGRATION.md)** - Liquidity (Python)
+- **[r_implementation/POWERBI_INTEGRATION.md](r_implementation/POWERBI_INTEGRATION.md)** - Liquidity (R)
 - **[QUICKSTART.md](QUICKSTART.md)** - Quick start guide
-- **[Files_for_Claude/RRA-specs.xlsx](Files_for_Claude/RRA-specs.xlsx)** - Lloyd's RRA specifications
+- **[Files_for_Claude/](Files_for_Claude/)** - Lloyd's specifications
 - **Python Docstrings** - All functions have detailed docstrings
 - **R Comments** - All R functions are documented
 
@@ -444,7 +588,8 @@ For questions or issues:
 1. Check the documentation files listed above
 2. Review function docstrings and comments
 3. Verify all required packages are installed
-4. Raise an issue in the repository
+4. Examine example outputs in the implementation folders
+5. Raise an issue in the repository
 
 ---
 
@@ -456,11 +601,12 @@ Future enhancements:
 - [ ] Create Power BI template files (.pbit)
 - [ ] Add data quality dashboards
 - [ ] Implement automated testing suite
-- [ ] Add export to Excel functionality
-- [ ] Create SQL database schema for data storage
-- [ ] Add API endpoints for data access
 - [ ] Enhanced validation rules
 - [ ] Real-time data refresh capabilities
+- [ ] Additional stress scenario types
+- [ ] Integration with Lloyd's data feeds
+- [ ] API endpoints for data access
+- [ ] SQL database schema for data storage
 
 ---
 
@@ -478,11 +624,19 @@ Future enhancements:
   - Additional synthetic data generators
   - Comprehensive documentation
 
+- **v1.2** (2025-11): Liquidity Stress Testing addition
+  - Liquidity stress test implementation (Python & R)
+  - Capital position analysis
+  - Cashflow analysis
+  - Stress scenario modeling
+  - Multi-syndicate comparison tools
+
 ---
 
-**Version:** 1.1
+**Version:** 1.2
 **Last Updated:** 2025-11-21
 **Maintained By:** Lloyd's Development Team
+**Compatibility:** Power BI Desktop, Python 3.7+, R 4.0+
 
 ---
 
