@@ -10,6 +10,8 @@ Tables Generated:
 - cashflow_summary: Cashflow Summary
 - stress_impact: Stress Test Impact analysis
 - dashboard_summary: Executive Dashboard Summary
+- qualitative_questionnaire: LST Qualitative Questionnaire responses
+- us_funding_requirements: US Surplus Lines Funding (1-in-200 tiered logic)
 
 Usage in Power BI:
 1. Get Data > More > Python script
@@ -232,6 +234,205 @@ def generate_dashboard_summary():
     return pd.DataFrame(summary_data)
 
 
+def generate_qualitative_questionnaire():
+    """
+    Generate LST Qualitative Questionnaire responses.
+    Contains text responses for qualitative questions required in the LST submission.
+    """
+    # Define the qualitative questions and standard responses
+    questions = [
+        {
+            'Question_ID': 'Q1',
+            'Section': 'Credit Facilities',
+            'Question': 'Describe strategy towards arranging credit facilities',
+            'Response': 'The syndicate maintains committed credit facilities with multiple banking counterparties to ensure adequate liquidity. Facilities are reviewed annually and stress tested quarterly.'
+        },
+        {
+            'Question_ID': 'Q2',
+            'Section': 'Credit Facilities',
+            'Question': 'Details of committed credit facilities',
+            'Response': 'Committed revolving credit facility of £100m with 3-year tenor. Additional uncommitted overdraft facility of £25m for operational flexibility.'
+        },
+        {
+            'Question_ID': 'Q3',
+            'Section': 'Credit Facilities',
+            'Question': 'Details of uncommitted credit facilities',
+            'Response': 'Uncommitted overdraft facility of £25m available on demand. Additional uncommitted letter of credit facility of £50m for US regulatory requirements.'
+        },
+        {
+            'Question_ID': 'Q4',
+            'Section': 'Liquidity Management',
+            'Question': 'Describe liquidity risk management framework',
+            'Response': 'Liquidity risk is managed through daily cash monitoring, weekly liquidity reporting, and monthly stress testing. Limits are set for minimum liquid asset ratios and maximum maturity mismatches.'
+        },
+        {
+            'Question_ID': 'Q5',
+            'Section': 'Liquidity Management',
+            'Question': 'Describe liquidity contingency plan',
+            'Response': 'Contingency plan includes drawdown of credit facilities, sale of liquid assets, acceleration of reinsurance collections, and if necessary, capital calls from members.'
+        },
+        {
+            'Question_ID': 'Q6',
+            'Section': 'Asset Liquidity',
+            'Question': 'Describe approach to asset liquidity classification',
+            'Response': 'Assets classified into three buckets: Liquid (cash, govt bonds - liquidatable in 1 week), Illiquid (corporate bonds, listed equities - 1-4 weeks), Restricted (property, private equity, regulatory deposits).'
+        },
+        {
+            'Question_ID': 'Q7',
+            'Section': 'Stress Testing',
+            'Question': 'Describe stress testing methodology',
+            'Response': 'Stress scenarios include: 1) Major catastrophe event with immediate claims surge, 2) Market dislocation with asset value falls, 3) Reinsurer default scenario, 4) Combined operational stress.'
+        },
+        {
+            'Question_ID': 'Q8',
+            'Section': 'Stress Testing',
+            'Question': 'Describe assumptions for 1-in-200 catastrophe scenario',
+            'Response': 'Based on Lloyd\'s Realistic Disaster Scenarios (RDS) with gross losses calibrated to syndicate-specific exposures. Net losses reflect reinsurance programme structure.'
+        },
+        {
+            'Question_ID': 'Q9',
+            'Section': 'US Trust Funds',
+            'Question': 'Describe management of US trust fund requirements',
+            'Response': 'US surplus lines trust fund maintained at minimum required levels plus buffer. Assets invested in high-quality fixed income securities meeting regulatory requirements.'
+        },
+        {
+            'Question_ID': 'Q10',
+            'Section': 'Governance',
+            'Question': 'Describe liquidity risk governance and oversight',
+            'Response': 'Liquidity risk overseen by Risk Committee with monthly reporting. Board receives quarterly liquidity dashboard. Limits approved by Board and monitored by Finance team.'
+        }
+    ]
+
+    data = []
+    for synd in SYNDICATES:
+        for q in questions:
+            data.append({
+                'Syndicate_Number': synd['number'],
+                'Syndicate_Name': synd['name'],
+                'Question_ID': q['Question_ID'],
+                'Section': q['Section'],
+                'Question': q['Question'],
+                'Response': q['Response'],
+                'Last_Updated': datetime.now().strftime('%Y-%m-%d'),
+                'Approved_By': f'CRO - {synd["agent"]}'
+            })
+
+    return pd.DataFrame(data)
+
+
+def calculate_us_funding_requirement(us_surplus_lines_exposure):
+    """
+    Calculate US Surplus Lines funding requirement using Lloyd's tiered 1-in-200 logic.
+
+    Tiered percentages:
+    - <$200m: 30%
+    - $200m-$500m: 25%
+    - $500m-$1bn: 20%
+    - >$1bn: 15%
+
+    Parameters:
+    -----------
+    us_surplus_lines_exposure : float
+        US Surplus Lines exposure in USD
+
+    Returns:
+    --------
+    float
+        Required funding amount in USD
+    """
+    if us_surplus_lines_exposure <= 0:
+        return 0
+
+    funding = 0
+
+    # Tier 1: First $200m at 30%
+    tier1_amount = min(us_surplus_lines_exposure, 200000000)
+    funding += tier1_amount * 0.30
+
+    # Tier 2: $200m to $500m at 25%
+    if us_surplus_lines_exposure > 200000000:
+        tier2_amount = min(us_surplus_lines_exposure - 200000000, 300000000)
+        funding += tier2_amount * 0.25
+
+    # Tier 3: $500m to $1bn at 20%
+    if us_surplus_lines_exposure > 500000000:
+        tier3_amount = min(us_surplus_lines_exposure - 500000000, 500000000)
+        funding += tier3_amount * 0.20
+
+    # Tier 4: Above $1bn at 15%
+    if us_surplus_lines_exposure > 1000000000:
+        tier4_amount = us_surplus_lines_exposure - 1000000000
+        funding += tier4_amount * 0.15
+
+    return funding
+
+
+def generate_us_funding_requirements():
+    """
+    Generate US Surplus Lines Funding Requirements table.
+    Implements Lloyd's tiered 1-in-200 funding logic.
+    """
+    data = []
+
+    for synd in SYNDICATES:
+        # Generate US Surplus Lines exposure (varies by syndicate)
+        us_exposure = random.randint(50000000, 1500000000)
+
+        # Calculate tiered funding requirement
+        funding_required = calculate_us_funding_requirement(us_exposure)
+
+        # Calculate tier breakdowns for transparency
+        tier1_exposure = min(us_exposure, 200000000)
+        tier2_exposure = min(max(us_exposure - 200000000, 0), 300000000)
+        tier3_exposure = min(max(us_exposure - 500000000, 0), 500000000)
+        tier4_exposure = max(us_exposure - 1000000000, 0)
+
+        # Current funding held
+        current_funding = random.randint(int(funding_required * 0.9), int(funding_required * 1.2))
+
+        # Determine funding status
+        surplus_deficit = current_funding - funding_required
+        if surplus_deficit >= 0:
+            status = 'Compliant'
+        elif surplus_deficit > -funding_required * 0.1:
+            status = 'Warning - Near Limit'
+        else:
+            status = 'Non-Compliant'
+
+        data.append({
+            'Syndicate_Number': synd['number'],
+            'Syndicate_Name': synd['name'],
+            'Reporting_Date': f'{CURRENT_YEAR}-12-31',
+            # Exposure details
+            'US_Surplus_Lines_Exposure_USD': us_exposure,
+            'US_Exposure_GBP_Equivalent': int(us_exposure / 1.27),  # Approx USD to GBP
+            # Tier breakdown
+            'Tier1_Exposure_Up_To_200m': tier1_exposure,
+            'Tier1_Rate': 0.30,
+            'Tier1_Funding': tier1_exposure * 0.30,
+            'Tier2_Exposure_200m_to_500m': tier2_exposure,
+            'Tier2_Rate': 0.25,
+            'Tier2_Funding': tier2_exposure * 0.25,
+            'Tier3_Exposure_500m_to_1bn': tier3_exposure,
+            'Tier3_Rate': 0.20,
+            'Tier3_Funding': tier3_exposure * 0.20,
+            'Tier4_Exposure_Above_1bn': tier4_exposure,
+            'Tier4_Rate': 0.15,
+            'Tier4_Funding': tier4_exposure * 0.15,
+            # Totals
+            'Total_Funding_Required_USD': funding_required,
+            'Total_Funding_Required_GBP': int(funding_required / 1.27),
+            'Current_Funding_Held_USD': current_funding,
+            'Surplus_Deficit_USD': surplus_deficit,
+            'Funding_Ratio': round(current_funding / funding_required * 100, 2) if funding_required > 0 else 0,
+            'Compliance_Status': status,
+            # Effective rate
+            'Blended_Funding_Rate': round(funding_required / us_exposure * 100, 2) if us_exposure > 0 else 0
+        })
+
+    return pd.DataFrame(data)
+
+
 # =============================================================================
 # GENERATE ALL TABLES FOR POWER BI
 # =============================================================================
@@ -244,11 +445,15 @@ liquidity_breakdown = generate_liquidity_breakdown()
 cashflow_summary = generate_cashflow_summary()
 stress_impact = generate_stress_impact()
 dashboard_summary = generate_dashboard_summary()
+qualitative_questionnaire = generate_qualitative_questionnaire()
+us_funding_requirements = generate_us_funding_requirements()
 
 print(f"capital_position: {len(capital_position)} records")
 print(f"liquidity_breakdown: {len(liquidity_breakdown)} records")
 print(f"cashflow_summary: {len(cashflow_summary)} records")
 print(f"stress_impact: {len(stress_impact)} records")
 print(f"dashboard_summary: {len(dashboard_summary)} records")
+print(f"qualitative_questionnaire: {len(qualitative_questionnaire)} records")
+print(f"us_funding_requirements: {len(us_funding_requirements)} records")
 print("=" * 60)
 print("Liquidity Stress Test data generated successfully!")

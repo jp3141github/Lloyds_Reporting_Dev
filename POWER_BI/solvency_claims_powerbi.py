@@ -5,11 +5,17 @@ Processes Lloyd's of London claims data for Solvency II reporting.
 Compatible with Power BI as a Python data source.
 
 Tables Generated:
-- detailed_claims: Full claims detail
+- detailed_claims: Full claims detail with Lloyd's market identifiers (OSN, UCR, Part VII)
 - by_syndicate: Claims aggregated by Syndicate
 - by_risk_code: Claims aggregated by Risk Code
 - by_claim_status: Claims aggregated by Claim Status
 - summary: Overall claims summary
+
+Lloyd's-Specific Fields:
+- OSN (Original Signing Number): Unique identifier assigned at policy inception
+- Original Signing Date: Date the policy was originally signed
+- UCR (Unique Claim Reference): Lloyd's market standard claim identifier
+- Part VII Indicator: Indicates if claim relates to Part VII transfer business
 
 Usage in Power BI:
 1. Get Data > More > Python script
@@ -41,14 +47,53 @@ RISK_CODES = ['PR', 'CA', 'MA', 'AV', 'EN', 'PI', 'PL', 'MO', 'CY', 'PA']
 CLAIM_STATUSES = ['Open', 'Re-opened', 'Closed', 'Pending Review', 'In Litigation']
 
 
+def generate_osn(syndicate, year_of_account, sequence):
+    """
+    Generate Original Signing Number (OSN) in Lloyd's market format.
+    Format: BYYYYSSSSSSNNNNN where:
+    - B = Bureau prefix
+    - YYYY = Year of account
+    - SSSSSS = Syndicate number (padded)
+    - NNNNN = Sequence number
+    """
+    return f'B{year_of_account}{syndicate:06d}{sequence:05d}'
+
+
+def generate_ucr(syndicate, year_of_account, claim_sequence):
+    """
+    Generate Unique Claim Reference (UCR) in Lloyd's market standard format.
+    Format: BYYYYSSSSSSCNNNNN where:
+    - B = Bureau prefix
+    - YYYY = Year
+    - SSSSSS = Syndicate (padded)
+    - C = Claim indicator
+    - NNNNN = Claim sequence
+    """
+    return f'B{year_of_account}{syndicate:06d}C{claim_sequence:05d}'
+
+
 def generate_synthetic_claims():
-    """Generate synthetic claims data for all syndicates"""
+    """Generate synthetic claims data for all syndicates with Lloyd's market identifiers"""
     claims = []
 
     for syndicate in SYNDICATES:
         for i in range(NUM_CLAIMS_PER_SYNDICATE):
             year_of_account = random.randint(CURRENT_YEAR - 6, CURRENT_YEAR)
             risk_code = random.choice(RISK_CODES)
+            claim_sequence = i + 1
+
+            # Generate Lloyd's market identifiers
+            osn = generate_osn(syndicate, year_of_account, claim_sequence)
+            ucr = generate_ucr(syndicate, year_of_account, claim_sequence)
+
+            # Original Signing Date - typically at or before inception
+            signing_month = random.randint(1, 12)
+            signing_day = random.randint(1, 28)
+            original_signing_date = f'{year_of_account}-{signing_month:02d}-{signing_day:02d}'
+
+            # Part VII Indicator - indicates if claim relates to Part VII transfer business
+            # Typically a small percentage of claims (legacy business transfers)
+            part_vii_indicator = 'Y' if random.random() < 0.05 else 'N'
 
             # Generate claim amounts
             os_beginning = random.randint(10000, 500000) if random.random() > 0.3 else 0
@@ -68,8 +113,12 @@ def generate_synthetic_claims():
 
             claims.append({
                 'Syndicate Number': syndicate,
-                'Claim Reference': f'CLM-{syndicate}-{year_of_account}-{i+1:05d}',
+                'Claim Reference': f'CLM-{syndicate}-{year_of_account}-{claim_sequence:05d}',
+                'OSN': osn,
+                'Original Signing Date': original_signing_date,
+                'UCR': ucr,
                 'UMR': f'B{random.randint(1000, 9999)}{syndicate}{random.randint(10, 99)}',
+                'Part VII Indicator': part_vii_indicator,
                 'Risk Code': risk_code,
                 'Year of Account': year_of_account,
                 'Original Currency': random.choice(['GBP', 'USD', 'EUR']),
