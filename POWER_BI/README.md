@@ -4,7 +4,18 @@ This folder contains comprehensive Python scripts designed for use as Power BI d
 
 ## Overview
 
-**Total Tables Available: 70+**
+**Total Tables Available: 114+**
+
+### Core Regulatory Returns (NEW)
+
+| Category | Script | Tables | Priority |
+|----------|--------|--------|----------|
+| **LCR** (Lloyd's Capital Return) | `lcr_capital_return_powerbi.py` | 14 | CRITICAL |
+| **SBF** (Syndicate Business Forecast) | `sbf_business_forecast_powerbi.py` | 10 | CRITICAL |
+| **QMA** (Quarterly Monitoring A) | `qma_quarterly_monitoring_powerbi.py` | 10 | HIGH |
+| **Bordereaux** (Premium/Claims) | `bordereaux_powerbi.py` | 5 | HIGH |
+
+### Existing Returns
 
 | Category | Script | Tables |
 |----------|--------|--------|
@@ -153,6 +164,98 @@ Portfolio-level analysis and aggregation:
 | `yoa_development_summary` | Development patterns by year of account |
 | `reserve_adequacy_indicators` | Reserve adequacy metrics |
 | `syndicate_profile` | Individual syndicate profiles |
+
+---
+
+## NEW: Core Regulatory Returns
+
+### 10. LCR - Lloyd's Capital Return (`lcr_capital_return_powerbi.py`)
+
+**THE MOST IMPORTANT Lloyd's Return** - Annual capital setting submission.
+
+| Table | Description |
+|-------|-------------|
+| `LCR_001_Control` | Syndicate metadata and submission control |
+| `LCR_010_SCR_Summary` | Overall SCR calculation summary |
+| `LCR_020_Premium_Risk` | Premium risk by line of business |
+| `LCR_030_Reserve_Risk` | Reserve risk calculations |
+| `LCR_040_Cat_Risk_Summary` | Catastrophe risk summary |
+| `LCR_041_Cat_By_Peril` | Cat risk by peril (Wind, EQ, Flood, Terror, Cyber, Pandemic) |
+| `LCR_050_Market_Risk` | Market risk (IR, Equity, Property, Spread, FX) |
+| `LCR_060_Credit_Risk` | Counterparty default risk |
+| `LCR_070_Operational_Risk` | Operational risk calculation |
+| `LCR_080_Technical_Provisions` | TP with risk margin (4% to 6% CoC conversion) |
+| `LCR_090_Own_Funds` | Own funds analysis (Tier 1, 2, 3) |
+| `LCR_100_Coverage_Ratios` | Capital coverage ratios and adequacy |
+| `LCR_110_YOA_Capital` | Year of Account capital allocation |
+| `LCR_120_Diversification` | Risk diversification matrix |
+
+**Key Calculations:**
+- SCR Range: GBP 80-300M per syndicate
+- Coverage Ratios: 1.2-2.5x (Lloyd's minimum: 1.0x, target: 1.35-1.50x)
+- Risk Margin: 4% CoC (Solvency II) to 6% CoC (Lloyd's) conversion
+
+### 11. SBF - Syndicate Business Forecast (`sbf_business_forecast_powerbi.py`)
+
+**Three-year business plan** required for all syndicates.
+
+| Table | Description |
+|-------|-------------|
+| `SBF_001_Control` | Submission metadata |
+| `SBF_010_Income_Statement` | Projected P&L for 3 years |
+| `SBF_020_Premium_Forecast` | Premium projections by LOB and geography |
+| `SBF_030_Claims_Forecast` | Expected loss ratios and claims costs |
+| `SBF_040_Expense_Budget` | Acquisition costs, admin expenses |
+| `SBF_050_Capacity_Plan` | Stamp capacity and utilization |
+| `SBF_060_Reinsurance_Strategy` | RI program structure and costs |
+| `SBF_070_Investment_Income` | Investment return assumptions |
+| `SBF_080_Combined_Ratios` | Target combined ratios by LOB |
+| `SBF_090_Stress_Scenarios` | Downside scenario analysis |
+
+**Typical Parameters:**
+- Growth Rates: -5% to +20% annual
+- Loss Ratios: 50-75% by LOB
+- Combined Ratios: 85-102%
+
+### 12. QMA - Quarterly Monitoring Return Part A (`qma_quarterly_monitoring_powerbi.py`)
+
+**Primary quarterly financial return** - backbone of Lloyd's monitoring.
+
+| Table | Description |
+|-------|-------------|
+| `QMA_001_Control` | Submission metadata and quarter info |
+| `QMA_010_Balance_Sheet` | Quarterly balance sheet |
+| `QMA_020_PL_Statement` | Profit & Loss account |
+| `QMA_030_Cash_Flow` | Cash flow statement |
+| `QMA_040_Technical_Account` | Technical account by LOB |
+| `QMA_050_Investment_Portfolio` | Investment holdings and returns |
+| `QMA_060_Reinsurance_Assets` | RI recoverable assets |
+| `QMA_070_Creditors` | Creditor analysis |
+| `QMA_080_Capital_Position` | Capital position and movements |
+| `QMA_090_Key_Ratios` | KPIs and performance metrics |
+
+**Submission Timing:** T+30 business days after quarter-end
+
+### 13. Bordereaux - Premium & Claims (`bordereaux_powerbi.py`)
+
+**Transaction-level reporting** for delegated authorities - following Lloyd's CRS v5.2.
+
+| Table | Description |
+|-------|-------------|
+| `Premium_Bordereaux` | Policy-level premium transactions (500+ records) |
+| `Claims_Bordereaux` | Claim-level details (300+ records) |
+| `Risk_Bordereaux` | Risk exposure summary |
+| `Coverholder_Summary` | Performance by coverholder |
+| `Contract_Performance` | TPA/Coverholder contract metrics |
+
+**Lloyd's Identifiers Generated:**
+- UMR Format: `B2024A1234567` (Broker + Year + Alpha + Number)
+- OSN Format: `OSN12345678` (Original Signing Number)
+- UCR Format: `B2024A1234567/2024/001` (UMR/Year/Sequence)
+
+**CRS v5.2 Fields Include:** Gross/Net premium, Lloyd's participation %, brokerage, commission, taxes, ALAE, defence costs, currencies, FX rates
+
+---
 
 ## Data Characteristics
 
