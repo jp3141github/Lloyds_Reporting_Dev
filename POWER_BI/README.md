@@ -4,7 +4,7 @@ This folder contains comprehensive Python scripts designed for use as Power BI d
 
 ## Overview
 
-**Total Tables Available: 114+**
+**Total Tables Available: 131+**
 
 ### Core Regulatory Returns (NEW)
 
@@ -12,7 +12,9 @@ This folder contains comprehensive Python scripts designed for use as Power BI d
 |----------|--------|--------|----------|
 | **LCR** (Lloyd's Capital Return) | `lcr_capital_return_powerbi.py` | 14 | CRITICAL |
 | **SBF** (Syndicate Business Forecast) | `sbf_business_forecast_powerbi.py` | 10 | CRITICAL |
+| **ASR** (Annual Solvency Return) | `asr_annual_solvency_powerbi.py` | 9 | HIGH |
 | **QMA** (Quarterly Monitoring A) | `qma_quarterly_monitoring_powerbi.py` | 10 | HIGH |
+| **QMB** (Quarterly Monitoring B) | `qmb_quarterly_monitoring_b_powerbi.py` | 8 | HIGH |
 | **Bordereaux** (Premium/Claims) | `bordereaux_powerbi.py` | 5 | HIGH |
 
 ### Existing Returns
@@ -254,6 +256,41 @@ Portfolio-level analysis and aggregation:
 - UCR Format: `B2024A1234567/2024/001` (UMR/Year/Sequence)
 
 **CRS v5.2 Fields Include:** Gross/Net premium, Lloyd's participation %, brokerage, commission, taxes, ALAE, defence costs, currencies, FX rates
+
+### 14. ASR - Annual Solvency Return (`asr_annual_solvency_powerbi.py`)
+
+**Annual Pillar 3 Solvency II reporting** - distinct from quarterly QSR.
+
+| Table | Description |
+|-------|-------------|
+| `ASR_001_Control` | Annual submission metadata |
+| `ASR_002_Balance_Sheet` | S.02.01.02 Annual balance sheet (with YoY) |
+| `ASR_210_Variation_Analysis` | S.29 Year-on-year variation analysis (annual only) |
+| `ASR_220_Own_Funds` | S.23.01.01 Annual own funds with movement |
+| `ASR_240_Technical_Provisions_By_LOB` | S.17 Full TP breakdown by Solvency II LOB |
+| `ASR_280_SCR_Components` | S.25 Annual SCR calculation breakdown |
+| `ASR_510_MCR` | S.28 Annual MCR calculation |
+| `ASR_910_SFCR_Metrics` | Public disclosure / SFCR summary metrics |
+| `ASR_TP_Reconciliation` | Technical provisions reconciliation (annual only) |
+
+**Key Difference from QSR:** ASR includes annual-only disclosures like variation analysis, TP reconciliation, and SFCR public disclosure elements not available quarterly.
+
+### 15. QMB - Quarterly Monitoring Part B (`qmb_quarterly_monitoring_b_powerbi.py`)
+
+**Quarterly business and claims analysis** - complements QMA (financial statements).
+
+| Table | Description |
+|-------|-------------|
+| `QMB_001_Control` | Submission metadata |
+| `QMB_010_Claims_Triangle` | Claims development triangle by UW year |
+| `QMB_020_Large_Losses` | Large loss register with detail |
+| `QMB_030_Segment_Analysis` | Business performance by geographic segment |
+| `QMB_040_Prior_Year_Development` | Prior year reserve development analysis |
+| `QMB_050_Reinsurance_Performance` | RI program performance metrics |
+| `QMB_060_Risk_Indicators` | Key Risk Indicators (KRIs) with RAG status |
+| `QMB_070_Cat_Exposure` | Catastrophe exposure summary by peril |
+
+**Key Difference from QMA:** QMA covers financial statements (BS, P&L, Cash Flow). QMB covers business analysis (claims triangles, large losses, segments, risk indicators).
 
 ---
 
