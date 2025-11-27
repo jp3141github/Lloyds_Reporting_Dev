@@ -4,7 +4,7 @@
 
 This document provides a comprehensive overview of the Lloyd's of London regulatory reporting toolkit, explaining what the returns are, how they work, and the complete coverage provided by this repository's synthetic data generators.
 
-**Total Coverage: 110+ tables across 13 major regulatory returns**
+**Total Coverage: 175+ tables across 21 major regulatory returns**
 
 ---
 
@@ -49,14 +49,21 @@ These bordereaux follow **Lloyd's Coverholder Reporting Standards v5.2** and are
 | SAO Addendum | `sao_addendum_powerbi.py` | 3 | MEDIUM |
 | RRA Aggregator | `rra_aggregator_powerbi.py` | 5 | MEDIUM |
 
-### New Generators (44+ tables)
+### New Generators (105+ tables)
 
 | Category | Script | Tables | Priority |
 |----------|--------|--------|----------|
 | **LCR** (Lloyd's Capital Return) | `lcr_capital_return_powerbi.py` | 14 | **CRITICAL** |
 | **SBF** (Syndicate Business Forecast) | `sbf_business_forecast_powerbi.py` | 10 | **CRITICAL** |
 | **QMA** (Quarterly Monitoring Return A) | `qma_quarterly_monitoring_powerbi.py` | 10 | HIGH |
+| **QMB** (Quarterly Monitoring Return B) | `qmb_performance_monitoring_powerbi.py` | 8 | HIGH |
 | **Bordereaux** (Premium/Claims) | `bordereaux_powerbi.py` | 5 | HIGH |
+| **ASR** (Annual Solvency Return) | `asr_annual_solvency_powerbi.py` | 12 | **CRITICAL** |
+| **QAD** (Quarterly Asset Data) | `qad_quarterly_assets_powerbi.py` | 10 | HIGH |
+| **PMDR** (Performance Management Data Return) | `pmdr_monthly_performance_powerbi.py` | 7 | HIGH |
+| **RDS** (Realistic Disaster Scenarios) | `rds_disaster_scenarios_powerbi.py` | 8 | **CRITICAL** |
+| **SRS** (Syndicate Reinsurance Structure) | `srs_reinsurance_structure_powerbi.py` | 8 | HIGH |
+| **SAO** (Statement of Actuarial Opinion) | `sao_actuarial_opinion_powerbi.py` | 8 | HIGH |
 
 ---
 
@@ -220,19 +227,16 @@ Bordereaux capture every premium and claim transaction from delegated authority 
 | QMA (Quarterly Monitoring A) | 10 tables | **NEW** |
 | Bordereaux | 5 tables | **NEW** |
 
-### Not Yet Covered (68+ returns)
+### Not Yet Covered
 
 The following returns are NOT covered by this repository:
 
 **Quarterly/Flash Reporting:**
-- QMB (Quarterly Monitoring Part B)
 - QMA Delta (Movement analysis)
 - QCT (Quarterly Claims Triangles)
 - Flash Report (Rapid business metrics)
 
 **Pillar 3 Public Disclosures:**
-- ASR (Annual Solvency Report) - 50+ forms
-- QAD (Quarterly Actuarial Data)
 - ORSA (Own Risk and Solvency Assessment)
 - SFCR (Solvency and Financial Condition Report)
 
@@ -326,7 +330,14 @@ No external data files required - all data is synthetically generated.
 | `lcr_capital_return_powerbi.py` | Lloyd's Capital Return | 14 |
 | `sbf_business_forecast_powerbi.py` | Syndicate Business Forecast | 10 |
 | `qma_quarterly_monitoring_powerbi.py` | Quarterly Monitoring A | 10 |
+| `qmb_performance_monitoring_powerbi.py` | Quarterly Monitoring B (Performance) | 8 |
 | `bordereaux_powerbi.py` | Premium/Claims Bordereaux | 5 |
+| `asr_annual_solvency_powerbi.py` | Annual Solvency Return | 12 |
+| `qad_quarterly_assets_powerbi.py` | Quarterly Asset Data | 10 |
+| `pmdr_monthly_performance_powerbi.py` | Performance Management Data Return | 7 |
+| `rds_disaster_scenarios_powerbi.py` | Realistic Disaster Scenarios | 8 |
+| `srs_reinsurance_structure_powerbi.py` | Syndicate Reinsurance Structure | 8 |
+| `sao_actuarial_opinion_powerbi.py` | Statement of Actuarial Opinion | 8 |
 | `rra_forms_powerbi.py` | RRA Forms 010-990 | 14 |
 | `fscs_data_powerbi.py` | FSCS Data | 2 |
 | `liquidity_stress_powerbi.py` | Liquidity Stress Test | 5 |
@@ -368,9 +379,10 @@ No external data files required - all data is synthetically generated.
 |---------|------|---------|
 | 1.0 | 2024-11-21 | Initial release with 70+ tables |
 | 2.0 | 2024-11-23 | Added LCR, SBF, QMA, Bordereaux (114+ tables) |
+| 3.0 | 2025-11-27 | Added ASR, QAD, QMB, PMDR, RDS, SRS, expanded SAO (175+ tables) |
 
 ---
 
 **Maintained By:** Lloyd's Development Team
-**Last Updated:** 2024-11-23
+**Last Updated:** 2025-11-27
 **Compatibility:** Power BI Desktop, Python 3.7+
