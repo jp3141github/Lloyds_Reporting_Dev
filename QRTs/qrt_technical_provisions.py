@@ -1,79 +1,37 @@
 """
-PRA/BoE QRT Generators - Technical Provisions
-==============================================
-IR1201-IR1206: Life Technical Provisions
-IR1401: Life Obligations Analysis
-IR1601-IR1602: Non-Life Annuities
-IR1701-IR1703: Non-Life Technical Provisions
-IR1801-IR1802: Non-Life Cash Flow Projections
-IR1901-IR1902: Non-Life Insurance Claims
-IR2001: Claims Distribution Development
-IR2102, IR2104: Underwriting Risks
+PRA/BoE QRT Generator - Technical Provisions Templates (IR12-18)
+================================================================
+Actuarial-focused technical provisions templates for Solvency II reporting.
 
-Usage in Power BI:
-1. Get Data > More > Python script
-2. Copy and paste this script
-3. Select the tables you need from the list
+Templates:
+- IR1201: Life Technical Provisions
+- IR1203: Life Best Estimate Liabilities by Country
+- IR1204: Best Estimate Assumptions for Life Insurance Risks
+- IR1205: With-Profits Value of Bonus
+- IR1206: With-Profits Liabilities and Assets
+- IR1401: Life Obligations Analysis
+- IR1601: Non-Life Annuities Information
+- IR1602: Non-Life Annuities Projection of Future Cash Flows
+- IR1701: Non-Life Technical Provisions
+- IR1703: Non-Life Best Estimate Liabilities by Country
+- IR1801: Non-Life Projection of Future Cash Flows
+- IR1802: Non-Life Liability Projection of Future Cash Flows
 """
 
 import pandas as pd
 import numpy as np
-from datetime import datetime, timedelta
+from datetime import datetime
 import random
-import string
+from typing import Dict, List
+
+from .qrt_balance_sheet import (
+    UNDERTAKINGS, REPORTING_DATE, CURRENCIES, COUNTRIES,
+    NON_LIFE_LOB, LIFE_LOB, random_amount, random_percentage
+)
 
 # Set random seed for reproducibility
 np.random.seed(42)
 random.seed(42)
-
-# ============================================================================
-# Configuration
-# ============================================================================
-
-UNDERTAKINGS = [
-    {'lei': '549300ABCDEF123456G7', 'name': 'Lloyd\'s Syndicate 2987', 'type': 'Non-Life'},
-    {'lei': '549300HIJKLM789012N3', 'name': 'Lloyd\'s Syndicate 33', 'type': 'Non-Life'},
-    {'lei': '549300OPQRS456789T0', 'name': 'Lloyd\'s Syndicate 1183', 'type': 'Non-Life'},
-    {'lei': '549300UVWXY012345Z1', 'name': 'Lloyd\'s Syndicate 2791', 'type': 'Composite'},
-    {'lei': '549300ABCDE678901F2', 'name': 'Lloyd\'s Syndicate 623', 'type': 'Non-Life'},
-]
-
-REPORTING_DATE = '2024-12-31'
-
-COUNTRIES = ['GB', 'US', 'DE', 'FR', 'JP', 'CH', 'AU', 'CA', 'IE', 'NL']
-
-NON_LIFE_LOB = [
-    'Medical expense insurance',
-    'Income protection insurance',
-    'Workers\' compensation insurance',
-    'Motor vehicle liability insurance',
-    'Other motor insurance',
-    'Marine, aviation and transport insurance',
-    'Fire and other damage to property insurance',
-    'General liability insurance',
-    'Credit and suretyship insurance',
-    'Legal expenses insurance',
-    'Assistance',
-    'Miscellaneous financial loss'
-]
-
-LIFE_LOB = [
-    'Insurance with profit participation',
-    'Index-linked and unit-linked insurance',
-    'Other life insurance',
-    'Annuities stemming from non-life contracts',
-    'Health insurance (SLT)',
-    'Life reinsurance'
-]
-
-def generate_lei():
-    return '549300' + ''.join(random.choices(string.ascii_uppercase + string.digits, k=14))
-
-def random_amount(min_val, max_val, precision=2):
-    return round(np.random.uniform(min_val, max_val), precision)
-
-def random_percentage(min_val=0, max_val=100):
-    return round(np.random.uniform(min_val, max_val), 4)
 
 
 # ============================================================================
@@ -83,45 +41,48 @@ def random_percentage(min_val=0, max_val=100):
 def generate_ir1201_life_technical_provisions():
     """
     IR1201 - Life Technical Provisions
-    Detailed breakdown of life insurance technical provisions.
+    Comprehensive breakdown of life insurance technical provisions.
     """
     data = []
 
     for undertaking in UNDERTAKINGS:
-        if undertaking['type'] in ['Life', 'Composite']:
-            for lob in LIFE_LOB:
-                gross_be = random_amount(10_000_000, 500_000_000)
-                ri_recoverables = gross_be * random_percentage(5, 25) / 100
-                net_be = gross_be - ri_recoverables
-                risk_margin = gross_be * random_percentage(3, 8) / 100
+        for lob in LIFE_LOB:
+            bel = random_amount(50_000_000, 500_000_000)
+            rm = bel * np.random.uniform(0.03, 0.08)
 
-                data.append({
-                    'LEI': undertaking['lei'],
-                    'Undertaking_Name': undertaking['name'],
-                    'Reporting_Date': REPORTING_DATE,
-                    'Line_Of_Business': lob,
-                    # Gross Best Estimate
-                    'Gross_Best_Estimate': gross_be,
-                    'BE_Claims_Provisions': gross_be * random_percentage(30, 50) / 100,
-                    'BE_Premium_Provisions': gross_be * random_percentage(50, 70) / 100,
-                    # Reinsurance Recoverables
-                    'RI_Recoverables_Total': ri_recoverables,
-                    'RI_Recoverables_Claims': ri_recoverables * random_percentage(60, 80) / 100,
-                    'RI_Recoverables_Premium': ri_recoverables * random_percentage(20, 40) / 100,
-                    # Net Best Estimate
-                    'Net_Best_Estimate': net_be,
-                    # Risk Margin
-                    'Risk_Margin': risk_margin,
-                    # Total Technical Provisions
-                    'Gross_Technical_Provisions': gross_be + risk_margin,
-                    'Net_Technical_Provisions': net_be + risk_margin,
-                    # Transitional Measures
-                    'Transitional_TP_Deduction': random_amount(0, gross_be * 0.1),
-                    'Transitional_Interest_Rate': random_amount(0, gross_be * 0.05),
-                    # Final TP
-                    'Technical_Provisions_After_Transitional': gross_be + risk_margin - random_amount(0, gross_be * 0.1),
-                    'Currency': 'GBP'
-                })
+            row = {
+                'LEI': undertaking['lei'],
+                'Undertaking_Name': undertaking['name'],
+                'Reporting_Date': REPORTING_DATE,
+                'Line_Of_Business': lob,
+                # Best Estimate
+                'Best_Estimate_Gross': bel,
+                'Reinsurance_Recoverables': bel * np.random.uniform(0.05, 0.20),
+                'Best_Estimate_Net': bel * np.random.uniform(0.80, 0.95),
+                # Risk Margin
+                'Risk_Margin': rm,
+                # Technical Provisions Total
+                'TP_Gross': bel + rm,
+                'TP_Net': (bel * np.random.uniform(0.80, 0.95)) + rm,
+                # BE Components
+                'BE_Future_Premiums': bel * np.random.uniform(-0.15, -0.05),
+                'BE_Future_Claims': bel * np.random.uniform(0.50, 0.70),
+                'BE_Future_Expenses': bel * np.random.uniform(0.08, 0.15),
+                'BE_Other_Cash_Flows': bel * np.random.uniform(0.05, 0.15),
+                # Transitional Measures
+                'Transitional_TP': random_amount(0, bel * 0.05),
+                'Transitional_Interest_Rate': random_amount(0, bel * 0.03),
+                # Matching Adjustment
+                'Matching_Adjustment_Applied': random.choice([True, False]),
+                'Matching_Adjustment_Amount': random_amount(0, bel * 0.02),
+                # Volatility Adjustment
+                'Volatility_Adjustment_Applied': random.choice([True, False]),
+                'Volatility_Adjustment_Amount': random_amount(0, bel * 0.01),
+                # Duration
+                'Modified_Duration': round(np.random.uniform(5, 20), 2),
+                'Average_Duration_Liabilities': round(np.random.uniform(8, 25), 2),
+            }
+            data.append(row)
 
     return pd.DataFrame(data)
 
@@ -133,31 +94,33 @@ def generate_ir1201_life_technical_provisions():
 def generate_ir1203_life_bel_by_country():
     """
     IR1203 - Life Best Estimate Liabilities by Country
-    Geographic breakdown of life best estimate.
+    Geographic breakdown of life BEL.
     """
     data = []
 
     for undertaking in UNDERTAKINGS:
-        if undertaking['type'] in ['Life', 'Composite']:
-            total_bel = random_amount(100_000_000, 1_000_000_000)
+        for country in COUNTRIES[:6]:
+            for lob in LIFE_LOB[:4]:
+                bel = random_amount(5_000_000, 80_000_000)
 
-            for country in COUNTRIES[:6]:
-                country_pct = random_percentage(5, 40) if country == 'GB' else random_percentage(2, 15)
-                country_bel = total_bel * country_pct / 100
-
-                data.append({
+                row = {
                     'LEI': undertaking['lei'],
                     'Undertaking_Name': undertaking['name'],
                     'Reporting_Date': REPORTING_DATE,
-                    'Country': country,
-                    'Best_Estimate_Gross': country_bel,
-                    'Best_Estimate_Ceded': country_bel * random_percentage(5, 20) / 100,
-                    'Best_Estimate_Net': country_bel * random_percentage(80, 95) / 100,
-                    'Percentage_Of_Total': country_pct,
-                    'Number_Of_Contracts': random.randint(100, 50000),
-                    'Sum_Insured': country_bel * random.randint(10, 30),
-                    'Currency': 'GBP'
-                })
+                    'Country_Of_Risk': country,
+                    'Line_Of_Business': lob,
+                    'Best_Estimate_Gross': bel,
+                    'Reinsurance_Recoverables': bel * np.random.uniform(0.05, 0.20),
+                    'Best_Estimate_Net': bel * np.random.uniform(0.80, 0.95),
+                    'BE_Death_Benefits': bel * np.random.uniform(0.15, 0.30),
+                    'BE_Survival_Benefits': bel * np.random.uniform(0.30, 0.50),
+                    'BE_Surrender_Benefits': bel * np.random.uniform(0.05, 0.15),
+                    'BE_Other_Benefits': bel * np.random.uniform(0.10, 0.25),
+                    'BE_Expenses': bel * np.random.uniform(0.05, 0.12),
+                    'Number_Of_Policies': random.randint(1000, 50000),
+                    'Sum_Insured': bel * np.random.uniform(3, 8),
+                }
+                data.append(row)
 
     return pd.DataFrame(data)
 
@@ -169,41 +132,44 @@ def generate_ir1203_life_bel_by_country():
 def generate_ir1204_life_be_assumptions():
     """
     IR1204 - Best Estimate Assumptions for Life Insurance Risks
-    Key assumptions used in calculating life best estimates.
+    Key actuarial assumptions used in life BEL calculation.
     """
     data = []
 
-    risk_types = [
-        'Mortality', 'Longevity', 'Disability/Morbidity',
-        'Lapse', 'Expense', 'Revision'
+    assumption_types = [
+        ('Mortality', 'qx', 'Per mille'),
+        ('Longevity', 'qx', 'Per mille'),
+        ('Morbidity', 'i', 'Per mille'),
+        ('Lapse', 'lapse_rate', 'Percentage'),
+        ('Expense', 'expense_per_policy', 'GBP'),
+        ('Expense_Inflation', 'inflation_rate', 'Percentage'),
+        ('Discount_Rate', 'rate', 'Percentage'),
     ]
 
-    age_bands = ['0-30', '31-45', '46-60', '61-75', '76+']
-
     for undertaking in UNDERTAKINGS:
-        if undertaking['type'] in ['Life', 'Composite']:
-            for lob in LIFE_LOB[:3]:
-                for risk_type in risk_types:
-                    for age_band in age_bands:
-                        base_rate = random_percentage(0.1, 5) if risk_type == 'Mortality' else random_percentage(0.5, 15)
-
-                        data.append({
-                            'LEI': undertaking['lei'],
-                            'Undertaking_Name': undertaking['name'],
-                            'Reporting_Date': REPORTING_DATE,
-                            'Line_Of_Business': lob,
-                            'Risk_Type': risk_type,
-                            'Age_Band': age_band,
-                            'Base_Table': f'{risk_type[:3].upper()}_2024',
-                            'Base_Rate_Pct': base_rate,
-                            'Loading_Factor': random_percentage(90, 120),
-                            'Trend_Assumption_Pct': random_percentage(-2, 2),
-                            'Selection_Factor': random_percentage(80, 100),
-                            'Experience_Adjustment': random_percentage(90, 110),
-                            'Uncertainty_Margin': random_percentage(5, 15),
-                            'Sensitivity_10pct_Increase': random_amount(100_000, 10_000_000),
-                            'Currency': 'GBP'
-                        })
+        for lob in LIFE_LOB[:4]:
+            for assumption_name, assumption_code, unit in assumption_types:
+                row = {
+                    'LEI': undertaking['lei'],
+                    'Undertaking_Name': undertaking['name'],
+                    'Reporting_Date': REPORTING_DATE,
+                    'Line_Of_Business': lob,
+                    'Assumption_Type': assumption_name,
+                    'Assumption_Code': assumption_code,
+                    'Unit': unit,
+                    'Best_Estimate_Value': round(np.random.uniform(0.5, 5.0), 4),
+                    'Upper_Bound': round(np.random.uniform(5.1, 8.0), 4),
+                    'Lower_Bound': round(np.random.uniform(0.1, 0.4), 4),
+                    'Year_1': round(np.random.uniform(0.5, 5.0), 4),
+                    'Year_2': round(np.random.uniform(0.5, 5.0), 4),
+                    'Year_5': round(np.random.uniform(0.5, 5.0), 4),
+                    'Year_10': round(np.random.uniform(0.5, 5.0), 4),
+                    'Year_20': round(np.random.uniform(0.5, 5.0), 4),
+                    'Ultimate': round(np.random.uniform(0.5, 5.0), 4),
+                    'Source': random.choice(['Internal Experience', 'Industry Tables', 'Regulatory Prescribed']),
+                    'Last_Review_Date': '2024-06-30',
+                }
+                data.append(row)
 
     return pd.DataFrame(data)
 
@@ -215,35 +181,32 @@ def generate_ir1204_life_be_assumptions():
 def generate_ir1205_with_profits_bonus():
     """
     IR1205 - With-Profits Value of Bonus
-    Analysis of with-profits bonus reserves.
+    Analysis of with-profits bonus provisions.
     """
     data = []
 
-    bonus_types = ['Reversionary Bonus', 'Terminal Bonus', 'Cash Bonus', 'Asset Share']
+    bonus_types = ['Reversionary Bonus', 'Terminal Bonus', 'Special Bonus', 'Interim Bonus']
 
     for undertaking in UNDERTAKINGS:
-        if undertaking['type'] in ['Life', 'Composite']:
-            for bonus_type in bonus_types:
-                total_value = random_amount(10_000_000, 200_000_000)
+        total_with_profits = random_amount(100_000_000, 800_000_000)
 
-                data.append({
-                    'LEI': undertaking['lei'],
-                    'Undertaking_Name': undertaking['name'],
-                    'Reporting_Date': REPORTING_DATE,
-                    'Bonus_Type': bonus_type,
-                    'Total_Bonus_Value': total_value,
-                    'Guaranteed_Bonus': total_value * random_percentage(60, 80) / 100 if bonus_type == 'Reversionary Bonus' else 0,
-                    'Non_Guaranteed_Bonus': total_value * random_percentage(20, 40) / 100 if bonus_type == 'Reversionary Bonus' else total_value,
-                    'Opening_Balance': total_value * random_percentage(90, 110) / 100,
-                    'Bonus_Additions': total_value * random_percentage(3, 8) / 100,
-                    'Claims_Paid': total_value * random_percentage(5, 15) / 100,
-                    'Surrenders': total_value * random_percentage(2, 8) / 100,
-                    'Transfers': random_amount(-5_000_000, 5_000_000),
-                    'Closing_Balance': total_value,
-                    'Number_Of_Policies': random.randint(1000, 50000),
-                    'Average_Bonus_Per_Policy': total_value / random.randint(1000, 50000),
-                    'Currency': 'GBP'
-                })
+        for bonus_type in bonus_types:
+            row = {
+                'LEI': undertaking['lei'],
+                'Undertaking_Name': undertaking['name'],
+                'Reporting_Date': REPORTING_DATE,
+                'Bonus_Type': bonus_type,
+                'Opening_Value': random_amount(total_with_profits * 0.02, total_with_profits * 0.15),
+                'Declared_Bonus': random_amount(total_with_profits * 0.005, total_with_profits * 0.03),
+                'Claims_Paid': random_amount(total_with_profits * 0.01, total_with_profits * 0.05),
+                'Surrenders': random_amount(total_with_profits * 0.005, total_with_profits * 0.02),
+                'Other_Movements': random_amount(-total_with_profits * 0.01, total_with_profits * 0.01),
+                'Closing_Value': random_amount(total_with_profits * 0.02, total_with_profits * 0.18),
+                'Bonus_Rate_Declared': random_percentage(0.5, 3.5),
+                'Asset_Share_Coverage': random_percentage(95, 110),
+                'Smoothing_Adjustment': random_amount(-total_with_profits * 0.02, total_with_profits * 0.02),
+            }
+            data.append(row)
 
     return pd.DataFrame(data)
 
@@ -255,39 +218,40 @@ def generate_ir1205_with_profits_bonus():
 def generate_ir1206_with_profits_liabilities_assets():
     """
     IR1206 - With-Profits Liabilities and Assets
-    With-profits fund balance sheet analysis.
+    With-profits fund asset-liability matching analysis.
     """
     data = []
 
     for undertaking in UNDERTAKINGS:
-        if undertaking['type'] in ['Life', 'Composite']:
-            total_assets = random_amount(500_000_000, 5_000_000_000)
-            total_liabilities = total_assets * random_percentage(85, 98) / 100
+        total_assets = random_amount(200_000_000, 1_000_000_000)
+        total_liabilities = total_assets * np.random.uniform(0.85, 0.98)
 
-            data.append({
-                'LEI': undertaking['lei'],
-                'Undertaking_Name': undertaking['name'],
-                'Reporting_Date': REPORTING_DATE,
-                # Assets
-                'Total_Assets': total_assets,
-                'Bonds': total_assets * random_percentage(30, 50) / 100,
-                'Equities': total_assets * random_percentage(20, 40) / 100,
-                'Property': total_assets * random_percentage(5, 15) / 100,
-                'Cash': total_assets * random_percentage(3, 10) / 100,
-                'Other_Assets': total_assets * random_percentage(2, 8) / 100,
-                # Liabilities
-                'Total_Liabilities': total_liabilities,
-                'With_Profits_BEL': total_liabilities * random_percentage(80, 90) / 100,
-                'Guaranteed_Benefits': total_liabilities * random_percentage(50, 70) / 100,
-                'Future_Discretionary_Benefits': total_liabilities * random_percentage(10, 25) / 100,
-                'Risk_Margin': total_liabilities * random_percentage(3, 8) / 100,
-                'Other_Liabilities': total_liabilities * random_percentage(5, 12) / 100,
-                # Surplus
-                'Estate': total_assets - total_liabilities,
-                'Support_Assets': random_amount(10_000_000, 100_000_000),
-                'PPFM_Ratio': random_percentage(0, 50),
-                'Currency': 'GBP'
-            })
+        row = {
+            'LEI': undertaking['lei'],
+            'Undertaking_Name': undertaking['name'],
+            'Reporting_Date': REPORTING_DATE,
+            # Assets
+            'Assets_Equities': total_assets * np.random.uniform(0.30, 0.50),
+            'Assets_Fixed_Income': total_assets * np.random.uniform(0.30, 0.45),
+            'Assets_Property': total_assets * np.random.uniform(0.05, 0.15),
+            'Assets_Cash': total_assets * np.random.uniform(0.02, 0.08),
+            'Assets_Other': total_assets * np.random.uniform(0.02, 0.10),
+            'Total_Assets': total_assets,
+            # Liabilities
+            'Guaranteed_Benefits': total_liabilities * np.random.uniform(0.60, 0.80),
+            'Future_Discretionary_Benefits': total_liabilities * np.random.uniform(0.10, 0.25),
+            'Declared_Bonus_Not_Yet_Credited': total_liabilities * np.random.uniform(0.02, 0.08),
+            'Expenses_Provision': total_liabilities * np.random.uniform(0.03, 0.08),
+            'Total_Liabilities': total_liabilities,
+            # Surplus
+            'Free_Assets': total_assets - total_liabilities,
+            'Estate_Ratio': round((total_assets - total_liabilities) / total_liabilities * 100, 2),
+            # Risk Metrics
+            'Equity_Backing_Ratio': random_percentage(30, 50),
+            'Duration_Mismatch': round(np.random.uniform(-3, 3), 2),
+            'Currency_Mismatch': random_percentage(0, 10),
+        }
+        data.append(row)
 
     return pd.DataFrame(data)
 
@@ -299,39 +263,44 @@ def generate_ir1206_with_profits_liabilities_assets():
 def generate_ir1401_life_obligations():
     """
     IR1401 - Life Obligations Analysis
-    Detailed analysis of life insurance obligations.
+    Detailed analysis of life insurance obligations by policy characteristics.
     """
     data = []
 
     product_types = [
-        'Term Assurance', 'Whole of Life', 'Endowment',
-        'Annuity in Payment', 'Deferred Annuity', 'Unit-Linked'
+        'Term Assurance',
+        'Whole of Life',
+        'Endowment',
+        'Pure Endowment',
+        'Immediate Annuity',
+        'Deferred Annuity',
+        'Unit-Linked',
+        'With-Profits',
     ]
 
     for undertaking in UNDERTAKINGS:
-        if undertaking['type'] in ['Life', 'Composite']:
-            for product in product_types:
-                num_policies = random.randint(1000, 100000)
-                avg_sum_assured = random_amount(50_000, 500_000)
+        for product in product_types:
+            bel = random_amount(20_000_000, 200_000_000)
 
-                data.append({
-                    'LEI': undertaking['lei'],
-                    'Undertaking_Name': undertaking['name'],
-                    'Reporting_Date': REPORTING_DATE,
-                    'Product_Type': product,
-                    'Number_Of_Policies': num_policies,
-                    'Number_Of_Lives': int(num_policies * random_percentage(90, 110) / 100),
-                    'Sum_At_Risk': num_policies * avg_sum_assured,
-                    'Best_Estimate_Liability': random_amount(10_000_000, 500_000_000),
-                    'Premium_Income_Annual': num_policies * random_amount(500, 5000),
-                    'Average_Age_At_Entry': random_percentage(25, 55),
-                    'Average_Current_Age': random_percentage(35, 65),
-                    'Average_Duration_Years': random_percentage(5, 25),
-                    'Average_Term_Remaining': random_percentage(5, 30),
-                    'Lapse_Rate_Assumption': random_percentage(2, 10),
-                    'Expense_Assumption_Per_Policy': random_amount(50, 200),
-                    'Currency': 'GBP'
-                })
+            row = {
+                'LEI': undertaking['lei'],
+                'Undertaking_Name': undertaking['name'],
+                'Reporting_Date': REPORTING_DATE,
+                'Product_Type': product,
+                'Number_Of_Policies': random.randint(1000, 100000),
+                'Sum_Insured': bel * np.random.uniform(5, 15),
+                'Annual_Premium': bel * np.random.uniform(0.05, 0.15),
+                'Best_Estimate': bel,
+                'Risk_Margin': bel * np.random.uniform(0.03, 0.08),
+                'Technical_Provisions': bel * np.random.uniform(1.03, 1.08),
+                'Average_Age': round(np.random.uniform(35, 65), 1),
+                'Average_Duration': round(np.random.uniform(5, 25), 1),
+                'Average_Premium': round(bel * 0.1 / random.randint(1000, 100000), 2),
+                'Persistency_Rate': random_percentage(85, 98),
+                'Claim_Rate': random_percentage(0.1, 5.0),
+                'New_Business_Strain': bel * np.random.uniform(-0.05, 0.05),
+            }
+            data.append(row)
 
     return pd.DataFrame(data)
 
@@ -347,29 +316,37 @@ def generate_ir1601_non_life_annuities():
     """
     data = []
 
-    for undertaking in UNDERTAKINGS:
-        if undertaking['type'] in ['Non-Life', 'Composite']:
-            for lob in ['Motor vehicle liability insurance', 'Workers\' compensation insurance', 'General liability insurance']:
-                num_annuities = random.randint(50, 2000)
-                avg_annual_payment = random_amount(10_000, 100_000)
+    annuity_origins = [
+        'Motor - Bodily Injury',
+        'Employers Liability',
+        'Public Liability',
+        'Professional Indemnity',
+        'Marine Personal Injury',
+    ]
 
-                data.append({
-                    'LEI': undertaking['lei'],
-                    'Undertaking_Name': undertaking['name'],
-                    'Reporting_Date': REPORTING_DATE,
-                    'Line_Of_Business': lob,
-                    'Number_Of_Annuities': num_annuities,
-                    'Total_Annual_Payment': num_annuities * avg_annual_payment,
-                    'Average_Age_Of_Annuitant': random_percentage(35, 70),
-                    'Average_Remaining_Life_Expectancy': random_percentage(10, 40),
-                    'Best_Estimate_Provision': num_annuities * avg_annual_payment * random_percentage(8, 20),
-                    'Risk_Margin': num_annuities * avg_annual_payment * random_percentage(0.5, 2),
-                    'Total_Technical_Provision': num_annuities * avg_annual_payment * random_percentage(8.5, 22),
-                    'Discount_Rate_Used': random_percentage(1, 4),
-                    'Mortality_Table': 'CMI 2023',
-                    'Inflation_Assumption': random_percentage(2, 4),
-                    'Currency': 'GBP'
-                })
+    for undertaking in UNDERTAKINGS:
+        for origin in annuity_origins:
+            bel = random_amount(5_000_000, 50_000_000)
+
+            row = {
+                'LEI': undertaking['lei'],
+                'Undertaking_Name': undertaking['name'],
+                'Reporting_Date': REPORTING_DATE,
+                'Annuity_Origin': origin,
+                'Number_Of_Annuitants': random.randint(50, 500),
+                'Total_Annual_Payment': bel * np.random.uniform(0.04, 0.08),
+                'Average_Age': round(np.random.uniform(45, 70), 1),
+                'Average_Remaining_Duration': round(np.random.uniform(10, 30), 1),
+                'Best_Estimate_Gross': bel,
+                'Reinsurance_Recoverables': bel * np.random.uniform(0.10, 0.30),
+                'Best_Estimate_Net': bel * np.random.uniform(0.70, 0.90),
+                'Risk_Margin': bel * np.random.uniform(0.04, 0.10),
+                'Technical_Provisions': bel * np.random.uniform(1.04, 1.10),
+                'Mortality_Table_Used': random.choice(['PMA08', 'PFA08', 'S3PMA', 'S3PFA']),
+                'Mortality_Improvement': random.choice(['CMI_2022', 'CMI_2023', 'None']),
+                'Discount_Rate': random_percentage(1.0, 4.0),
+            }
+            data.append(row)
 
     return pd.DataFrame(data)
 
@@ -381,34 +358,34 @@ def generate_ir1601_non_life_annuities():
 def generate_ir1602_non_life_annuities_cash_flows():
     """
     IR1602 - Non-Life Annuities Projection of Future Cash Flows
-    Cash flow projections for non-life annuities.
+    Cash flow projections for non-life annuity obligations.
     """
     data = []
 
-    projection_years = list(range(1, 51))  # 50 year projection
+    years = list(range(1, 51))  # 50 year projection
 
     for undertaking in UNDERTAKINGS:
-        if undertaking['type'] in ['Non-Life', 'Composite']:
-            initial_payment = random_amount(5_000_000, 50_000_000)
+        base_payment = random_amount(2_000_000, 10_000_000)
 
-            for year in projection_years:
-                # Declining payments over time
-                payment_factor = max(0.01, 1 - (year - 1) * 0.025)  # Reduce by 2.5% per year
-                inflation_factor = (1.025) ** year  # 2.5% inflation
+        for year in years:
+            decay_factor = np.exp(-0.03 * year)  # Mortality run-off
 
-                data.append({
-                    'LEI': undertaking['lei'],
-                    'Undertaking_Name': undertaking['name'],
-                    'Reporting_Date': REPORTING_DATE,
-                    'Projection_Year': year,
-                    'Cash_Out_Payments': initial_payment * payment_factor * inflation_factor,
-                    'Cash_Out_Expenses': initial_payment * payment_factor * 0.03,
-                    'Total_Cash_Out': initial_payment * payment_factor * inflation_factor * 1.03,
-                    'Discount_Factor': 1 / ((1 + 0.03) ** year),
-                    'Discounted_Cash_Flow': initial_payment * payment_factor * inflation_factor * 1.03 / ((1 + 0.03) ** year),
-                    'Survivors_Assumed': 100 * (0.98 ** year),  # 2% mortality per year
-                    'Currency': 'GBP'
-                })
+            row = {
+                'LEI': undertaking['lei'],
+                'Undertaking_Name': undertaking['name'],
+                'Reporting_Date': REPORTING_DATE,
+                'Projection_Year': year,
+                'Calendar_Year': 2024 + year,
+                'Annuity_Payments': round(base_payment * decay_factor, 2),
+                'Expenses': round(base_payment * decay_factor * 0.02, 2),
+                'Reinsurance_Recoveries': round(base_payment * decay_factor * np.random.uniform(0.1, 0.3), 2),
+                'Net_Cash_Flow': round(base_payment * decay_factor * np.random.uniform(0.68, 0.88), 2),
+                'Discount_Factor': round(np.exp(-0.025 * year), 6),
+                'Present_Value': round(base_payment * decay_factor * np.exp(-0.025 * year), 2),
+                'Number_Of_Annuitants': max(1, int(200 * decay_factor)),
+                'Cumulative_PV': round(base_payment * (1 - np.exp(-0.025 * year)) / 0.025, 2),
+            }
+            data.append(row)
 
     return pd.DataFrame(data)
 
@@ -420,50 +397,44 @@ def generate_ir1602_non_life_annuities_cash_flows():
 def generate_ir1701_non_life_technical_provisions():
     """
     IR1701 - Non-Life Technical Provisions
-    Detailed breakdown of non-life technical provisions.
+    Comprehensive breakdown of non-life insurance technical provisions.
     """
     data = []
 
     for undertaking in UNDERTAKINGS:
-        if undertaking['type'] in ['Non-Life', 'Composite']:
-            for lob in NON_LIFE_LOB:
-                claims_provision = random_amount(10_000_000, 500_000_000)
-                premium_provision = random_amount(5_000_000, 200_000_000)
+        for lob in NON_LIFE_LOB:
+            claims_provision = random_amount(20_000_000, 300_000_000)
+            premium_provision = random_amount(5_000_000, 100_000_000)
 
-                # RI Recoverables
-                ri_claims = claims_provision * random_percentage(10, 35) / 100
-                ri_premium = premium_provision * random_percentage(10, 35) / 100
-
-                risk_margin = (claims_provision + premium_provision) * random_percentage(4, 10) / 100
-
-                data.append({
-                    'LEI': undertaking['lei'],
-                    'Undertaking_Name': undertaking['name'],
-                    'Reporting_Date': REPORTING_DATE,
-                    'Line_Of_Business': lob,
-                    # Claims Provisions
-                    'Gross_Claims_Provision': claims_provision,
-                    'Gross_IBNR': claims_provision * random_percentage(30, 60) / 100,
-                    'Gross_Case_Reserves': claims_provision * random_percentage(40, 70) / 100,
-                    'RI_Recoverables_Claims': ri_claims,
-                    'Net_Claims_Provision': claims_provision - ri_claims,
-                    # Premium Provisions
-                    'Gross_Premium_Provision': premium_provision,
-                    'Expected_Future_Premiums': premium_provision * random_percentage(80, 100) / 100,
-                    'Expected_Future_Claims': premium_provision * random_percentage(60, 85) / 100,
-                    'Expected_Future_Expenses': premium_provision * random_percentage(15, 30) / 100,
-                    'RI_Recoverables_Premium': ri_premium,
-                    'Net_Premium_Provision': premium_provision - ri_premium,
-                    # Risk Margin
-                    'Risk_Margin': risk_margin,
-                    # Totals
-                    'Gross_Best_Estimate': claims_provision + premium_provision,
-                    'Total_RI_Recoverables': ri_claims + ri_premium,
-                    'Net_Best_Estimate': (claims_provision - ri_claims) + (premium_provision - ri_premium),
-                    'Gross_Technical_Provisions': claims_provision + premium_provision + risk_margin,
-                    'Net_Technical_Provisions': (claims_provision - ri_claims) + (premium_provision - ri_premium) + risk_margin,
-                    'Currency': 'GBP'
-                })
+            row = {
+                'LEI': undertaking['lei'],
+                'Undertaking_Name': undertaking['name'],
+                'Reporting_Date': REPORTING_DATE,
+                'Line_Of_Business': lob,
+                # Claims Provision
+                'Claims_Provision_Gross': claims_provision,
+                'Claims_Provision_RI_Recoverables': claims_provision * np.random.uniform(0.15, 0.35),
+                'Claims_Provision_Net': claims_provision * np.random.uniform(0.65, 0.85),
+                # Premium Provision
+                'Premium_Provision_Gross': premium_provision,
+                'Premium_Provision_RI_Recoverables': premium_provision * np.random.uniform(0.10, 0.25),
+                'Premium_Provision_Net': premium_provision * np.random.uniform(0.75, 0.90),
+                # Best Estimate
+                'Best_Estimate_Claims': claims_provision * np.random.uniform(0.92, 0.98),
+                'Best_Estimate_Premium': premium_provision * np.random.uniform(0.92, 0.98),
+                'Best_Estimate_Total': (claims_provision + premium_provision) * np.random.uniform(0.92, 0.98),
+                # Risk Margin
+                'Risk_Margin': (claims_provision + premium_provision) * np.random.uniform(0.04, 0.08),
+                # Total Technical Provisions
+                'TP_Gross': claims_provision + premium_provision,
+                'TP_RI_Recoverables': (claims_provision + premium_provision) * np.random.uniform(0.12, 0.30),
+                'TP_Net': (claims_provision + premium_provision) * np.random.uniform(0.70, 0.88),
+                # ENID
+                'ENID_Adjustment': (claims_provision + premium_provision) * np.random.uniform(0.01, 0.05),
+                # Duration
+                'Modified_Duration': round(np.random.uniform(1.5, 5.0), 2),
+            }
+            data.append(row)
 
     return pd.DataFrame(data)
 
@@ -475,33 +446,33 @@ def generate_ir1701_non_life_technical_provisions():
 def generate_ir1703_non_life_bel_by_country():
     """
     IR1703 - Non-Life Best Estimate Liabilities by Country
-    Geographic breakdown of non-life best estimate.
+    Geographic breakdown of non-life BEL.
     """
     data = []
 
     for undertaking in UNDERTAKINGS:
-        if undertaking['type'] in ['Non-Life', 'Composite']:
-            for lob in NON_LIFE_LOB[:6]:
-                total_bel = random_amount(20_000_000, 300_000_000)
+        for country in COUNTRIES[:8]:
+            for lob in NON_LIFE_LOB[:8]:
+                bel = random_amount(3_000_000, 50_000_000)
 
-                for country in COUNTRIES[:5]:
-                    country_pct = random_percentage(20, 50) if country == 'GB' else random_percentage(5, 20)
-                    country_bel = total_bel * country_pct / 100
-
-                    data.append({
-                        'LEI': undertaking['lei'],
-                        'Undertaking_Name': undertaking['name'],
-                        'Reporting_Date': REPORTING_DATE,
-                        'Line_Of_Business': lob,
-                        'Country': country,
-                        'Claims_Provision': country_bel * random_percentage(60, 80) / 100,
-                        'Premium_Provision': country_bel * random_percentage(20, 40) / 100,
-                        'Total_Best_Estimate': country_bel,
-                        'RI_Recoverables': country_bel * random_percentage(10, 30) / 100,
-                        'Net_Best_Estimate': country_bel * random_percentage(70, 90) / 100,
-                        'Percentage_Of_Total': country_pct,
-                        'Currency': 'GBP'
-                    })
+                row = {
+                    'LEI': undertaking['lei'],
+                    'Undertaking_Name': undertaking['name'],
+                    'Reporting_Date': REPORTING_DATE,
+                    'Country_Of_Risk': country,
+                    'Line_Of_Business': lob,
+                    'Claims_Provision_BE': bel * np.random.uniform(0.65, 0.80),
+                    'Premium_Provision_BE': bel * np.random.uniform(0.20, 0.35),
+                    'Best_Estimate_Gross': bel,
+                    'RI_Recoverables': bel * np.random.uniform(0.15, 0.30),
+                    'Best_Estimate_Net': bel * np.random.uniform(0.70, 0.85),
+                    'IBNR': bel * np.random.uniform(0.20, 0.40),
+                    'Case_Reserves': bel * np.random.uniform(0.30, 0.50),
+                    'ULAE': bel * np.random.uniform(0.02, 0.06),
+                    'ENID': bel * np.random.uniform(0.01, 0.04),
+                    'Binary_Events': bel * np.random.uniform(0.005, 0.02),
+                }
+                data.append(row)
 
     return pd.DataFrame(data)
 
@@ -513,45 +484,42 @@ def generate_ir1703_non_life_bel_by_country():
 def generate_ir1801_non_life_cash_flows():
     """
     IR1801 - Non-Life Projection of Future Cash Flows
-    Cash flow projections for non-life technical provisions.
+    Cash flow projections for non-life insurance obligations.
     """
     data = []
 
-    projection_years = list(range(1, 31))  # 30 year projection
+    years = list(range(1, 21))  # 20 year projection
 
     for undertaking in UNDERTAKINGS:
-        if undertaking['type'] in ['Non-Life', 'Composite']:
-            for lob in NON_LIFE_LOB[:6]:
-                initial_claims = random_amount(20_000_000, 200_000_000)
-                initial_premium = random_amount(50_000_000, 300_000_000)
+        for lob in NON_LIFE_LOB[:6]:
+            base_claims = random_amount(10_000_000, 80_000_000)
 
-                for year in projection_years:
-                    # Claims runoff pattern (faster in early years)
-                    claims_factor = 0.6 ** (year - 1) if year <= 5 else 0.6 ** 4 * 0.9 ** (year - 5)
-                    premium_factor = max(0, 1 - year * 0.3)  # Earned over ~3 years
+            for year in years:
+                decay = np.exp(-0.25 * year)  # Claims run-off pattern
 
-                    data.append({
-                        'LEI': undertaking['lei'],
-                        'Undertaking_Name': undertaking['name'],
-                        'Reporting_Date': REPORTING_DATE,
-                        'Line_Of_Business': lob,
-                        'Projection_Year': year,
-                        # Cash Inflows
-                        'Future_Premiums_Receivable': initial_premium * premium_factor,
-                        'Salvage_And_Subrogation': initial_claims * claims_factor * 0.02,
-                        'Total_Cash_In': initial_premium * premium_factor + initial_claims * claims_factor * 0.02,
-                        # Cash Outflows
-                        'Claims_Payments': initial_claims * claims_factor,
-                        'Claims_Expenses': initial_claims * claims_factor * 0.08,
-                        'Administrative_Expenses': initial_premium * premium_factor * 0.05,
-                        'Acquisition_Costs': initial_premium * premium_factor * 0.15,
-                        'Total_Cash_Out': initial_claims * claims_factor * 1.08 + initial_premium * premium_factor * 0.2,
-                        # Discounted Values
-                        'Discount_Factor': 1 / ((1 + 0.03) ** year),
-                        'Discounted_Net_Cash_Flow': ((initial_premium * premium_factor + initial_claims * claims_factor * 0.02) -
-                                                    (initial_claims * claims_factor * 1.08 + initial_premium * premium_factor * 0.2)) / ((1 + 0.03) ** year),
-                        'Currency': 'GBP'
-                    })
+                row = {
+                    'LEI': undertaking['lei'],
+                    'Undertaking_Name': undertaking['name'],
+                    'Reporting_Date': REPORTING_DATE,
+                    'Line_Of_Business': lob,
+                    'Projection_Year': year,
+                    'Calendar_Year': 2024 + year,
+                    # Outflows
+                    'Claims_Payments': round(base_claims * decay, 2),
+                    'Expenses_Claims_Handling': round(base_claims * decay * 0.08, 2),
+                    'Expenses_Administration': round(base_claims * decay * 0.03, 2),
+                    'Total_Outflows': round(base_claims * decay * 1.11, 2),
+                    # Inflows
+                    'Premium_Receivables': round(base_claims * decay * 0.15 if year <= 2 else 0, 2),
+                    'RI_Recoveries': round(base_claims * decay * np.random.uniform(0.15, 0.30), 2),
+                    'Salvage_Subrogation': round(base_claims * decay * np.random.uniform(0.02, 0.08), 2),
+                    'Total_Inflows': round(base_claims * decay * np.random.uniform(0.20, 0.45), 2),
+                    # Net
+                    'Net_Cash_Flow': round(base_claims * decay * np.random.uniform(0.65, 0.85), 2),
+                    'Discount_Factor': round(np.exp(-0.025 * year), 6),
+                    'Present_Value': round(base_claims * decay * np.exp(-0.025 * year), 2),
+                }
+                data.append(row)
 
     return pd.DataFrame(data)
 
@@ -563,310 +531,72 @@ def generate_ir1801_non_life_cash_flows():
 def generate_ir1802_non_life_liability_cash_flows():
     """
     IR1802 - Non-Life Liability Projection of Future Cash Flows
-    Detailed liability cash flow projections.
+    Detailed liability cash flow projections by development period.
     """
     data = []
 
-    projection_years = list(range(1, 21))
+    development_periods = list(range(0, 11))  # 0-10 years development
 
     for undertaking in UNDERTAKINGS:
-        if undertaking['type'] in ['Non-Life', 'Composite']:
-            for lob in NON_LIFE_LOB[:4]:
-                initial_reserve = random_amount(30_000_000, 300_000_000)
+        for lob in NON_LIFE_LOB[:8]:
+            ultimate_loss = random_amount(50_000_000, 300_000_000)
 
-                for year in projection_years:
-                    runoff_factor = 0.7 ** (year - 1) if year <= 3 else 0.7 ** 2 * 0.85 ** (year - 3)
+            for dev_period in development_periods:
+                # Typical development pattern
+                if dev_period == 0:
+                    cumulative_pct = 0.35
+                elif dev_period == 1:
+                    cumulative_pct = 0.60
+                elif dev_period == 2:
+                    cumulative_pct = 0.75
+                elif dev_period == 3:
+                    cumulative_pct = 0.85
+                elif dev_period == 4:
+                    cumulative_pct = 0.92
+                else:
+                    cumulative_pct = min(1.0, 0.92 + 0.015 * (dev_period - 4))
 
-                    data.append({
-                        'LEI': undertaking['lei'],
-                        'Undertaking_Name': undertaking['name'],
-                        'Reporting_Date': REPORTING_DATE,
-                        'Line_Of_Business': lob,
-                        'Projection_Year': year,
-                        'Opening_Reserve': initial_reserve * (0.7 ** (year - 1)) if year > 1 else initial_reserve,
-                        'Claims_Paid': initial_reserve * runoff_factor * random_percentage(20, 40) / 100,
-                        'Reserve_Movement': initial_reserve * runoff_factor * random_percentage(-10, 10) / 100,
-                        'Closing_Reserve': initial_reserve * runoff_factor,
-                        'ALAE_Paid': initial_reserve * runoff_factor * 0.05,
-                        'ULAE_Paid': initial_reserve * runoff_factor * 0.03,
-                        'Discount_Rate': 0.03,
-                        'Discounted_Reserve': initial_reserve * runoff_factor / ((1 + 0.03) ** year),
-                        'Currency': 'GBP'
-                    })
+                incremental_pct = cumulative_pct - (0 if dev_period == 0 else
+                                                    0.35 if dev_period == 1 else
+                                                    0.60 if dev_period == 2 else
+                                                    0.75 if dev_period == 3 else
+                                                    0.85 if dev_period == 4 else
+                                                    min(1.0, 0.92 + 0.015 * (dev_period - 5)))
 
-    return pd.DataFrame(data)
-
-
-# ============================================================================
-# IR1901 - Non-Life Insurance Claims
-# ============================================================================
-
-def generate_ir1901_non_life_claims():
-    """
-    IR1901 - Non-Life Insurance Claims
-    Claims development triangles and analysis.
-    """
-    data = []
-
-    accident_years = list(range(2015, 2025))
-    development_years = list(range(0, 10))
-
-    for undertaking in UNDERTAKINGS:
-        if undertaking['type'] in ['Non-Life', 'Composite']:
-            for lob in NON_LIFE_LOB[:8]:
-                for acc_year in accident_years:
-                    ultimate = random_amount(20_000_000, 200_000_000)
-
-                    for dev_year in development_years:
-                        if acc_year + dev_year <= 2024:
-                            # Development pattern
-                            cumulative_paid_pct = min(100, 30 + dev_year * 15 + random_percentage(-5, 5))
-                            cumulative_incurred_pct = min(100, 60 + dev_year * 8 + random_percentage(-3, 3))
-
-                            data.append({
-                                'LEI': undertaking['lei'],
-                                'Undertaking_Name': undertaking['name'],
-                                'Reporting_Date': REPORTING_DATE,
-                                'Line_Of_Business': lob,
-                                'Accident_Year': acc_year,
-                                'Development_Year': dev_year,
-                                'Reporting_Year': acc_year + dev_year,
-                                # Gross amounts
-                                'Gross_Claims_Paid_Cumulative': ultimate * cumulative_paid_pct / 100,
-                                'Gross_Claims_Incurred_Cumulative': ultimate * cumulative_incurred_pct / 100,
-                                'Gross_Case_Reserves': ultimate * (cumulative_incurred_pct - cumulative_paid_pct) / 100,
-                                'Gross_IBNR': ultimate * (100 - cumulative_incurred_pct) / 100,
-                                # Net amounts (after RI)
-                                'Net_Claims_Paid_Cumulative': ultimate * cumulative_paid_pct / 100 * 0.75,
-                                'Net_Claims_Incurred_Cumulative': ultimate * cumulative_incurred_pct / 100 * 0.75,
-                                # Development factors
-                                'Paid_Development_Factor': 1 / (cumulative_paid_pct / 100) if cumulative_paid_pct > 0 else None,
-                                'Incurred_Development_Factor': 1 / (cumulative_incurred_pct / 100) if cumulative_incurred_pct > 0 else None,
-                                'Number_Of_Claims_Open': int(1000 * (1 - cumulative_paid_pct / 100)),
-                                'Number_Of_Claims_Closed': int(1000 * cumulative_paid_pct / 100),
-                                'Currency': 'GBP'
-                            })
-
-    return pd.DataFrame(data)
-
-
-# ============================================================================
-# IR1902 - Non-Life Claim Development (General Liability Sub-classes)
-# ============================================================================
-
-def generate_ir1902_gl_claims_development():
-    """
-    IR1902 - Non-Life Claim Development (General Liability Sub-classes)
-    Detailed claim development for general liability.
-    """
-    data = []
-
-    gl_subclasses = [
-        'Public Liability', 'Products Liability', 'Employers Liability',
-        'Professional Indemnity', 'Directors & Officers', 'Medical Malpractice'
-    ]
-
-    accident_years = list(range(2015, 2025))
-    development_years = list(range(0, 15))  # Longer tail for GL
-
-    for undertaking in UNDERTAKINGS:
-        if undertaking['type'] in ['Non-Life', 'Composite']:
-            for subclass in gl_subclasses:
-                for acc_year in accident_years:
-                    ultimate = random_amount(5_000_000, 80_000_000)
-
-                    for dev_year in development_years:
-                        if acc_year + dev_year <= 2024:
-                            # GL has longer development pattern
-                            cumulative_paid_pct = min(100, 10 + dev_year * 8 + random_percentage(-3, 3))
-                            cumulative_incurred_pct = min(100, 40 + dev_year * 6 + random_percentage(-2, 2))
-
-                            data.append({
-                                'LEI': undertaking['lei'],
-                                'Undertaking_Name': undertaking['name'],
-                                'Reporting_Date': REPORTING_DATE,
-                                'GL_Subclass': subclass,
-                                'Accident_Year': acc_year,
-                                'Development_Year': dev_year,
-                                'Gross_Paid_Cumulative': ultimate * cumulative_paid_pct / 100,
-                                'Gross_Incurred_Cumulative': ultimate * cumulative_incurred_pct / 100,
-                                'Gross_Outstanding': ultimate * (cumulative_incurred_pct - cumulative_paid_pct) / 100,
-                                'Large_Claims_Count': random.randint(0, 10),
-                                'Large_Claims_Value': ultimate * random_percentage(20, 50) / 100,
-                                'Average_Claim_Size': ultimate / random.randint(50, 500),
-                                'Currency': 'GBP'
-                            })
-
-    return pd.DataFrame(data)
-
-
-# ============================================================================
-# IR2001 - Development of Distribution of Claims Incurred
-# ============================================================================
-
-def generate_ir2001_claims_distribution():
-    """
-    IR2001 - Development of the Distribution of the Claims Incurred
-    Statistical distribution of claims development.
-    """
-    data = []
-
-    percentiles = [10, 25, 50, 75, 90, 95, 99]
-
-    for undertaking in UNDERTAKINGS:
-        if undertaking['type'] in ['Non-Life', 'Composite']:
-            for lob in NON_LIFE_LOB[:6]:
-                mean_ultimate = random_amount(50_000_000, 500_000_000)
-                cv = random_percentage(10, 30) / 100  # Coefficient of variation
-
-                for percentile in percentiles:
-                    # Normal distribution approximation
-                    z_score = {10: -1.28, 25: -0.67, 50: 0, 75: 0.67, 90: 1.28, 95: 1.65, 99: 2.33}
-                    ultimate_at_percentile = mean_ultimate * (1 + z_score[percentile] * cv)
-
-                    data.append({
-                        'LEI': undertaking['lei'],
-                        'Undertaking_Name': undertaking['name'],
-                        'Reporting_Date': REPORTING_DATE,
-                        'Line_Of_Business': lob,
-                        'Percentile': percentile,
-                        'Ultimate_Claims_Gross': ultimate_at_percentile,
-                        'Ultimate_Claims_Net': ultimate_at_percentile * random_percentage(65, 85) / 100,
-                        'Best_Estimate': mean_ultimate,
-                        'Standard_Deviation': mean_ultimate * cv,
-                        'Coefficient_Of_Variation': cv * 100,
-                        'Skewness': random_percentage(0.5, 2),
-                        'Currency': 'GBP'
-                    })
-
-    return pd.DataFrame(data)
-
-
-# ============================================================================
-# IR2102 - Non-Life Underwriting Risks
-# ============================================================================
-
-def generate_ir2102_non_life_underwriting_risks():
-    """
-    IR2102 - Non-Life Underwriting Risks
-    Analysis of non-life underwriting risk exposures.
-    """
-    data = []
-
-    for undertaking in UNDERTAKINGS:
-        if undertaking['type'] in ['Non-Life', 'Composite']:
-            for lob in NON_LIFE_LOB:
-                premium_volume = random_amount(20_000_000, 500_000_000)
-                reserve_volume = random_amount(30_000_000, 600_000_000)
-
-                data.append({
+                row = {
                     'LEI': undertaking['lei'],
                     'Undertaking_Name': undertaking['name'],
                     'Reporting_Date': REPORTING_DATE,
                     'Line_Of_Business': lob,
-                    # Premium Risk
-                    'Net_Premium_Volume': premium_volume,
-                    'Premium_Risk_Std_Dev': random_percentage(5, 15),
-                    'USP_Premium_Risk': random.choice(['Yes', 'No']),
-                    'Premium_Risk_SCR': premium_volume * random_percentage(10, 25) / 100,
-                    # Reserve Risk
-                    'Net_Reserve_Volume': reserve_volume,
-                    'Reserve_Risk_Std_Dev': random_percentage(8, 20),
-                    'USP_Reserve_Risk': random.choice(['Yes', 'No']),
-                    'Reserve_Risk_SCR': reserve_volume * random_percentage(15, 35) / 100,
-                    # Lapse Risk
-                    'Lapse_Risk_Exposure': premium_volume * random_percentage(20, 50) / 100,
-                    'Lapse_Risk_SCR': premium_volume * random_percentage(2, 8) / 100,
-                    # Combined
-                    'Geographic_Diversification': random_percentage(0.7, 0.95),
-                    'Combined_SCR_Before_Div': (premium_volume * random_percentage(10, 25) / 100 +
-                                               reserve_volume * random_percentage(15, 35) / 100),
-                    'Combined_SCR_After_Div': (premium_volume * random_percentage(10, 25) / 100 +
-                                              reserve_volume * random_percentage(15, 35) / 100) * 0.85,
-                    'Currency': 'GBP'
-                })
+                    'Development_Year': dev_period,
+                    'Calendar_Year': 2024 + dev_period,
+                    'Incremental_Claims_Paid': round(ultimate_loss * incremental_pct, 2),
+                    'Cumulative_Claims_Paid': round(ultimate_loss * cumulative_pct, 2),
+                    'Outstanding_Reserve': round(ultimate_loss * (1 - cumulative_pct), 2),
+                    'IBNR': round(ultimate_loss * (1 - cumulative_pct) * np.random.uniform(0.3, 0.6), 2),
+                    'Case_Reserves': round(ultimate_loss * (1 - cumulative_pct) * np.random.uniform(0.4, 0.7), 2),
+                    'Ultimate_Loss': ultimate_loss,
+                    'Development_Factor': round(1 / cumulative_pct if cumulative_pct > 0 else 999, 4),
+                    'Incremental_Percentage': round(incremental_pct * 100, 2),
+                    'Cumulative_Percentage': round(cumulative_pct * 100, 2),
+                }
+                data.append(row)
 
     return pd.DataFrame(data)
 
 
-# ============================================================================
-# IR2104 - Cyber Underwriting Risk
-# ============================================================================
-
-def generate_ir2104_cyber_underwriting_risk():
-    """
-    IR2104 - Cyber Underwriting Risk
-    Specific analysis of cyber insurance risks.
-    """
-    data = []
-
-    cyber_coverages = [
-        'First Party - Data Breach',
-        'First Party - Business Interruption',
-        'Third Party - Liability',
-        'Third Party - Privacy Liability',
-        'Cyber Extortion',
-        'Media Liability'
-    ]
-
-    industry_sectors = [
-        'Financial Services', 'Healthcare', 'Retail', 'Technology',
-        'Manufacturing', 'Professional Services', 'Public Sector'
-    ]
-
-    for undertaking in UNDERTAKINGS:
-        if undertaking['type'] in ['Non-Life', 'Composite']:
-            for coverage in cyber_coverages:
-                for sector in industry_sectors[:4]:
-                    gwp = random_amount(500_000, 30_000_000)
-
-                    data.append({
-                        'LEI': undertaking['lei'],
-                        'Undertaking_Name': undertaking['name'],
-                        'Reporting_Date': REPORTING_DATE,
-                        'Cyber_Coverage_Type': coverage,
-                        'Industry_Sector': sector,
-                        'Gross_Written_Premium': gwp,
-                        'Net_Written_Premium': gwp * random_percentage(60, 90) / 100,
-                        'Total_Sum_Insured': gwp * random.randint(50, 200),
-                        'Policy_Count': random.randint(10, 1000),
-                        'Average_Limit': gwp * random.randint(50, 200) / random.randint(10, 1000),
-                        'Average_Deductible': random_amount(10_000, 500_000),
-                        'Claims_Count_Current_Year': random.randint(0, 50),
-                        'Claims_Incurred_Current_Year': gwp * random_percentage(20, 80) / 100,
-                        'Loss_Ratio': random_percentage(30, 90),
-                        'Aggregate_Exposure': gwp * random.randint(50, 200),
-                        'PML_1_in_100': gwp * random.randint(20, 80),
-                        'PML_1_in_250': gwp * random.randint(40, 120),
-                        'Correlation_Assumption': random_percentage(20, 60),
-                        'Currency': 'GBP'
-                    })
-
-    return pd.DataFrame(data)
-
-
-# ============================================================================
-# Power BI Execution
-# ============================================================================
-
-if __name__ == "__main__":
-    print("Generating Technical Provisions QRTs...")
-
-# Generate all tables for Power BI
-IR1201_Life_Technical_Provisions = generate_ir1201_life_technical_provisions()
-IR1203_Life_BEL_By_Country = generate_ir1203_life_bel_by_country()
-IR1204_Life_BE_Assumptions = generate_ir1204_life_be_assumptions()
-IR1205_With_Profits_Bonus = generate_ir1205_with_profits_bonus()
-IR1206_With_Profits_Liabilities_Assets = generate_ir1206_with_profits_liabilities_assets()
-IR1401_Life_Obligations = generate_ir1401_life_obligations()
-IR1601_Non_Life_Annuities = generate_ir1601_non_life_annuities()
-IR1602_Non_Life_Annuities_Cash_Flows = generate_ir1602_non_life_annuities_cash_flows()
-IR1701_Non_Life_Technical_Provisions = generate_ir1701_non_life_technical_provisions()
-IR1703_Non_Life_BEL_By_Country = generate_ir1703_non_life_bel_by_country()
-IR1801_Non_Life_Cash_Flows = generate_ir1801_non_life_cash_flows()
-IR1802_Non_Life_Liability_Cash_Flows = generate_ir1802_non_life_liability_cash_flows()
-IR1901_Non_Life_Claims = generate_ir1901_non_life_claims()
-IR1902_GL_Claims_Development = generate_ir1902_gl_claims_development()
-IR2001_Claims_Distribution = generate_ir2001_claims_distribution()
-IR2102_Non_Life_Underwriting_Risks = generate_ir2102_non_life_underwriting_risks()
-IR2104_Cyber_Underwriting_Risk = generate_ir2104_cyber_underwriting_risk()
+# Export all functions
+__all__ = [
+    'generate_ir1201_life_technical_provisions',
+    'generate_ir1203_life_bel_by_country',
+    'generate_ir1204_life_be_assumptions',
+    'generate_ir1205_with_profits_bonus',
+    'generate_ir1206_with_profits_liabilities_assets',
+    'generate_ir1401_life_obligations',
+    'generate_ir1601_non_life_annuities',
+    'generate_ir1602_non_life_annuities_cash_flows',
+    'generate_ir1701_non_life_technical_provisions',
+    'generate_ir1703_non_life_bel_by_country',
+    'generate_ir1801_non_life_cash_flows',
+    'generate_ir1802_non_life_liability_cash_flows',
+]
