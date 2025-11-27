@@ -4,6 +4,8 @@ Generates realistic RRA (Reserving Return Annual) data for testing and developme
 
 This script creates synthetic Lloyd's data that can be used in Power BI
 for testing RRA reporting templates.
+
+Note: Configuration constants are imported from lloyds_reporting.config
 """
 
 import pandas as pd
@@ -11,10 +13,35 @@ import numpy as np
 from datetime import datetime, timedelta
 import random
 import os
+import sys
+
+# Add parent directories to path for imports
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '..'))
+
+# Import shared configuration
+try:
+    from lloyds_reporting.config import (
+        RANDOM_SEED,
+        SYNDICATES_PRIMARY,
+        CLASSES_OF_BUSINESS,
+        RISK_CODES,
+        CATASTROPHE_CODES,
+        CURRENCIES,
+        CURRENT_YEAR,
+        YEARS_OF_ACCOUNT,
+        BASE_EXCHANGE_RATES,
+        DevelopmentFactors,
+        ReserveRatios,
+    )
+    CONFIG_AVAILABLE = True
+except ImportError:
+    CONFIG_AVAILABLE = False
 
 # Set random seed for reproducibility
-np.random.seed(42)
-random.seed(42)
+_seed = RANDOM_SEED if CONFIG_AVAILABLE else 42
+np.random.seed(_seed)
+random.seed(_seed)
+
 
 class LloydsDataGenerator:
     """Generates synthetic Lloyd's of London reserving data"""
@@ -23,60 +50,65 @@ class LloydsDataGenerator:
         self.output_dir = output_dir
         os.makedirs(output_dir, exist_ok=True)
 
-        # Lloyd's syndicate numbers (realistic ranges)
-        self.syndicates = [2987, 33, 1183, 2791, 623, 4242, 5000, 1910, 2010, 2525]
-
-        # Years of Account (YoA)
-        self.current_year = 2024
-        self.years_of_account = list(range(2018, 2026))  # 2018-2025
-
-        # Classes of Business (Lloyd's typical classes)
-        self.classes_of_business = {
-            'A1': 'Direct Accident & Health',
-            'A2': 'Accident & Health Reinsurance',
-            'D1': 'Direct Motor (Private Car)',
-            'D2': 'Direct Motor (Commercial)',
-            'E1': 'Energy Offshore',
-            'E2': 'Energy Onshore',
-            'F1': 'Fire & Other Damage - Direct',
-            'F2': 'Fire & Other Damage - Reinsurance',
-            'M1': 'Marine Cargo',
-            'M2': 'Marine Hull',
-            'M3': 'Marine Liability',
-            'N1': 'Non-Marine Property Treaty',
-            'N2': 'Non-Marine Property Facultative',
-            'P1': 'Professional Indemnity',
-            'P2': 'Public & Products Liability',
-            'T1': 'Third Party Liability - Direct',
-            'T2': 'Third Party Liability - Reinsurance',
-            'V1': 'Aviation',
-            'W1': 'Political Risk & Contingency',
-            'X1': 'Catastrophe Reinsurance'
-        }
-
-        # Risk codes
-        self.risk_codes = {
-            'RC01': 'Attritional',
-            'RC02': 'Large Loss',
-            'RC03': 'Catastrophe - Natural',
-            'RC04': 'Catastrophe - Man-made',
-            'RC05': 'Reserve Development'
-        }
-
-        # Catastrophe codes
-        self.cat_codes = {
-            'NAT01': 'Hurricane - USA',
-            'NAT02': 'Earthquake - Japan',
-            'NAT03': 'Flood - Europe',
-            'NAT04': 'Windstorm - Europe',
-            'NAT05': 'Wildfire - USA',
-            'MAN01': 'Cyber Attack',
-            'MAN02': 'Industrial Accident',
-            'MAN03': 'Aviation Accident'
-        }
-
-        # Currency codes
-        self.currencies = ['GBP', 'USD', 'EUR', 'CAD', 'AUD', 'JPY']
+        # Use config values if available, otherwise use defaults
+        if CONFIG_AVAILABLE:
+            self.syndicates = SYNDICATES_PRIMARY
+            self.current_year = CURRENT_YEAR
+            self.years_of_account = YEARS_OF_ACCOUNT
+            self.classes_of_business = CLASSES_OF_BUSINESS
+            self.risk_codes = RISK_CODES
+            self.cat_codes = CATASTROPHE_CODES
+            self.currencies = CURRENCIES
+            self._base_exchange_rates = BASE_EXCHANGE_RATES
+        else:
+            # Fallback defaults for standalone usage
+            self.syndicates = [2987, 33, 1183, 2791, 623, 4242, 5000, 1910, 2010, 2525]
+            self.current_year = 2024
+            self.years_of_account = list(range(2018, 2026))
+            self.classes_of_business = {
+                'A1': 'Direct Accident & Health',
+                'A2': 'Accident & Health Reinsurance',
+                'D1': 'Direct Motor (Private Car)',
+                'D2': 'Direct Motor (Commercial)',
+                'E1': 'Energy Offshore',
+                'E2': 'Energy Onshore',
+                'F1': 'Fire & Other Damage - Direct',
+                'F2': 'Fire & Other Damage - Reinsurance',
+                'M1': 'Marine Cargo',
+                'M2': 'Marine Hull',
+                'M3': 'Marine Liability',
+                'N1': 'Non-Marine Property Treaty',
+                'N2': 'Non-Marine Property Facultative',
+                'P1': 'Professional Indemnity',
+                'P2': 'Public & Products Liability',
+                'T1': 'Third Party Liability - Direct',
+                'T2': 'Third Party Liability - Reinsurance',
+                'V1': 'Aviation',
+                'W1': 'Political Risk & Contingency',
+                'X1': 'Catastrophe Reinsurance'
+            }
+            self.risk_codes = {
+                'RC01': 'Attritional',
+                'RC02': 'Large Loss',
+                'RC03': 'Catastrophe - Natural',
+                'RC04': 'Catastrophe - Man-made',
+                'RC05': 'Reserve Development'
+            }
+            self.cat_codes = {
+                'NAT01': 'Hurricane - USA',
+                'NAT02': 'Earthquake - Japan',
+                'NAT03': 'Flood - Europe',
+                'NAT04': 'Windstorm - Europe',
+                'NAT05': 'Wildfire - USA',
+                'MAN01': 'Cyber Attack',
+                'MAN02': 'Industrial Accident',
+                'MAN03': 'Aviation Accident'
+            }
+            self.currencies = ['GBP', 'USD', 'EUR', 'CAD', 'AUD', 'JPY']
+            self._base_exchange_rates = {
+                'USD': 1.27, 'EUR': 1.17, 'CAD': 1.72,
+                'AUD': 1.95, 'JPY': 188.5, 'GBP': 1.00
+            }
 
     def generate_control_data(self):
         """Generate RRA 010 Control Data"""
@@ -110,15 +142,8 @@ class LloydsDataGenerator:
         """Generate RRA 020 Exchange Rates"""
         exchange_rates = []
 
-        # Base rates for main currencies (against GBP)
-        base_rates = {
-            'USD': 1.27,
-            'EUR': 1.17,
-            'CAD': 1.72,
-            'AUD': 1.95,
-            'JPY': 188.5,
-            'GBP': 1.00
-        }
+        # Use configured base rates (from config or fallback)
+        base_rates = self._base_exchange_rates
 
         for year in self.years_of_account:
             for currency, base_rate in base_rates.items():
@@ -214,15 +239,28 @@ class LloydsDataGenerator:
         """Generate RRA 193 Net Claims Data"""
         net_claims = []
 
+        # Use development factors from config if available
+        if CONFIG_AVAILABLE:
+            initial_factor = DevelopmentFactors.INITIAL_FACTOR
+            annual_increment = DevelopmentFactors.ANNUAL_INCREMENT
+            max_factor = DevelopmentFactors.MAX_FACTOR
+            loss_ratio_range = DevelopmentFactors.INITIAL_LOSS_RATIO_RANGE
+        else:
+            # Fallback defaults
+            initial_factor = 0.2
+            annual_increment = 0.15
+            max_factor = 1.0
+            loss_ratio_range = (0.45, 0.85)
+
         for syndicate in self.syndicates:
             for year in self.years_of_account[:-1]:  # Exclude prospective year
                 for lob_code in list(self.classes_of_business.keys())[:5]:
                     for development_year in range(0, min(8, self.current_year - year + 1)):
 
-                        # Calculate cumulative paid and incurred
+                        # Calculate cumulative paid and incurred using configured factors
                         base_premium = random.randint(1000000, 20000000)
-                        loss_ratio = random.uniform(0.45, 0.85)
-                        development_factor = min(1.0, 0.2 + (development_year * 0.15))
+                        loss_ratio = random.uniform(*loss_ratio_range)
+                        development_factor = min(max_factor, initial_factor + (development_year * annual_increment))
 
                         cumulative_paid = int(base_premium * loss_ratio * development_factor)
                         case_reserves = int(base_premium * loss_ratio * (1 - development_factor) * 0.6)
