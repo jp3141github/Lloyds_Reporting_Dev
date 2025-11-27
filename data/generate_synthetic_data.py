@@ -1,39 +1,76 @@
 """
 Synthetic Lloyd's of London Data Generator
 Generates realistic Lloyd's syndicate liquidity stress test data
+
+Note: Configuration constants are imported from lloyds_reporting.config
 """
 
 import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
 import random
+import os
+import sys
+
+# Add parent directory to path for imports
+sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
+
+# Import shared configuration
+try:
+    from lloyds_reporting.config import (
+        RANDOM_SEED,
+        SYNDICATES_LIQUIDITY,
+        CapitalRatios,
+        LiquidityRatios,
+        LIQUIDITY_QUARTERS,
+    )
+    CONFIG_AVAILABLE = True
+except ImportError:
+    CONFIG_AVAILABLE = False
 
 # Set random seed for reproducibility
-np.random.seed(42)
-random.seed(42)
+_seed = RANDOM_SEED if CONFIG_AVAILABLE else 42
+np.random.seed(_seed)
+random.seed(_seed)
 
-# Sample syndicate names and managing agents
-SYNDICATES = [
-    {"number": 2001, "name": "Alpha Syndicate", "agent": "Alpha Managing Agents Ltd"},
-    {"number": 2002, "name": "Beta Syndicate", "agent": "Beta Insurance Management"},
-    {"number": 2003, "name": "Gamma Syndicate", "agent": "Gamma Underwriting Ltd"},
-    {"number": 2004, "name": "Delta Syndicate", "agent": "Delta Risk Services"},
-    {"number": 2005, "name": "Epsilon Syndicate", "agent": "Epsilon Capital Management"},
-]
+# Sample syndicate names and managing agents (use config if available)
+if CONFIG_AVAILABLE:
+    SYNDICATES = SYNDICATES_LIQUIDITY
+else:
+    SYNDICATES = [
+        {"number": 2001, "name": "Alpha Syndicate", "agent": "Alpha Managing Agents Ltd"},
+        {"number": 2002, "name": "Beta Syndicate", "agent": "Beta Insurance Management"},
+        {"number": 2003, "name": "Gamma Syndicate", "agent": "Gamma Underwriting Ltd"},
+        {"number": 2004, "name": "Delta Syndicate", "agent": "Delta Risk Services"},
+        {"number": 2005, "name": "Epsilon Syndicate", "agent": "Epsilon Capital Management"},
+    ]
+
 
 def generate_capital_position(syndicate_number):
     """Generate realistic capital position data"""
+    # Use config ratios if available
+    if CONFIG_AVAILABLE:
+        fal_range = CapitalRatios.FAL_RANGE_GBP
+        fis_range = CapitalRatios.FIS_TO_FAL_RANGE
+        uscr_range = CapitalRatios.USCR_TO_FAL_RANGE
+        ueca_range = CapitalRatios.UECA_TO_FAL_RANGE
+    else:
+        fal_range = (100_000_000, 500_000_000)
+        fis_range = (0.80, 0.95)
+        uscr_range = (0.60, 0.85)
+        ueca_range = (0.10, 0.20)
+
     # Base FAL between 100M and 500M GBP
-    fal = np.random.randint(100_000_000, 500_000_000)
+    fal = np.random.randint(*fal_range)
 
     # FIS typically 80-95% of FAL
-    fis = int(fal * np.random.uniform(0.80, 0.95))
+    fis = int(fal * np.random.uniform(*fis_range))
 
     # uSCR typically 60-85% of FAL
-    uscr = int(fal * np.random.uniform(0.60, 0.85))
+    uscr = int(fal * np.random.uniform(*uscr_range))
 
     # uECA typically 10-20% of FAL
-    ueca = int(fal * np.random.uniform(0.10, 0.20))
+    ueca = int(fal * np.random.uniform(*ueca_range))
 
     return {
         'syndicate_fal': fal,
@@ -42,29 +79,49 @@ def generate_capital_position(syndicate_number):
         'syndicate_ueca': ueca
     }
 
+
 def generate_asset_liquidity_breakdown(capital_position):
     """Generate asset and liquidity breakdown across quarters"""
     fal = capital_position['syndicate_fal']
 
+    # Use config ratios if available
+    if CONFIG_AVAILABLE:
+        us_trust_range = LiquidityRatios.US_TRUST_FUNDS_RANGE
+        other_trust_range = LiquidityRatios.OTHER_TRUST_FUNDS_RANGE
+        other_restricted_range = LiquidityRatios.OTHER_RESTRICTED_RANGE
+        ri_recov_range = LiquidityRatios.REINSURANCE_RECOVERABLES_RANGE
+        ri_urp_range = LiquidityRatios.REINSURER_URP_RANGE
+        other_illiquid_range = LiquidityRatios.OTHER_ILLIQUID_RANGE
+        free_funds_range = LiquidityRatios.FREE_FUNDS_RANGE
+        other_liquid_range = LiquidityRatios.OTHER_LIQUID_RANGE
+        quarters = LIQUIDITY_QUARTERS
+    else:
+        us_trust_range = (0.20, 0.30)
+        other_trust_range = (0.05, 0.10)
+        other_restricted_range = (0.02, 0.05)
+        ri_recov_range = (0.15, 0.25)
+        ri_urp_range = (0.08, 0.12)
+        other_illiquid_range = (0.02, 0.05)
+        free_funds_range = (0.15, 0.25)
+        other_liquid_range = (0.05, 0.15)
+        quarters = ['2024-12-31', '2025-03-31', '2025-06-30', '2025-09-30', '2025-12-31']
+
     # Restricted Assets (30-45% of FAL)
-    us_trust_funds = int(fal * np.random.uniform(0.20, 0.30))
-    other_trust_funds = int(fal * np.random.uniform(0.05, 0.10))
-    other_restricted = int(fal * np.random.uniform(0.02, 0.05))
+    us_trust_funds = int(fal * np.random.uniform(*us_trust_range))
+    other_trust_funds = int(fal * np.random.uniform(*other_trust_range))
+    other_restricted = int(fal * np.random.uniform(*other_restricted_range))
     restricted_total = us_trust_funds + other_trust_funds + other_restricted
 
     # Illiquid Assets (25-40% of FAL)
-    reinsurance_recoverables = int(fal * np.random.uniform(0.15, 0.25))
-    reinsurer_urp_unearned = int(fal * np.random.uniform(0.08, 0.12))
-    other_illiquid = int(fal * np.random.uniform(0.02, 0.05))
+    reinsurance_recoverables = int(fal * np.random.uniform(*ri_recov_range))
+    reinsurer_urp_unearned = int(fal * np.random.uniform(*ri_urp_range))
+    other_illiquid = int(fal * np.random.uniform(*other_illiquid_range))
     illiquid_total = reinsurance_recoverables + reinsurer_urp_unearned + other_illiquid
 
     # Liquid Assets (remainder to balance)
-    closing_free_funds = int(fal * np.random.uniform(0.15, 0.25))
-    other_liquid = int(fal * np.random.uniform(0.05, 0.15))
+    closing_free_funds = int(fal * np.random.uniform(*free_funds_range))
+    other_liquid = int(fal * np.random.uniform(*other_liquid_range))
     liquid_total = closing_free_funds + other_liquid
-
-    # Generate quarterly projections with some variation
-    quarters = ['2024-12-31', '2025-03-31', '2025-06-30', '2025-09-30', '2025-12-31']
 
     data = {
         'date': quarters,

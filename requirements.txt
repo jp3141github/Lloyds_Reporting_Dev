@@ -1,0 +1,67 @@
+# =============================================================================
+# Lloyd's Reporting Development - Python Requirements
+# =============================================================================
+# Install with: pip install -r requirements.txt
+#
+# For optional dependencies, use:
+#   pip install -r requirements.txt -r requirements-dev.txt
+#
+# Or install via pyproject.toml:
+#   pip install -e ".[all]"
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# Core Dependencies (Required)
+# -----------------------------------------------------------------------------
+
+# Data manipulation
+pandas>=2.0.0
+numpy>=1.24.0
+
+# Excel file handling
+openpyxl>=3.1.0      # For .xlsx files (read/write)
+xlrd>=2.0.0          # For legacy .xls files (read only)
+
+# -----------------------------------------------------------------------------
+# Visualization (Optional but Recommended)
+# -----------------------------------------------------------------------------
+
+matplotlib>=3.5.0    # For charts and plots
+seaborn>=0.12.0      # For statistical visualizations
+
+# -----------------------------------------------------------------------------
+# Statistical Analysis (Optional)
+# -----------------------------------------------------------------------------
+
+scipy>=1.9.0         # Scientific computing
+statsmodels>=0.13.0  # Statistical models and tests
+
+# -----------------------------------------------------------------------------
+# Database Connectivity (Optional)
+# -----------------------------------------------------------------------------
+# Uncomment if database access is needed:
+#
+# sqlalchemy>=2.0.0    # ORM and database toolkit
+# pyodbc>=4.0.0        # SQL Server connectivity
+
+# -----------------------------------------------------------------------------
+# Development Dependencies (Optional)
+# -----------------------------------------------------------------------------
+# Install separately or use: pip install -e ".[dev]"
+#
+# pytest>=7.0.0        # Testing framework
+# pytest-cov>=4.0.0    # Coverage reporting
+# black>=22.0.0        # Code formatting
+# pylint>=2.15.0       # Code linting
+# mypy>=1.0.0          # Type checking
+# isort>=5.10.0        # Import sorting
+# pre-commit>=3.0.0    # Git hooks
+
+# -----------------------------------------------------------------------------
+# Notes
+# -----------------------------------------------------------------------------
+# - Python 3.7+ required (3.9+ recommended)
+# - All core functionality works with just pandas, numpy, openpyxl
+# - Power BI integration requires only: pandas, numpy, datetime, random
+# - For R dependencies, see r_scripts/install_packages.R
+# =============================================================================
