@@ -1,7 +1,8 @@
 {
-  "generated_at": "2025-11-28T15:26:46.393199",
+  "generated_at": "2025-11-28T15:33:46.039082",
+  "reporting_period": "2025-11-30",
   "seed": 42,
-  "version": "1.0.0",
+  "version": "1.1.0",
   "generator": "generate_raw_transactional_data.py",
   "datasets": [
     "syndicates",

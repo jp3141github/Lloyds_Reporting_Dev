@@ -1,11 +1,11 @@
-Syndicate_Number,Return_Type,Status,Managing_Agent,Reporting_Year,Submission_Date
-2987,RRA,Approved,Managing Agent 2987,2025,2025-11-28
-33,RRA,Draft,Managing Agent 33,2025,2025-11-28
-1183,RRA,Draft,Managing Agent 1183,2025,2025-11-28
-2791,RRA,Approved,Managing Agent 2791,2025,2025-11-28
-623,RRA,Submitted,Managing Agent 623,2025,2025-11-28
-4242,RRA,Draft,Managing Agent 4242,2025,2025-11-28
-5000,RRA,Draft,Managing Agent 5000,2025,2025-11-28
-1910,RRA,Draft,Managing Agent 1910,2025,2025-11-28
-2010,RRA,Approved,Managing Agent 2010,2025,2025-11-28
-2525,RRA,Draft,Managing Agent 2525,2025,2025-11-28
+reporting_period,Syndicate_Number,Return_Type,Status,Managing_Agent,Reporting_Year,Submission_Date
+2025-11-30,2987,RRA,Approved,Managing Agent 2987,2025,2025-11-28
+2025-11-30,33,RRA,Draft,Managing Agent 33,2025,2025-11-28
+2025-11-30,1183,RRA,Draft,Managing Agent 1183,2025,2025-11-28
+2025-11-30,2791,RRA,Approved,Managing Agent 2791,2025,2025-11-28
+2025-11-30,623,RRA,Submitted,Managing Agent 623,2025,2025-11-28
+2025-11-30,4242,RRA,Draft,Managing Agent 4242,2025,2025-11-28
+2025-11-30,5000,RRA,Draft,Managing Agent 5000,2025,2025-11-28
+2025-11-30,1910,RRA,Draft,Managing Agent 1910,2025,2025-11-28
+2025-11-30,2010,RRA,Approved,Managing Agent 2010,2025,2025-11-28
+2025-11-30,2525,RRA,Draft,Managing Agent 2525,2025,2025-11-28

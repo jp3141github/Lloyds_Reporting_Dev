@@ -1,6 +1,6 @@
-LOB_Code,Claims_Inflation_Rate,Expense_Inflation_Rate,Wage_Inflation_Rate
-A1,0.0315,0.0225,0.0388
-A2,0.048,0.0389,0.035
-D1,0.0398,0.0216,0.0258
-D2,0.0373,0.0264,0.03
-E1,0.0237,0.0392,0.0417
+reporting_period,LOB_Code,Claims_Inflation_Rate,Expense_Inflation_Rate,Wage_Inflation_Rate
+2025-11-30,A1,0.0315,0.0225,0.0388
+2025-11-30,A2,0.048,0.0389,0.035
+2025-11-30,D1,0.0398,0.0216,0.0258
+2025-11-30,D2,0.0373,0.0264,0.03
+2025-11-30,E1,0.0237,0.0392,0.0417

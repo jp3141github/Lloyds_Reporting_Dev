@@ -2,6 +2,8 @@
 
 This folder contains granular transactional-level synthetic data that can be aggregated via ETL tools (KNIME, Alteryx) to produce the Power BI outputs in `exports/powerbi/`.
 
+**Note:** All files include `reporting_period` as the first column (value: `2025-11-30`) to match the Power BI export format.
+
 ## Data Files
 
 | File | Records | Description |
@@ -18,6 +20,7 @@ This folder contains granular transactional-level synthetic data that can be agg
 ## Schema Overview
 
 ### 1. syndicates.csv (Reference Data)
+- `reporting_period`: Reporting period date (2025-11-30)
 - `Syndicate_Number`: Unique syndicate identifier (e.g., 2987, 33)
 - `Managing_Agent`: Managing agent name
 - `LEI`: Legal Entity Identifier

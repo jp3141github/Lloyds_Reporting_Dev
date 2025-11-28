@@ -33,6 +33,9 @@ np.random.seed(42)
 # CONSTANTS - Must match the Power BI output files exactly
 # ============================================================================
 
+# Reporting period - first column in all outputs (matches Power BI exports)
+REPORTING_PERIOD = '2025-11-30'
+
 SYNDICATES = [2987, 33, 1183, 2791, 623, 4242, 5000, 1910, 2010, 2525]
 
 LOB_CODES = {
@@ -675,6 +678,13 @@ def generate_risk_exposures(targets: dict) -> pd.DataFrame:
 # MAIN GENERATION FUNCTION
 # ============================================================================
 
+def add_reporting_period(df: pd.DataFrame) -> pd.DataFrame:
+    """Add reporting_period as the first column of a DataFrame."""
+    df = df.copy()
+    df.insert(0, 'reporting_period', REPORTING_PERIOD)
+    return df
+
+
 def generate_all_raw_data(output_dir: str, exports_dir: str = None) -> dict:
     """
     Generate all raw transactional data files.
@@ -689,6 +699,7 @@ def generate_all_raw_data(output_dir: str, exports_dir: str = None) -> dict:
     print("=" * 70)
     print("Lloyd's Regulatory Reporting - Raw Transactional Data Generator")
     print("=" * 70)
+    print(f"Reporting Period: {REPORTING_PERIOD}")
 
     # Create output directory
     Path(output_dir).mkdir(parents=True, exist_ok=True)
@@ -704,56 +715,56 @@ def generate_all_raw_data(output_dir: str, exports_dir: str = None) -> dict:
 
     # 1. Generate syndicates reference data
     print("\n[1/8] Generating syndicates.csv...")
-    syndicates_df = generate_syndicates()
+    syndicates_df = add_reporting_period(generate_syndicates())
     syndicates_df.to_csv(os.path.join(output_dir, 'syndicates.csv'), index=False)
     results['syndicates'] = syndicates_df
     print(f"       Generated {len(syndicates_df)} syndicate records")
 
     # 2. Generate exchange rates
     print("\n[2/8] Generating exchange_rates.csv...")
-    exchange_rates_df = generate_exchange_rates(targets)
+    exchange_rates_df = add_reporting_period(generate_exchange_rates(targets))
     exchange_rates_df.to_csv(os.path.join(output_dir, 'exchange_rates.csv'), index=False)
     results['exchange_rates'] = exchange_rates_df
     print(f"       Generated {len(exchange_rates_df)} exchange rate records")
 
     # 3. Generate policies
     print("\n[3/8] Generating policies.csv...")
-    policies_df = generate_policies(num_policies=5000)
+    policies_df = add_reporting_period(generate_policies(num_policies=5000))
     policies_df.to_csv(os.path.join(output_dir, 'policies.csv'), index=False)
     results['policies'] = policies_df
     print(f"       Generated {len(policies_df)} policy records")
 
     # 4. Generate claim transactions
     print("\n[4/8] Generating claim_transactions.csv...")
-    claims_df = generate_claim_transactions(policies_df, targets)
+    claims_df = add_reporting_period(generate_claim_transactions(policies_df, targets))
     claims_df.to_csv(os.path.join(output_dir, 'claim_transactions.csv'), index=False)
     results['claim_transactions'] = claims_df
     print(f"       Generated {len(claims_df)} claim transaction records")
 
     # 5. Generate premium transactions
     print("\n[5/8] Generating premium_transactions.csv...")
-    premiums_df = generate_premium_transactions(policies_df, targets)
+    premiums_df = add_reporting_period(generate_premium_transactions(policies_df, targets))
     premiums_df.to_csv(os.path.join(output_dir, 'premium_transactions.csv'), index=False)
     results['premium_transactions'] = premiums_df
     print(f"       Generated {len(premiums_df)} premium transaction records")
 
     # 6. Generate asset holdings
     print("\n[6/8] Generating asset_holdings.csv...")
-    assets_df = generate_asset_holdings(targets)
+    assets_df = add_reporting_period(generate_asset_holdings(targets))
     assets_df.to_csv(os.path.join(output_dir, 'asset_holdings.csv'), index=False)
     results['asset_holdings'] = assets_df
     print(f"       Generated {len(assets_df)} asset holding records")
 
     # 7. Generate reserve movements
     print("\n[7/8] Generating reserve_movements.csv...")
-    reserves_df = generate_reserve_movements(targets)
+    reserves_df = add_reporting_period(generate_reserve_movements(targets))
     reserves_df.to_csv(os.path.join(output_dir, 'reserve_movements.csv'), index=False)
     results['reserve_movements'] = reserves_df
     print(f"       Generated {len(reserves_df)} reserve movement records")
 
     # 8. Generate risk exposures
     print("\n[8/8] Generating risk_exposures.csv...")
-    risk_df = generate_risk_exposures(targets)
+    risk_df = add_reporting_period(generate_risk_exposures(targets))
     risk_df.to_csv(os.path.join(output_dir, 'risk_exposures.csv'), index=False)
     results['risk_exposures'] = risk_df
     print(f"       Generated {len(risk_df)} risk exposure records")
@@ -761,8 +772,9 @@ def generate_all_raw_data(output_dir: str, exports_dir: str = None) -> dict:
     # Generate metadata
     metadata = {
         'generated_at': datetime.now().isoformat(),
+        'reporting_period': REPORTING_PERIOD,
         'seed': 42,
-        'version': '1.0.0',
+        'version': '1.1.0',
         'generator': 'generate_raw_transactional_data.py',
         'datasets': list(results.keys()),
         'record_counts': {name: len(df) for name, df in results.items()},
