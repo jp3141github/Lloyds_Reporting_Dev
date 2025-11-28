@@ -1,0 +1,41 @@
+LEI,Undertaking_Name,Reporting_Date,Risk_Module,Simplification,Used,Justification,Impact_On_SCR,Impact_Percentage,Last_Review_Date,Approved_By_Board
+549300ABCDEF123456G7,Lloyd's Syndicate 2987,2024-12-31,Spread Risk,Credit Quality Step Approach,True,Proportionality - immaterial exposure,-31234.74,-0.01,2024-06-30,True
+549300ABCDEF123456G7,Lloyd's Syndicate 2987,2024-12-31,Counterparty Risk Type 2,Standard LGD,True,Proportionality - immaterial exposure,8256636.93,2.25,2024-06-30,True
+549300ABCDEF123456G7,Lloyd's Syndicate 2987,2024-12-31,Life Lapse Risk,Homogeneous Risk Groups,True,Proportionality - immaterial exposure,1785476.05,1.01,2024-06-30,True
+549300ABCDEF123456G7,Lloyd's Syndicate 2987,2024-12-31,Non-Life Premium Risk,Undertaking-Specific Parameters,False,Full calculation performed,0.0,0.0,2024-06-30,True
+549300ABCDEF123456G7,Lloyd's Syndicate 2987,2024-12-31,Non-Life Reserve Risk,Undertaking-Specific Parameters,False,Full calculation performed,0.0,0.0,2024-06-30,True
+549300ABCDEF123456G7,Lloyd's Syndicate 2987,2024-12-31,Catastrophe Risk,Standard Scenarios,True,Proportionality - immaterial exposure,4086406.43,2.63,2024-06-30,True
+549300ABCDEF123456G7,Lloyd's Syndicate 2987,2024-12-31,Concentration Risk,Exposure Aggregation,True,Proportionality - immaterial exposure,6858953.08,2.19,2024-06-30,True
+549300ABCDEF123456G7,Lloyd's Syndicate 2987,2024-12-31,Currency Risk,Material Currencies Only,True,Proportionality - immaterial exposure,6934607.86,3.02,2024-06-30,True
+549300HIJKLM789012N3,Lloyd's Syndicate 33,2024-12-31,Spread Risk,Credit Quality Step Approach,True,Proportionality - immaterial exposure,3361424.5,2.57,2024-06-30,True
+549300HIJKLM789012N3,Lloyd's Syndicate 33,2024-12-31,Counterparty Risk Type 2,Standard LGD,True,Proportionality - immaterial exposure,5314684.26,2.16,2024-06-30,True
+549300HIJKLM789012N3,Lloyd's Syndicate 33,2024-12-31,Life Lapse Risk,Homogeneous Risk Groups,True,Proportionality - immaterial exposure,2638574.53,0.75,2024-06-30,True
+549300HIJKLM789012N3,Lloyd's Syndicate 33,2024-12-31,Non-Life Premium Risk,Undertaking-Specific Parameters,False,Full calculation performed,0.0,0.0,2024-06-30,True
+549300HIJKLM789012N3,Lloyd's Syndicate 33,2024-12-31,Non-Life Reserve Risk,Undertaking-Specific Parameters,False,Full calculation performed,0.0,0.0,2024-06-30,True
+549300HIJKLM789012N3,Lloyd's Syndicate 33,2024-12-31,Catastrophe Risk,Standard Scenarios,True,Proportionality - immaterial exposure,6584816.64,2.53,2024-06-30,True
+549300HIJKLM789012N3,Lloyd's Syndicate 33,2024-12-31,Concentration Risk,Exposure Aggregation,True,Proportionality - immaterial exposure,326594.9,0.14,2024-06-30,True
+549300HIJKLM789012N3,Lloyd's Syndicate 33,2024-12-31,Currency Risk,Material Currencies Only,True,Proportionality - immaterial exposure,261455.07,0.18,2024-06-30,True
+549300OPQRS456789T0,Lloyd's Syndicate 1183,2024-12-31,Spread Risk,Credit Quality Step Approach,True,Proportionality - immaterial exposure,4686639.62,1.52,2024-06-30,True
+549300OPQRS456789T0,Lloyd's Syndicate 1183,2024-12-31,Counterparty Risk Type 2,Standard LGD,True,Proportionality - immaterial exposure,9568150.52,4.04,2024-06-30,True
+549300OPQRS456789T0,Lloyd's Syndicate 1183,2024-12-31,Life Lapse Risk,Homogeneous Risk Groups,True,Proportionality - immaterial exposure,9959386.19,6.38,2024-06-30,True
+549300OPQRS456789T0,Lloyd's Syndicate 1183,2024-12-31,Non-Life Premium Risk,Undertaking-Specific Parameters,False,Full calculation performed,0.0,0.0,2024-06-30,True
+549300OPQRS456789T0,Lloyd's Syndicate 1183,2024-12-31,Non-Life Reserve Risk,Undertaking-Specific Parameters,False,Full calculation performed,0.0,0.0,2024-06-30,True
+549300OPQRS456789T0,Lloyd's Syndicate 1183,2024-12-31,Catastrophe Risk,Standard Scenarios,True,Proportionality - immaterial exposure,4849462.49,1.22,2024-06-30,True
+549300OPQRS456789T0,Lloyd's Syndicate 1183,2024-12-31,Concentration Risk,Exposure Aggregation,True,Proportionality - immaterial exposure,4604874.54,1.95,2024-06-30,True
+549300OPQRS456789T0,Lloyd's Syndicate 1183,2024-12-31,Currency Risk,Material Currencies Only,True,Proportionality - immaterial exposure,2728784.51,0.77,2024-06-30,True
+549300UVWXY012345Z1,Lloyd's Syndicate 2791,2024-12-31,Spread Risk,Credit Quality Step Approach,True,Proportionality - immaterial exposure,9086657.44,3.85,2024-06-30,True
+549300UVWXY012345Z1,Lloyd's Syndicate 2791,2024-12-31,Counterparty Risk Type 2,Standard LGD,True,Proportionality - immaterial exposure,6585550.43,1.73,2024-06-30,True
+549300UVWXY012345Z1,Lloyd's Syndicate 2791,2024-12-31,Life Lapse Risk,Homogeneous Risk Groups,True,Proportionality - immaterial exposure,-768191.36,-0.31,2024-06-30,True
+549300UVWXY012345Z1,Lloyd's Syndicate 2791,2024-12-31,Non-Life Premium Risk,Undertaking-Specific Parameters,False,Full calculation performed,0.0,0.0,2024-06-30,True
+549300UVWXY012345Z1,Lloyd's Syndicate 2791,2024-12-31,Non-Life Reserve Risk,Undertaking-Specific Parameters,False,Full calculation performed,0.0,0.0,2024-06-30,True
+549300UVWXY012345Z1,Lloyd's Syndicate 2791,2024-12-31,Catastrophe Risk,Standard Scenarios,True,Proportionality - immaterial exposure,9931263.32,4.82,2024-06-30,True
+549300UVWXY012345Z1,Lloyd's Syndicate 2791,2024-12-31,Concentration Risk,Exposure Aggregation,True,Proportionality - immaterial exposure,4295319.34,1.45,2024-06-30,True
+549300UVWXY012345Z1,Lloyd's Syndicate 2791,2024-12-31,Currency Risk,Material Currencies Only,True,Proportionality - immaterial exposure,-2687773.6,-0.79,2024-06-30,True
+549300ABCDE678901F2,Lloyd's Syndicate 623,2024-12-31,Spread Risk,Credit Quality Step Approach,True,Proportionality - immaterial exposure,1193509.14,0.48,2024-06-30,True
+549300ABCDE678901F2,Lloyd's Syndicate 623,2024-12-31,Counterparty Risk Type 2,Standard LGD,True,Proportionality - immaterial exposure,4642637.05,2.08,2024-06-30,True
+549300ABCDE678901F2,Lloyd's Syndicate 623,2024-12-31,Life Lapse Risk,Homogeneous Risk Groups,True,Proportionality - immaterial exposure,-123763.02,-0.05,2024-06-30,True
+549300ABCDE678901F2,Lloyd's Syndicate 623,2024-12-31,Non-Life Premium Risk,Undertaking-Specific Parameters,False,Full calculation performed,0.0,0.0,2024-06-30,True
+549300ABCDE678901F2,Lloyd's Syndicate 623,2024-12-31,Non-Life Reserve Risk,Undertaking-Specific Parameters,False,Full calculation performed,0.0,0.0,2024-06-30,True
+549300ABCDE678901F2,Lloyd's Syndicate 623,2024-12-31,Catastrophe Risk,Standard Scenarios,True,Proportionality - immaterial exposure,201774.01,0.09,2024-06-30,True
+549300ABCDE678901F2,Lloyd's Syndicate 623,2024-12-31,Concentration Risk,Exposure Aggregation,True,Proportionality - immaterial exposure,-3373887.37,-0.95,2024-06-30,True
+549300ABCDE678901F2,Lloyd's Syndicate 623,2024-12-31,Currency Risk,Material Currencies Only,True,Proportionality - immaterial exposure,1175608.38,0.94,2024-06-30,True
