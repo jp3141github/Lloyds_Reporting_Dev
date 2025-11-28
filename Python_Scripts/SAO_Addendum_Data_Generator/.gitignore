@@ -1,0 +1,5 @@
+# Ignore generated output files
+output/
+*.pyc
+__pycache__/
+.ipynb_checkpoints/
