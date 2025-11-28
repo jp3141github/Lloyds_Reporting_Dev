@@ -1,0 +1,43 @@
+{
+  "generated_at": "2025-11-28T15:33:46.039082",
+  "reporting_period": "2025-11-30",
+  "seed": 42,
+  "version": "1.1.0",
+  "generator": "generate_raw_transactional_data.py",
+  "datasets": [
+    "syndicates",
+    "exchange_rates",
+    "policies",
+    "claim_transactions",
+    "premium_transactions",
+    "asset_holdings",
+    "reserve_movements",
+    "risk_exposures"
+  ],
+  "record_counts": {
+    "syndicates": 10,
+    "exchange_rates": 108,
+    "policies": 5000,
+    "claim_transactions": 1433,
+    "premium_transactions": 20000,
+    "asset_holdings": 2213,
+    "reserve_movements": 2400,
+    "risk_exposures": 2400
+  },
+  "total_records": 33564,
+  "target_outputs": "exports/powerbi/*.csv",
+  "etl_tools": [
+    "KNIME",
+    "Alteryx"
+  ],
+  "schema_description": {
+    "syndicates": "Reference data for Lloyd's syndicates",
+    "exchange_rates": "Currency exchange rates by year/type",
+    "policies": "Policy master data with premium info",
+    "claim_transactions": "Individual claim payment/reserve transactions",
+    "premium_transactions": "Premium bookings by policy/period",
+    "asset_holdings": "Asset positions by syndicate/quarter",
+    "reserve_movements": "Technical provisions and IBNR movements",
+    "risk_exposures": "SCR risk components by syndicate/LOB"
+  }
+}
