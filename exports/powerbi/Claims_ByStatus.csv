@@ -1,0 +1,5 @@
+Status,Claim_Count,Total_Outstanding,Total_Paid,Average_Age_Days
+Open,300,30000000,24000000,325
+Closed,600,60000000,48000000,421
+Reopened,50,5000000,4000000,111
+Pending,50,5000000,4000000,280
