@@ -1,20 +1,11 @@
-# Lloyd's Synthetic Data Generator - R Scripts
+# Lloyd's Synthetic Data Generator - Python Scripts
 
-> **DEPRECATED (V2.0)**: This directory is deprecated as of V2.0 (December 2024).
->
-> **For new development, please use:**
-> - `r_scripts/` - Primary R module (lowercase, parallel to python_scripts/)
->
-> This directory is preserved for backward compatibility. Contents have been archived to `archive/v1.2.0/`.
-
----
-
-This folder contains legacy R scripts for generating synthetic Lloyd's of London insurance data for SCR (Solvency Capital Requirement) reporting.
+This folder contains Python scripts for generating synthetic Lloyd's of London insurance data for SCR (Solvency Capital Requirement) reporting.
 
 ## Files
 
-### 1. `generate_lloyds_synthetic_data.R`
-Comprehensive data generator that can be run standalone or sourced as functions.
+### 1. `generate_lloyds_synthetic_data.py`
+Comprehensive data generator that can be run standalone or imported as a module.
 
 **Features:**
 - Generates realistic Lloyd's syndicate data
@@ -25,31 +16,22 @@ Comprehensive data generator that can be run standalone or sourced as functions.
 
 **Usage:**
 
-```r
-# Source the script
-source("generate_lloyds_synthetic_data.R")
+```bash
+# Run directly
+python generate_lloyds_synthetic_data.py
 
-# Generate data
-data <- generate_all_data(
-  num_syndicates = 25,
-  seed = 42,
-  save_to_csv = TRUE,
-  output_dir = "./output"
-)
-
-# Access individual tables
-syndicate_master <- data$syndicate_master
-scr_impact <- data$scr_impact_data
-loss_ratios <- data$loss_ratio_data
+# Or import as module
+from generate_lloyds_synthetic_data import generate_all_data
+data = generate_all_data(num_syndicates=25, seed=42, save_to_csv=True)
 ```
 
-### 2. `powerbi_lloyds_data.R`
-Optimized script for use in Power BI's R script data source.
+### 2. `powerbi_lloyds_data.py`
+Optimized script for use in Power BI's Python script data source.
 
 **Usage in Power BI:**
 1. Open Power BI Desktop
-2. Home → Get Data → More → R script
-3. Copy and paste the entire `powerbi_lloyds_data.R` script
+2. Home → Get Data → More → Python script
+3. Copy and paste the entire `powerbi_lloyds_data.py` script
 4. Click OK
 5. Select tables to import:
    - `syndicate_master`
@@ -68,7 +50,7 @@ Reference data for Lloyd's syndicates.
 | ManagingAgent | Managing agent code |
 | PrimaryBusinessClass | Main line of business |
 | YearOfAccount | Year of account (2025) |
-| Active | Active status (logical) |
+| Active | Active status (boolean) |
 | StampCapacity_GBPm | Stamp capacity in £m |
 
 ### 2. SCR Impact Data
@@ -81,7 +63,7 @@ Tracks changes in uSCR (ultimate SCR) and 1SCR (1-year SCR).
 | SBFVersion | Version identifier |
 | SubmissionDate | Submission date |
 | uSCR_GBPm | Ultimate SCR in £m |
-| X1SCR_GBPm | 1-year SCR in £m (Note: X prefix for R naming) |
+| 1SCR_GBPm | 1-year SCR in £m |
 | SCR_Ratio | Ratio of 1SCR to uSCR |
 
 ### 3. Loss Ratio Data
@@ -100,31 +82,24 @@ Plan vs Modelled loss ratios on Net Net basis.
 
 ## Requirements
 
-```r
-# Install required packages
-install.packages("dplyr")
-
-# The script will attempt to install dplyr automatically if missing
+```bash
+pip install pandas numpy openpyxl
 ```
 
 ## Customization
 
 Edit these parameters in the scripts:
 
-```r
+```python
 # Number of syndicates to generate
-NUM_SYNDICATES <- 25
+num_syndicates = 25
 
 # Random seed for reproducibility
-RANDOM_SEED <- 42
+seed = 42
 
-# For standalone script
-data <- generate_all_data(
-  num_syndicates = 25,
-  seed = 42,
-  save_to_csv = TRUE,
-  output_dir = "./output"
-)
+# Save to CSV files
+save_to_csv = True
+output_dir = './output'
 ```
 
 ## Data Characteristics
@@ -141,37 +116,9 @@ The synthetic data generator creates realistic Lloyd's data with:
 ## Example Output
 
 ```
-Generating synthetic Lloyd's data for 25 syndicates...
-
-============================================================
-DATA GENERATION COMPLETE
-============================================================
-
-Syndicate Master: 25 syndicates
-SCR Impact Data: 100 records
-Loss Ratio Data: 100 records
-```
-
-## Working with the Data
-
-```r
-# Load the data
-source("generate_lloyds_synthetic_data.R")
-data <- generate_all_data(num_syndicates = 20)
-
-# Filter for specific syndicate
-library(dplyr)
-syndicate_2001 <- data$scr_impact_data %>%
-  filter(SyndicateNumber == 2001)
-
-# Analyze loss ratios by business class
-loss_summary <- data$loss_ratio_data %>%
-  left_join(data$syndicate_master, by = "SyndicateNumber") %>%
-  group_by(PrimaryBusinessClass, RowLabel) %>%
-  summarise(
-    avg_plan = mean(PlanLossRatio_NetNet),
-    avg_modelled = mean(ModelledLossRatio_NetNet)
-  )
+Generated 25 syndicates
+SCR Impact Data: 100 records (4 per syndicate)
+Loss Ratio Data: 100 records (4 per syndicate)
 ```
 
 ## Support

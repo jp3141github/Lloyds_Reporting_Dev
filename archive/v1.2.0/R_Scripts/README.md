@@ -1,15 +1,6 @@
 # Lloyd's Synthetic Data Generator - R Scripts
 
-> **DEPRECATED (V2.0)**: This directory is deprecated as of V2.0 (December 2024).
->
-> **For new development, please use:**
-> - `r_scripts/` - Primary R module (lowercase, parallel to python_scripts/)
->
-> This directory is preserved for backward compatibility. Contents have been archived to `archive/v1.2.0/`.
-
----
-
-This folder contains legacy R scripts for generating synthetic Lloyd's of London insurance data for SCR (Solvency Capital Requirement) reporting.
+This folder contains R scripts for generating synthetic Lloyd's of London insurance data for SCR (Solvency Capital Requirement) reporting.
 
 ## Files
 

@@ -1,6 +1,17 @@
 # Lloyd's Synthetic Data Generator - Python Scripts
 
-This folder contains Python scripts for generating synthetic Lloyd's of London insurance data for SCR (Solvency Capital Requirement) reporting.
+> **DEPRECATED (V2.0)**: This directory is deprecated as of V2.0 (December 2024).
+>
+> **For new development, please use:**
+> - `python_scripts/` - Primary Python module for RRA/RRQ forms
+> - `python_scripts/data_generation/` - Unified data generators
+> - `python_scripts/forms/` - Form processors
+>
+> This directory is preserved for backward compatibility. Contents have been archived to `archive/v1.2.0/`.
+
+---
+
+This folder contains legacy Python scripts for generating synthetic Lloyd's of London insurance data for SCR (Solvency Capital Requirement) reporting.
 
 ## Files
 
