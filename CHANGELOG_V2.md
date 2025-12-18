@@ -62,11 +62,36 @@ Previous V1.2.0 code has been archived to `archive/v1.2.0/`:
 - Lloyd's RRQ Instructions V1.6 (March 2025)
 - Form 591 confirmed active per Lloyd's fact-check (December 2024)
 
-### Known Issues / Future Work
+### Unified Data Generator Updates
 
-1. **Synthetic data generators**: Need to add data generation for new forms (591, 191, 192)
-2. **Legacy directories**: Python_Scripts/, R_Scripts/ should be fully deprecated
-3. **Unified generator**: `generate_unified_lloyds_data.py` needs expansion to all forms
+The unified data generator (`python_scripts/data_generation/generate_unified_lloyds_data.py`) now generates all forms:
+
+**New Generator Methods:**
+- `generate_scob_mapping()` - Form 071
+- `generate_reserving_class()` - Form 081
+- `generate_lpt_data()` - Form 091
+- `generate_net_premium_ibnr()` - Form 292
+- `generate_outstanding_ibnr_pyoa()` - Form 293
+- `generate_catastrophe_ibnr()` - Form 294
+- `generate_ulae()` - Form 295
+- `generate_ielr()` - Form 391
+- `generate_reinsurance_structure()` - Form 591 (NEW)
+- `generate_additional_info()` - Form 910
+- `generate_validation_summary()` - Form 990
+- `generate_gross_claims_rrq()` - RRQ Form 191 (NEW)
+- `generate_claims_triangles_rrq()` - RRQ Form 192 (NEW)
+
+### Legacy Directory Deprecation
+
+The following directories are now deprecated with notices added to their READMEs:
+- `Python_Scripts/` → Use `python_scripts/` instead
+- `R_Scripts/` → Use `r_scripts/` instead
+
+### Resolved Issues
+
+1. ~~Synthetic data generators: Need to add data generation for new forms~~ - COMPLETE
+2. ~~Legacy directories: Python_Scripts/, R_Scripts/ should be fully deprecated~~ - COMPLETE (deprecation notices added)
+3. ~~Unified generator: needs expansion to all forms~~ - COMPLETE
 
 ---
 
