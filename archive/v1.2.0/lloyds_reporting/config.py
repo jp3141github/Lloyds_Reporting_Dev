@@ -350,8 +350,6 @@ LIQUIDITY_QUARTERS: List[str] = [
 # =============================================================================
 
 # RRA form codes and descriptions
-# Reference: Lloyd's RRA Instructions V1.6 (March 2025)
-# Note: Form 591 confirmed active as of 2025
 RRA_FORMS: Dict[str, str] = {
     '010': 'Control Data',
     '020': 'Exchange Rates',
@@ -365,45 +363,16 @@ RRA_FORMS: Dict[str, str] = {
     '294': 'Catastrophe IBNR',
     '295': 'ULAE',
     '391': 'IELR',
-    '591': 'Syndicate Reinsurance Structure',  # V2: Added - confirmed active 2025
     '910': 'Additional Information',
     '990': 'Validation Summary',
 }
 
-# RRQ form codes
-# Reference: Lloyd's RRQ Instructions V1.6 (March 2025)
-# Note: Forms vary by quarter - see RRQ_FORMS_BY_QUARTER for details
+# RRQ form codes (subset of RRA)
 RRQ_FORMS: Dict[str, str] = {
-    '081': 'Reserving Class Information',
-    '091': 'LPT Data',
-    '191': 'Gross Claims Development',  # V2: Added - confirmed in RRQ spec
-    '192': 'Claims Triangles Summary',  # V2: Added - confirmed in RRQ spec
-}
-
-# RRQ forms vary by quarter
-# Q1-Q3: Core forms only
-# Q4: Additional forms aligned with RRA cycle
-RRQ_FORMS_Q1_Q3: Dict[str, str] = {
     '010': 'Control Data',
     '020': 'Exchange Rates',
-    '071': 'SCOB Mapping',
-    '091': 'LPT Data',
-    '191': 'Gross Claims Development',
-    '192': 'Claims Triangles Summary',
     '193': 'Net Claims Development',
     '291': 'Gross Premium and IBNR',
-    '292': 'Net Premium and IBNR',
-    '293': 'Outstanding & IBNR by PYoA',
-    '294': 'Catastrophe IBNR',
-    '295': 'ULAE',
-    '990': 'Validation Summary',
-}
-
-RRQ_FORMS_Q4: Dict[str, str] = {
-    **RRQ_FORMS_Q1_Q3,
-    '081': 'Reserving Class Information',
-    '391': 'IELR',
-    '910': 'Additional Information',
 }
 
 # Form validation statuses
@@ -498,8 +467,6 @@ __all__ = [
     # Forms
     'RRA_FORMS',
     'RRQ_FORMS',
-    'RRQ_FORMS_Q1_Q3',
-    'RRQ_FORMS_Q4',
     'VALIDATION_STATUSES',
     'RETURN_TYPES',
 

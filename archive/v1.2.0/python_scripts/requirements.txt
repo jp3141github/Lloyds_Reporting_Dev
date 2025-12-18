@@ -1,0 +1,31 @@
+# Python requirements for Lloyd's Reporting Scripts
+# Install with: pip install -r requirements.txt
+
+# Core data manipulation
+pandas>=2.0.0
+numpy>=1.23.0
+
+# Excel file handling (for reading RRA specs and claims data)
+openpyxl>=3.0.0
+xlrd>=2.0.0
+
+# Date/time handling (included in standard library, but listing for clarity)
+# datetime - standard library
+# random - standard library
+
+# Optional: For enhanced data visualization (if using Python visuals in Power BI)
+matplotlib>=3.5.0
+seaborn>=0.12.0
+
+# Optional: For statistical analysis
+scipy>=1.9.0
+statsmodels>=0.13.0
+
+# Optional: For working with databases
+# sqlalchemy>=1.4.0
+# pyodbc>=4.0.0  # For SQL Server connections
+
+# Development dependencies (optional)
+# pytest>=7.0.0  # For testing
+# black>=22.0.0  # For code formatting
+# pylint>=2.15.0  # For code linting
